@@ -7,7 +7,7 @@ const extractSass = new ExtractTextPlugin({
 })
 
 module.exports = {
-  entry: ['./src/App.jsx'],
+  entry: ['./src/App.jsx', './src/scss/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -32,7 +32,7 @@ module.exports = {
             loader: 'sass-loader'
           }],
           fallback: 'style-loader'
-        })
+        }),
       },
       {
         test: /\.css?/,
