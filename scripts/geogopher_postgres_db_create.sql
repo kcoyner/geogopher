@@ -12,30 +12,30 @@ CREATE TABLE "polygons" (
   OIDS=FALSE
 );
 
-# psql:./geogopher_postgres_db_insert_sample_data.sql:2: ERROR:  insert or update on table "polygons" violates foreign key constraint "polygons_fk0"
-# DETAIL:  Key (polygon_type_id)=(1) is not present in table "polygon_types".
+-- psql:./geogopher_postgres_db_insert_sample_data.sql:2: ERROR:  insert or update on table "polygons" violates foreign key constraint "polygons_fk0" */
+-- DETAIL:  Key (polygon_type_id)=(1) is not present in table "polygon_types". */
 
 CREATE TABLE "polygon_types" (
-	"polygon_type_id" serial NOT NULL UNIQUE,
+	"polygon_type_id" serial NOT NULL UNIQUE REFERENCES polygons on delete cascade,
 	"polygon_type_name" varchar NOT NULL,
 	CONSTRAINT polygon_types_pk PRIMARY KEY ("polygon_type_id")
 ) WITH (
   OIDS=FALSE
 );
 
-ALTER TABLE "polygons" ADD CONSTRAINT "polygons_fk0" FOREIGN KEY ("polygon_type_id") REFERENCES "polygon_types"("polygon_type_id");
+-- ALTER TABLE "polygons" ADD CONSTRAINT "polygons_fk0" FOREIGN KEY ("polygon_type_id") REFERENCES "polygon_types"("polygon_type_id"); */
 
 
 
 CREATE TABLE "polygon_regions" (
-	"polygon_region_id" serial NOT NULL UNIQUE,
+	"polygon_region_id" serial NOT NULL UNIQUE REFERENCES polygons on delete cascade,
 	"polygon_region_name" varchar NOT NULL,
 	CONSTRAINT polygon_regions_pk PRIMARY KEY ("polygon_region_id")
 ) WITH (
   OIDS=FALSE
 );
 
-ALTER TABLE "polygons" ADD CONSTRAINT "polygons_fk1" FOREIGN KEY ("polygon_region_id") REFERENCES "polygon_regions"("polygon_region_id");
+-- ALTER TABLE "polygons" ADD CONSTRAINT "polygons_fk1" FOREIGN KEY ("polygon_region_id") REFERENCES "polygon_regions"("polygon_region_id");
 
 
 CREATE TABLE "games" (
