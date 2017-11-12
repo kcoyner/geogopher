@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS scores, users, games, polygons, polygon_types, polygon_regions, game_types, game_difficulties CASCADE;
+
 CREATE TABLE "polygons" (
 	"polygon_id" serial NOT NULL UNIQUE,
 	"polygon_name" varchar NOT NULL,
@@ -85,7 +87,7 @@ CREATE TABLE "scores" (
 
 
 
-CREATE TABLE "user" (
+CREATE TABLE "users" (
 	"user_id" serial NOT NULL UNIQUE,
 	"username" varchar NOT NULL,
 	"password_hash" varchar NOT NULL,
