@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS scores, users, games, polygons, polygon_types, polygon_regi
 CREATE TABLE "polygons" (
 	"polygon_id" serial NOT NULL UNIQUE,
 	"polygon_name" varchar NOT NULL,
-	"coordinates" serial NOT NULL,
+	"coordinates" varchar NOT NULL,
 	"polygon_accepted_names" varchar NOT NULL,
 	"polygon_type_id" integer NOT NULL,
 	"polygon_region_id" integer NOT NULL,
@@ -12,15 +12,18 @@ CREATE TABLE "polygons" (
   OIDS=FALSE
 );
 
-
+# psql:./geogopher_postgres_db_insert_sample_data.sql:2: ERROR:  insert or update on table "polygons" violates foreign key constraint "polygons_fk0"
+# DETAIL:  Key (polygon_type_id)=(1) is not present in table "polygon_types".
 
 CREATE TABLE "polygon_types" (
 	"polygon_type_id" serial NOT NULL UNIQUE,
-	"polygon_type_name" serial NOT NULL UNIQUE,
+	"polygon_type_name" varchar NOT NULL,
 	CONSTRAINT polygon_types_pk PRIMARY KEY ("polygon_type_id")
 ) WITH (
   OIDS=FALSE
 );
+
+ALTER TABLE "polygons" ADD CONSTRAINT "polygons_fk0" FOREIGN KEY ("polygon_type_id") REFERENCES "polygon_types"("polygon_type_id");
 
 
 
@@ -32,6 +35,7 @@ CREATE TABLE "polygon_regions" (
   OIDS=FALSE
 );
 
+ALTER TABLE "polygons" ADD CONSTRAINT "polygons_fk1" FOREIGN KEY ("polygon_region_id") REFERENCES "polygon_regions"("polygon_region_id");
 
 
 CREATE TABLE "games" (
@@ -77,7 +81,7 @@ CREATE TABLE "scores" (
 	"game_id" integer NOT NULL,
 	"game_type_id" integer NOT NULL,
 	"game_difficulty_id" integer NOT NULL,
-	"time_taken" TIME NOT NULL,
+	"time_taken" varchar NOT NULL,
 	"when_game_played" TIMESTAMP WITH TIME ZONE,
 	"ip_where_game_played" varchar NOT NULL,
 	CONSTRAINT scores_pk PRIMARY KEY ("score_id")
@@ -107,8 +111,6 @@ CREATE TABLE "users" (
 
 
 
-ALTER TABLE "polygons" ADD CONSTRAINT "polygon_fk0" FOREIGN KEY ("polygon_type_id") REFERENCES "polygon_types"("polygon_type_id");
-ALTER TABLE "polygons" ADD CONSTRAINT "polygon_fk1" FOREIGN KEY ("polygon_region_id") REFERENCES "polygon_regions"("polygon_region_id");
 
 
 
