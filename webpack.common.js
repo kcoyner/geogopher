@@ -2,9 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 const extractSass = new ExtractTextPlugin({
   filename: "styles.css"
-})
+});
 
 module.exports = {
   entry: ['./src/App.jsx', './src/scss/main.scss'],
@@ -49,6 +50,13 @@ module.exports = {
     ]
   },
   plugins: [
+      new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
     extractSass,
       new HtmlWebpackPlugin({
       template: path.join(path.resolve(__dirname, './'), 'index.html'),

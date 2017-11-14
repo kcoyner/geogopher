@@ -57,3 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
+# bundled JS file
+dist/bundle.js
+dist/bundle.js.gz
+
