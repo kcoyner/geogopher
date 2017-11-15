@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from './Components/Container';
+import Container from './components/Container';
 import { NavLink } from 'react-router-dom';
 
 export default class App extends React.Component {
