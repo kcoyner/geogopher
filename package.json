@@ -4,7 +4,7 @@
   "description": "learn more about the world around you",
   "main": "index.html",
   "scripts": {
-    "build": "webpack --config webpack.dev.js",
+    "build": "webpack --config webpack.testing.js",
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
