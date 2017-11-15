@@ -1,3 +1,4 @@
 #!/bin/bash
 
-rm -rf /home/ubuntu/geogopher/*
+cd /home/ubuntu/geogopher
+rm -rf * .[^.]*

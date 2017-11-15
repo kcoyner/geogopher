@@ -48,7 +48,7 @@
     "LinuxAMIID" : {
       "Description" : "Gopher Ubuntu AMI ID",
       "Type" : "String",
-      "Default": "ami-891792f3"
+      "Default": "ami-c5cd4bbf"
     }
   },
   "Resources" : {
@@ -127,13 +127,12 @@
               [
                 "#!/bin/bash\n\n",
                 "apt-get -y update\n\n",
+                "apt-get -y install nodejs\n\n",
+                "update-alternatives --install /usr/bin/node node /usr/bin/nodejs \n\n",
+                "curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -",
                 "apt-get -y install ruby\n\n",
                 "apt-get -y install wget\n\n",
                 "apt-get -y install nginx\n\n",
-                "apt-get -y install nodejs\n\n",
-                "curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -",
-                "apt-get -y install nodejs\n\n",
-                "update-alternatives --install /usr/bin/node node /usr/bin/nodejs \n\n",
                 "cd /home/ubuntu\n\n",
                 "rm -f install*\n\n",
                 "wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install\n\n",
@@ -143,6 +142,7 @@
                 "hostname >> /var/www/html/index.html\n\n",
                 "service nginx restart\n\n",
                 "cd /home/ubuntu/geogopher\n\n",
+                "apt-get -y install nodejs\n\n",
                 "npm install\n\n",
                 "npm run build\n\n",
                 "chown -R ubuntu:ubuntu /home/ubuntu/geogopher\n\n",
@@ -224,7 +224,7 @@
         },
         "HealthCheck" :  {
           "Target" : "HTTP:80/index.html",
-          "HealthyThreshold" : "3",
+          "HealthyThreshold" : "9",
           "UnhealthyThreshold" : "3",
           "Interval" : "15",
           "Timeout" : "5"
