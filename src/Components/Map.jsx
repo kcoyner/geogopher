@@ -1,6 +1,7 @@
 import React from 'react';
 
 let map;
+const google = window.google;
 
 export default class Map extends React.Component {
   constructor(props){
@@ -13,12 +14,12 @@ export default class Map extends React.Component {
   }
 
   componentDidMount(){
-    map = new window.google.maps.Map(document.getElementById('map'),{
+    map = new google.maps.Map(document.getElementById('map'),{
       zoom: 2,
       center: {lat: 30, lng: 31},
       zoomControl: true,
       zoomControlOptions: {
-        position: window.google.maps.ControlPosition.RIGHT_CENTER
+        position: google.maps.ControlPosition.RIGHT_CENTER
       },
       streetViewControl: false,
       mapTypeControl: false,

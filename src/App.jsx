@@ -9,7 +9,7 @@ export default class App extends React.Component {
       <div>
         <nav>
             <NavLink exact to="/" > home </NavLink>
-            <NavLink to="/map" > map </NavLink>
+            <NavLink to="/map"> map </NavLink>
         </nav>
         <Container></Container>
       </div>
