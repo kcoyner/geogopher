@@ -61,3 +61,4 @@ typings/
 dist/bundle.js
 dist/bundle.js.gz
 
+.envrc

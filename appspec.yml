@@ -5,18 +5,15 @@ files:
     destination: /home/ubuntu/geogopher
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies.sh
-      timeout: 300
-      runas: root
+    - location: scripts/stop_server.sh
+    - location: scripts/delete_old_files.sh
   AfterInstall:
-    - location: scripts/change_permissions.sh
-      timeout: 300
-      runas: root
+    - location: scripts/sleep.sh
   ApplicationStart:
     - location: scripts/start_server.sh
-      timeout: 300
+      timeout: 400
       runas: root
   ApplicationStop:
     - location: scripts/stop_server.sh
-      timeout: 300
+      timeout: 45
       runas: root
