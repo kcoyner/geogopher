@@ -26,6 +26,7 @@
   "homepage": "https://github.com/geogopher/geogopher#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "path": "^0.12.7",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",

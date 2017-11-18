@@ -1,3 +1,4 @@
+/*global window.google*/
 import React from 'react';
 
 let map;

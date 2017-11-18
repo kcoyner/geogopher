@@ -8,8 +8,8 @@ class Container extends React.Component {
     render() {
       return (
         <main>
-            <Route exact path="/" component={ Home }/>
-            <Route path="/map" component={ Map }/>
+          <Route path="/map" component={Map}/>
+          <Route exact path="/" component={Home}/>
         </main>
       );
     }
