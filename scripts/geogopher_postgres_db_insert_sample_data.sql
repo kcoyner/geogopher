@@ -4,7 +4,6 @@ INSERT INTO polygon_types (polygon_type_id,	polygon_type_name) VALUES (2, "capit
 INSERT INTO polygon_types (polygon_type_id,	polygon_type_name) VALUES (3, "state/province");
 INSERT INTO polygon_types (polygon_type_id,	polygon_type_name) VALUES (4, "neighborhood");
 
-
 INSERT INTO polygon_regions (polygon_region_id,	polygon_region_name) VALUES (1, "North America");
 INSERT INTO polygon_regions (polygon_region_id,	polygon_region_name) VALUES (2, "South America");
 INSERT INTO polygon_regions (polygon_region_id,	polygon_region_name) VALUES (3, "Europe");
@@ -42,4 +41,3 @@ INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_
 INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (2 ,4 , 2, 2, '1:30', '2017-11-10 10:23:54+02', 1, 1, '1.127.34.56');
 INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (3 ,3 , 3, 3, '12:54', '2017-11-09 10:23:54+02', 1, 1, '1.127.34.56');
 INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (4 ,1 , 1, 4, '23:13', '2017-11-08 10:23:54+02', 1, 1, '1.127.34.56');
-
