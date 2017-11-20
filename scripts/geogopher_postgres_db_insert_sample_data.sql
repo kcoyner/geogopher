@@ -41,3 +41,4 @@ INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_
 INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (2 ,4 , 2, 2, '1:30', '2017-11-10 10:23:54+02', 1, 1, '1.127.34.56');
 INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (3 ,3 , 3, 3, '12:54', '2017-11-09 10:23:54+02', 1, 1, '1.127.34.56');
 INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (4 ,1 , 1, 4, '23:13', '2017-11-08 10:23:54+02', 1, 1, '1.127.34.56');
+
