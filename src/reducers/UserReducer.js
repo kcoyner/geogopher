@@ -9,6 +9,7 @@ export default function reducer(
           ...state,
           userGameSelected: action.payload.userGameSelected
         }
+      }
       case 'SET_USER_NAME': {
         return {
           ...state,
