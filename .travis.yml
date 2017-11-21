@@ -38,7 +38,6 @@ deploy:
   deployment_group: geoGopherAppTestingGroup
   region: us-east-1
   on: *2
-
 - provider: s3
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
