@@ -21,6 +21,7 @@ deploy:
   skip_cleanup: true
   on: &2
     repo: kcoyner/geogopher
+    branch: travisTuning
   bucket: gopher-codedeploy
   region: us-east-1
 - provider: codedeploy
