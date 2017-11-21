@@ -18,12 +18,13 @@ deploy:
   on: &2
     repo: kcoyner/geogopher
     branch: travisTuning
-  bucket: gopher-codedeploy/testing
+  bucket: gopher-codedeploy
+  upload-dir: testing
   region: us-east-1
 - provider: codedeploy
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
-  bucket: gopher-codedeploy/testing
+  bucket: gopher-codedeploy
   key: latestTravis.zip
   bundle_type: zip
   application: geogopherApp
