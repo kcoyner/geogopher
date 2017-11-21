@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.testing.js",
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
-    "test": "webpack --config webpack.testing.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.2.1",
     "node-sass": "^4.6.0",
     "nodemon": "^1.12.1",
     "sass-loader": "^6.0.6",
