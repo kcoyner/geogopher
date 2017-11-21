@@ -17,7 +17,7 @@ deploy:
   skip_cleanup: true
   on: &2
     repo: kcoyner/geogopher
-    branch: travisTuning
+    all_branches: true
   bucket: gopher-codedeploy
   upload-dir: testing
   region: us-east-1
@@ -31,4 +31,24 @@ deploy:
   deployment_group: geogopherAppGroup
   region: us-east-1
   on: *2
-
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  local_dir: s3_upload
+  skip_cleanup: true
+  on: &3
+    repo: geogopher/geogopher
+    branch: master
+  bucket: gopher-codedeploy
+  upload-dir: production
+  region: us-east-1
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: gopher-codedeploy
+  key: latestTravis.zip
+  bundle_type: zip
+  application: geogopherApp
+  deployment_group: geogopherAppGroup
+  region: us-east-1
+  on: *3
