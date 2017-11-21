@@ -34,4 +34,3 @@ deploy:
   deployment_group: geogopherAppGroup
   region: us-east-1
   on: *2
-
