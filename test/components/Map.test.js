@@ -33,6 +33,5 @@ describe('the map', () => {
   it('has title Geogophers', () => {
     expect.stringContaining('Geogophers');
   });
-
 });
 

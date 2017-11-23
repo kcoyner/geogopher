@@ -31,5 +31,3 @@ describe('The games list', () => {
   });
 
 });
-
-
