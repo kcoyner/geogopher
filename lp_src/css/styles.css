@@ -1,0 +1,49 @@
+.bg-primary-custom{
+  background-color: white;
+  color: black;
+}
+
+span.navbar-brand.mb-0.h1{
+  font-family: 'Ubuntu Mono', monospace;
+  font-weight: bolder;
+  font-size: 2em;
+}
+
+.start{
+  background-color: green;
+}
+
+	#pinContainer {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	.panel {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+	}
+	.panel.blue {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+    background-color: blue;
+	}
+	.panel.green {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+    background-color: green;
+	}
+	.panel.turqouise {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+    background-color: turquoise;
+	}
+	.panel.bordeaux {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+    background-color: indianred;
+	}
