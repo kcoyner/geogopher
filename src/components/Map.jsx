@@ -34,7 +34,7 @@ export default class Map extends React.Component {
         }
       ]
     });
-    
+
     map.data.loadGeoJson(
       'https://www.jasonbase.com/things/yKxG.json');
     map.data.setStyle({
