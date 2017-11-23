@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the map home link matches snapshot 1`] = `
+<a
+  href="/"
+  onClick={[Function]}
+/>
+`;
+
+exports[`the map map link matches snapshot 1`] = `
+<a
+  href="/map"
+  onClick={[Function]}
+/>
+`;
