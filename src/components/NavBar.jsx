@@ -5,15 +5,12 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
-
+      <div className="navbar">
         <nav>
             <NavLink exact to="/" > home </NavLink>
             <NavLink to="/map"> map </NavLink>
         </nav>
-
       </div>
-
     )
   }
 }
