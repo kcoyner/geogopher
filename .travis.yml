@@ -34,8 +34,8 @@ deploy:
   bucket: gopher-codedeploy
   key: latestTravis.zip
   bundle_type: zip
-  application: geogopherApp
-  deployment_group: geogopherAppGroup
+  application: geogopherProd
+  deployment_group: geogopherProdGroup
   region: us-east-1
   on: *3
 - provider: s3
@@ -55,8 +55,8 @@ deploy:
   bucket: gopher-codedeploy
   key: latestTravis.zip
   bundle_type: zip
-  application: geoGopherAppTesting
-  deployment_group: geoGopherAppTestingGroup
+  application: geogopherTesting
+  deployment_group: geogopherTestingGroup
   region: us-east-1
   on: *2
 
