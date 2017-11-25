@@ -13,7 +13,7 @@ hooks:
       runas: root
   ApplicationStart:
     - location: scripts/start_server.sh
-      timeout: 40
+      timeout: 90
       runas: root
   ApplicationStop:
     - location: scripts/stop_server.sh
