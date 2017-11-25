@@ -26,7 +26,7 @@ rm -f /etc/nginx/sites-available/default
 
 cd /etc/nginx/sites-available
 
-wget -r https://s3.amazonaws.com/gopher-codedeploy/nginx-server.conf
+wget https://s3.amazonaws.com/gopher-codedeploy/nginx-server.conf
 
 mv /etc/nginx/sites-available/nginx-server.conf /etc/nginx/sites-available/default
 
@@ -39,6 +39,8 @@ hostname >> /var/www/html/index.html
 cd /home/ubuntu/geogopher
 
 npm install
+
+npm rebuild node-sass --force
 
 npm run build
 
