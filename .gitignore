@@ -61,5 +61,9 @@ typings/
 dist/bundle.js
 dist/bundle.js.gz
 
+# for use with direnv for setting environment vars.  see https://github.com/direnv/direnv
 .envrc
+
+# just a holding folder for various things that should not be revealed
 credentials/
+

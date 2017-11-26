@@ -5,6 +5,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const app = express();
 const config = require('../webpack.dev.js');
+const db = require('../db/config');
 const compiler = webpack(config);
 
 const apiRouter = express.Router();
@@ -29,7 +30,5 @@ apiRouter.route('/map')
   .get((req, res) => {
     res.send('hello')
   })
-
-
 
 
