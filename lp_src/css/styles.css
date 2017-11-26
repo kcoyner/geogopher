@@ -1,0 +1,126 @@
+.bg-primary-custom{
+  background-color: black;
+  color: white;
+}
+
+.container-fluid{
+  padding: 0px;
+  height: 100%;
+}
+
+.text-container{
+  text-align: center;
+}
+
+.texts{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+h1.tlt{
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  margin-top: 200px;
+}
+
+.signup-title > h1{
+  text-align: center;
+  font-family: 'Ubuntu Mono', monospace;
+  font-weight: bolder;
+  font-size: 4.5em;
+  line-height: 1em;
+  color: white;
+}
+
+.signup-title > h4{
+  text-align: center;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  font-size: 2em;
+  line-height: 1em;
+  color: white;
+  padding-bottom: 50px;
+}
+
+.container-bg{
+  transition: background-image 1s ease-in-out;
+  background-image:url("../assets/bg-earth.png");
+}
+
+
+
+span.navbar-brand.mb-0.h1{
+  font-family: 'Ubuntu Mono', monospace;
+  font-weight: bolder;
+  font-size: 2em;
+}
+
+.form-group > input{
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 1px;
+}
+
+.form-group > input:focus{
+  color: white;
+  background-color: black;
+  border: 1px solid transparent;
+  -moz-border-image: -moz-linear-gradient(top, aqua 0%, chartreuse 100%);
+  -webkit-border-image: -webkit-linear-gradient(top, aqua 0%, chartreuse 100%);
+  border-image: linear-gradient(to bottom, aqua 0%, chartreuse 100%);
+  border-image-slice: 1;
+  border-radius: 1px;
+  border-radius: 1px;
+}
+
+.btn.btn-xl{
+  width: 200px;
+  background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 1px;
+  margin-top: 20px;
+}
+
+.btn.btn-xl:hover{
+  width: 200px;
+  color: white;
+  border: 1px solid transparent;
+  -moz-border-image: -moz-linear-gradient(top, aqua 0%, chartreuse 100%);
+  -webkit-border-image: -webkit-linear-gradient(top, aqua 0%, chartreuse 100%);
+  border-image: linear-gradient(to bottom, aqua 0%, chartreuse 100%);
+  border-image-slice: 1;
+  border-radius: 1px;
+}
+
+.form-display{
+  display: none;
+
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:-moz-placeholder { /* Firefox 18- */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
