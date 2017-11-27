@@ -26,6 +26,10 @@ app.listen(1337, function () {
 
 app.use('/api', apiRouter);
 
+db.users.findAll().then(users => {
+  console.log('users: ', users);
+})
+
 apiRouter.route('/map')
   .get((req, res) => {
     res.send('hello')

@@ -6,7 +6,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Polygon_regions', {
+    return sequelize.define('polygon_regions', {
       polygon_region_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

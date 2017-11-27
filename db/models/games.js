@@ -6,7 +6,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Games', {
+    return sequelize.define('games', {
       game_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
