@@ -1,7 +1,7 @@
 import React from 'react';
 
 class GamesList extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
   }
@@ -10,10 +10,10 @@ class GamesList extends React.Component {
     return (
       <div>
         <h1>GamesList</h1>
-        {/* GamesListEntries will go here */}
+        { /* GamesListEntries will go here */ }
       </div>
     );
   }
-};
+}
 
 export default GamesList;

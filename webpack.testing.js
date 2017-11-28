@@ -11,8 +11,7 @@ module.exports = merge(common, {
   watch: false,
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './'
-  ,
+    contentBase: './',
   },
   plugins: [
     new webpack.DefinePlugin({

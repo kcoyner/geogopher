@@ -4,7 +4,7 @@ import React from 'react';
 let map;
 
 export default class Map extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       inputValue: ''
@@ -13,10 +13,13 @@ export default class Map extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount(){
-    map = new window.google.maps.Map(document.getElementById('map'),{
+  componentDidMount() {
+    map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: 2,
-      center: {lat: 30, lng: 31},
+      center: {
+        lat: 30,
+        lng: 31
+      },
       zoomControl: true,
       zoomControlOptions: {
         position: window.google.maps.ControlPosition.RIGHT_CENTER
@@ -29,7 +32,9 @@ export default class Map extends React.Component {
           featureType: "all",
           elementType: "labels",
           stylers: [
-            { visibility: "off" }
+            {
+              visibility: "off"
+            }
           ]
         }
       ]
@@ -43,30 +48,34 @@ export default class Map extends React.Component {
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     let ctx = this;
-    map.data.forEach(function(feature){
+    map.data.forEach(function(feature) {
       if (feature.getProperty('Name') === ctx.state.inputValue) {
-        map.data.overrideStyle(feature, {fillColor: 'green'})
+        map.data.overrideStyle(feature, {
+          fillColor: 'green'
+        })
       }
-      })
-    }
+    })
+  }
 
-    onInputChange(e){
-      this.setState({inputValue:e.target.value})
-    }
+  onInputChange(e) {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
 
   render() {
     return (
-      <div className="container" style={{height: `100%`}}>
+      <div className="container" style={ { height: `100%` } }>
         <div className="page-header">
-            <h1>Geogophers Test</h1>
+          <h1>Geogophers Test</h1>
         </div>
-        <br></br>&nbsp;
-        <input onChange={this.onInputChange} value={this.state.inputValue}></input>
-        <button onClick={this.onSubmit}>Submit</button>
-          <div className="maps" id="map"></div>
+        <br></br>
+        <input onChange={ this.onInputChange } value={ this.state.inputValue }></input>
+        <button onClick={ this.onSubmit }>Submit</button>
+        <div className="maps" id="map"></div>
       </div>
-    );
+      );
   }
 }
