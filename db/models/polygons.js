@@ -8,7 +8,7 @@ const Polygon_types = require('./polygon_types');
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('Polygons', {
+  return sequelize.define('polygons', {
     polygon_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -45,4 +45,3 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 };
-

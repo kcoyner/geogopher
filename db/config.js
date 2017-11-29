@@ -3,10 +3,12 @@
  */
 
 const Sequelize = require('sequelize');
+const fs = require('fs');
+const path = require('path');
 
 const DBPASSWD = process.env.DBPASSWD;
 
-const db = new Sequelize('geogopherdb', 'webAppLogin', DBPASSWD, {
+const sequelize = new Sequelize('geogopherdb', 'webAppLogin', DBPASSWD, {
   host: 'geogophers-postgresql-db.c8nqtytgojtc.us-east-1.rds.amazonaws.com',
   dialect: 'postgres',
   pool: {
@@ -15,25 +17,31 @@ const db = new Sequelize('geogopherdb', 'webAppLogin', DBPASSWD, {
     acquire: 30000,
     idle: 10000
   },
-  operatorsAliases: false
+  operatorsAliases: false,
+  define: {
+    charset: 'utf8',
+    timestamps: false
+  }
 });
 
-db.authenticate()
-  .then(() => {
-    console.log('AWS Postgresql connection has been established successfully, 😎 listening on 5432')
+var db = {};
+
+fs.readdirSync(__dirname + '/models')
+  .filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== 'index.js');
   })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+  .forEach(function(file) {
+    var model = sequelize['import'](path.join(__dirname + '/models', file));
+    db[model.name] = model;
   });
 
-const Game_difficulties = db.import(__dirname + "/models/game_difficulties");
-const Game_types = db.import(__dirname + "/models/game_types");
-const Games = db.import(__dirname + "/models/games");
-const Polygon_types = db.import(__dirname + "/models/polygon_types");
-const Polygon_regions = db.import(__dirname + "/models/polygon_regions");
-const Polygons = db.import(__dirname + "/models/polygons");
-const Users = db.import(__dirname + "/models/users");
-const Scores = db.import(__dirname + "/models/scores");
+Object.keys(db).forEach(function(modelName) {
+  if ('associate' in db[modelName]) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;
-

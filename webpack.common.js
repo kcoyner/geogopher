@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractSass = new ExtractTextPlugin({
-  filename: "styles.css"
+  filename: 'styles.css'
 });
 
 module.exports = {
@@ -14,47 +14,43 @@ module.exports = {
     publicPath: '/'
   },
   module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        options: {
-          presets: ['env', 'react', 'stage-2']
-        }
-      },
-      {
-        test: /\.scss$/,
-        use: extractSass.extract({
-          use: [{
-            loader: 'css-loader'
-          },{
-            loader: 'sass-loader'
-          }],
-          fallback: 'style-loader'
-        }),
-      },
-      {
-        test: /\.css?/,
-        loader: ['style-loader',
-                'css-loader',
-                'sass-loader']
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          'file-loader',
-        ],
-      },
-    ]
+    rules: [{
+      test: /\.(js|jsx)$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      options: {
+        presets: ['env', 'react', 'stage-2']
+      }
+    }, {
+      test: /\.scss$/,
+      use: extractSass.extract({
+        use: [{
+          loader: 'css-loader'
+        }, {
+          loader: 'sass-loader'
+        }],
+        fallback: 'style-loader'
+      }),
+    }, {
+      test: /\.css?/,
+      loader: ['style-loader',
+        'css-loader',
+        'sass-loader'
+      ]
+    }, {
+      test: /\.(png|jpg|gif)$/,
+      use: [
+        'file-loader',
+      ],
+    }, ]
   },
   plugins: [
     extractSass,
-      new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: path.join(path.resolve(__dirname, './'), 'index.html'),
     })
   ],
   resolve: {
-    extensions: ['.js','.jsx'],
+    extensions: ['.js', '.jsx'],
   }
 };
