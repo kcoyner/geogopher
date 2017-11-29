@@ -22,6 +22,15 @@ module.exports = {
         presets: ['env', 'react', 'stage-2']
       }
     }, {
+      test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 100000,
+        },
+      },
+    }, 
+    {
       test: /\.scss$/,
       use: extractSass.extract({
         use: [{
