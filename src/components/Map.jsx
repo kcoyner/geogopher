@@ -1,5 +1,6 @@
 /*global window.google*/
 import React from 'react';
+import { Button } from 'semantic-ui-react'
 
 let map;
 
@@ -73,7 +74,9 @@ export default class Map extends React.Component {
         </div>
         <br></br>
         <input onChange={ this.onInputChange } value={ this.state.inputValue }></input>
-        <button onClick={ this.onSubmit }>Submit</button>
+
+        <Button onClick={ this.onSubmit }>Submit</Button>
+
         <div className="maps" id="map"></div>
       </div>
       );
