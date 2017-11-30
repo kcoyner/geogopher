@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import Signup from '../../src/components/Signup';
+import RegisterPage from '../../src/components/Register';
 
 import renderer from 'react-test-renderer';
 import { Link } from 'react-router-dom';
@@ -14,11 +14,11 @@ global.requestAnimationFrme = function(callback) {
   setTimeout(callback, 0);
 };
 
-describe('the signup', () => {
+describe('the register', () => {
 
-  it('renders a Signup component', () => {
+  it('renders a Register component', () => {
     const signupRenderer = createRenderer();
-    signupRenderer.render(<Signup/>);
+    signupRenderer.render(<RegisterPage/>);
     let s = signupRenderer.getRenderOutput();
     expect(s.type).toBe('div');
   });

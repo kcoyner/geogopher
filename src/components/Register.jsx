@@ -1,7 +1,10 @@
 import React from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-class Signup extends React.Component {
+import { userActions } from '../actions';
+
+class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,16 +38,15 @@ class Signup extends React.Component {
     const { user } = this.state;
     const { dispatch } = this.props;
     if (user.firstName && user.lastName && user.username && user.password && user.email) {
-        console.log(user);
-        // dispatch(userActions.register(user));
+        dispatch(userActions.register(user));
     }
   }
 
   render() {
     return (
       <div>
-        <h1>Sign up</h1>
-          <Form onChange={this.handleChange} onSubmit={this.handleSubmit}>
+        <h1>Register</h1>
+          <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
             <Form.Field>
               <label>First Name</label>
               <input name='firstName' placeholder='First Name' required='true'/>
@@ -72,4 +74,14 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default RegisterPage;
+
+// function mapStateToProps(state) {
+//   const { registering } = state.registration;
+//   return {
+//       registering
+//   };
+// }
+
+// const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
+// export { connectedRegisterPage as RegisterPage };

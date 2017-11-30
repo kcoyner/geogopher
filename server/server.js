@@ -15,6 +15,13 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(express.static('../dist'));
+app.use('/api', apiRouter);
+
+// Declare api routes BEFORE * route
+apiRouter.route('/user')
+.post((req, res) => {
+  res.send('hello');
+});
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
@@ -24,13 +31,6 @@ app.listen(1337, function() {
   console.log('😎 listening on 1337');
 });
 
-app.use('/api', apiRouter);
-
-db.users.findAll().then(users => {
-  console.log('users: ', users);
-});
-
-apiRouter.route('/map')
-  .get((req, res) => {
-    res.send('hello');
-  });
+// db.users.findAll().then(users => {
+//   console.log('users: ', users);
+// });

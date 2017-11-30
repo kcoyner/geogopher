@@ -2,7 +2,7 @@
 
 exports[`the login signup link matches snapshot 1`] = `
 <a
-  href="/signup"
+  href="/register"
   onClick={[Function]}
 />
 `;
