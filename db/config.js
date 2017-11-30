@@ -5,6 +5,7 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv').config();
 
 const DBPASSWD = process.env.DBPASSWD;
 

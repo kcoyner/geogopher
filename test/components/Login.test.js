@@ -23,11 +23,11 @@ describe('the login', () => {
     expect(l.type).toBe('div');
   });
 
-  it('signup link matches snapshot', () => {
+  it('register link matches snapshot', () => {
     const context = {}
     const tree = require('react-test-renderer').create(
-      <StaticRouter location="http://localhost:1337/signup" context={context}>
-        <Link to="/signup" />
+      <StaticRouter location="http://localhost:1337/register" context={context}>
+        <Link to="/register" />
       </StaticRouter>
     ).toJSON();
     expect(tree).toMatchSnapshot();
