@@ -5,10 +5,7 @@ export const userService = {
 };
 
 function register(user) {
-    axios.post('/api/user', {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
-      })
+    axios.post('/api/user', user)
       .then(function (response) {
         console.log(response);
       })

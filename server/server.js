@@ -1,6 +1,7 @@
 const express = require('express');
 const webpack = require('webpack');
 const path = require('path');
+const bodyParser = require('body-parser')
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const app = express();
@@ -10,18 +11,19 @@ const compiler = webpack(config);
 
 const apiRouter = express.Router();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
-
 app.use(express.static('../dist'));
 app.use('/api', apiRouter);
 
 // Declare api routes BEFORE * route
 apiRouter.route('/user')
-.post((req, res) => {
-  res.send('hello');
-});
+  .post((req, res) => {
+    console.log(req.body)
+  });
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
