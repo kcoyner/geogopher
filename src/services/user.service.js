@@ -7,7 +7,7 @@ export const userService = {
 function register(user) {
     axios.post('/api/user', user)
       .then(function (response) {
-        console.log(response);
+        return response;
       })
       .catch(function (error) {
         console.log(error);

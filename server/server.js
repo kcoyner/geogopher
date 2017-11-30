@@ -3,12 +3,12 @@ const webpack = require('webpack');
 const path = require('path');
 const bodyParser = require('body-parser')
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const moment = require('moment');
 
 const app = express();
 const config = require('../webpack.dev.js');
 const db = require('../db/config');
 const compiler = webpack(config);
-
 const apiRouter = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,7 +22,27 @@ app.use('/api', apiRouter);
 // Declare api routes BEFORE * route
 apiRouter.route('/user')
   .post((req, res) => {
-    console.log(req.body)
+    let date = moment();
+    // This should probably be put into some sort of helper file
+    let user = {
+      'username': req.body.username,
+      'first_name': req.body.firstName,
+      'last_name': req.body.lastName,
+      'email': req.body.email,
+      'password_hash': 'asldjasldkjas',
+      'password_salt': 'sdf98SDF98+sdf1',
+      'count_games_played': 0,
+      'is_first_login': 't',
+      'last_login': date,
+      'user_ip': '1.127.23.34',
+      'token':'4bDac45deUys'
+    };
+    db.users.create(user)
+    .then(user => {
+      console.log(user.get('email'));
+      console.log(user.get('username'));
+    })
+    res.send();
   });
 
 app.get('/*', (req, res) => {
@@ -32,7 +52,3 @@ app.get('/*', (req, res) => {
 app.listen(1337, function() {
   console.log('😎 listening on 1337');
 });
-
-// db.users.findAll().then(users => {
-//   console.log('users: ', users);
-// });
