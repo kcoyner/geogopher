@@ -5,7 +5,9 @@ const Signup = () => {
   return (
     <div>
       <h1>Sign up</h1>
-      <Input placeholder='Search...' />
+      <Input placeholder='Email' />
+      <Input placeholder='Password' />
+      <Input placeholder='Confirm Your Password' />
     </div>
   );
 };
