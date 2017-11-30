@@ -39,10 +39,8 @@ apiRouter.route('/user')
     };
     db.users.create(user)
     .then(user => {
-      console.log(user.get('email'));
-      console.log(user.get('username'));
+      res.send(user);
     })
-    res.send();
   });
 
 app.get('/*', (req, res) => {

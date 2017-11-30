@@ -11,13 +11,15 @@ function register(user) {
         userService.register(user)
             .then(
                 user => { 
-                    dispatch(success());
-                    history.push('/login');
-                    dispatch(alertActions.success('Registration successful'));
+                    console.log('User created: ', user);
+                    // dispatch(success());
+                    // history.push('/login');
+                    // dispatch(alertActions.success('Registration successful'));
                 },
                 error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                    console.log('Error registering user: ', error);
+                    // dispatch(failure(error));
+                    // dispatch(alertActions.error(error));
                 }
             );
     // };

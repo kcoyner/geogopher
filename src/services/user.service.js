@@ -5,11 +5,11 @@ export const userService = {
 };
 
 function register(user) {
-    axios.post('/api/user', user)
+    return axios.post('/api/user', user)
       .then(function (response) {
-        return response;
+          return response.data;
       })
       .catch(function (error) {
-        console.log(error);
+       return error;
       });
 }
