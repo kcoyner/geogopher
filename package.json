@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/geogopher/geogopher#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "path": "^0.12.7",
     "pg": "^7.4.0",
