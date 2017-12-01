@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import GameStart from './GamesStart';
+import GameOver from './GameOver';
 
 let map;
 
@@ -10,10 +11,12 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      gameStart: 'open'
+      gameOver: false,
     }
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleQuit = this.handleQuit.bind(this);
   }
 
   componentDidMount() {
@@ -50,7 +53,13 @@ export default class Map extends React.Component {
       strokeWeight: '0'
     });
   }
-
+  handleQuit() { 
+    this.setState({ gameOver : true });
+  }
+  handleClose(){
+    this.setState({ open: false });
+    this.props.history.push('/');
+  }
   onSubmit() {
     let ctx = this;
     map.data.forEach(function(feature) {
@@ -71,7 +80,9 @@ export default class Map extends React.Component {
   render() {
     return (
       <div className="container" style={ { height: `100%` } }>
+      <Button onClick={this.handleQuit}>Quit Game</Button>
       <GameStart/>
+      <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
         <div className="page-header">
           <h1>Geogophers Test</h1>
         </div>
