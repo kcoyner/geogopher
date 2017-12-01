@@ -1,28 +1,48 @@
 import React from 'react';
 import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import {withRouter} from "react-router-dom";
 
 class GameStart extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            open: true
+        };
+
+        this.handleStart = this.handleStart.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    handleStart() {
+        this.setState({ open: false });
+        // Function to start timer
+    }
+
+    handleClose(){
+        this.setState({ open: false });
+        this.props.history.push('/');
     }
 
     render() {
         return(
-            <Modal defaultOpen='true'>
-                <Modal.Header>Select a Photo</Modal.Header>
-                <Modal.Content image>
-                <Image wrapped size='medium' src='/assets/images/avatar/large/rachel.png' />
+            <Modal
+            open={this.state.open}
+            closeOnRootNodeClick={false}
+            onClose={this.onClose}>
+                <Modal.Header>Ready?</Modal.Header>
+                <Modal.Content>
                 <Modal.Description>
-                    <Header>Default Profile Image</Header>
-                    <p>We've found the following gravatar image associated with your e-mail address.</p>
-                    <p>Is it okay to use this photo?</p>
+                    <p>Type as many countries names as you can within the time limit</p>
                 </Modal.Description>
                 </Modal.Content>
+                <Modal.Actions>
+                    <Button onClick={this.handleClose} negative>Go Back</Button>
+                    <Button onClick={this.handleStart} positive>Let's Go!</Button>
+                </Modal.Actions>
             </Modal>
         )
     }
 }
 
-export default GameStart;
+export default withRouter(GameStart);
