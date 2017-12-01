@@ -1,6 +1,7 @@
 /*global window.google*/
 import React from 'react';
-import { Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react';
+import GameStart from './GamesStart';
 
 let map;
 
@@ -8,7 +9,8 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: ''
+      inputValue: '',
+      gameStart: 'open'
     }
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -69,6 +71,7 @@ export default class Map extends React.Component {
   render() {
     return (
       <div className="container" style={ { height: `100%` } }>
+      <GameStart/>
         <div className="page-header">
           <h1>Geogophers Test</h1>
         </div>
