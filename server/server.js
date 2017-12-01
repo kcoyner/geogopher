@@ -43,6 +43,15 @@ apiRouter.route('/user')
     })
   });
 
+apiRouter.route('/gamelist')
+  .get((req, res) => {
+    db.games.findAll()
+      .then(game => {
+      console.log(game);
+      res.send(game);
+    })
+  });
+
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
 });
