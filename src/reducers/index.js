@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import GamesReducer from './GamesReducer';
+import GamesListReducer from './GamesListReducer';
 import UserReducer from './UserReducer';
 
 export default combineReducers({
-  GamesReducer,
+  GamesListReducer,
   UserReducer
 });
