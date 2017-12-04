@@ -94,13 +94,15 @@ export default class Map extends React.Component {
   }
   keyPress(e) {
     if(e.keyCode == 13){
-             map.data.forEach(function(feature) {
-               if (feature.getProperty('primaryCountryName') === e.target.value) {
-                 map.data.overrideStyle(feature, {
-                   fillColor: 'green'
-                 })
-               }
+        let answerInputted = e.target.value;
+        this.setState({inputValue: ''});
+         map.data.forEach(function(feature) {
+           if (feature.getProperty('primaryCountryName') === answerInputted) {
+             map.data.overrideStyle(feature, {
+               fillColor: 'green'
              })
+           }
+         })
       }
   }
 
