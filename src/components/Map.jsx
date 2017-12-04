@@ -13,7 +13,7 @@ export default class Map extends React.Component {
       inputValue: '',
       gameOver: true,
       gameStart: true,
-      secondsElapsed: 60,
+      secondsElapsed: 30000,
       quit: false,
     }
     this.incrementer = null;
@@ -53,13 +53,13 @@ export default class Map extends React.Component {
     });
 
     map.data.loadGeoJson(
-      'https://www.jasonbase.com/things/yKxG.json');
+      'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json');
     map.data.setStyle({
       fillColor: 'red',
       strokeWeight: '0'
     });
   }
-  handleQuit() { 
+  handleQuit() {
     this.setState({
       quit: true,
       gameOver : true });
@@ -80,7 +80,8 @@ export default class Map extends React.Component {
   onSubmit() {
     let ctx = this;
     map.data.forEach(function(feature) {
-      if (feature.getProperty('Name') === ctx.state.inputValue) {
+      console.log(feature)
+      if (feature.getProperty('primaryCountryName') === ctx.state.inputValue) {
         map.data.overrideStyle(feature, {
           fillColor: 'green'
         })
@@ -101,22 +102,24 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <div className="container" style={ { height: `100%` } }>
-      <h1>{this.state.secondsElapsed}</h1>
-      {this.isEnd()}
-      <Button onClick={this.handleQuit}>Quit Game</Button>
-      {
-        this.state.quit ?
-        <GameOver onClose={ this.handleClose } open={this.state.gameOver}/> :
-          null
-      }
-      <GameStart onClose={ this.handleClose } onStart={this.handleStart} open={this.state.gameStart}/>
-        <div className="page-header">
-          <h1>Geogophers Test</h1>
-        </div>
-        <br></br>
-        <input onChange={ this.onInputChange } value={ this.state.inputValue }></input>
-        <Button onClick={ this.onSubmit }>Submit</Button>
+      <div className="container">
+        <div className="game-controls">
+        <h1>{this.state.secondsElapsed}</h1>
+        {this.isEnd()}
+        <Button onClick={this.handleQuit}>Quit Game</Button>
+        {
+          this.state.quit ?
+          <GameOver onClose={ this.handleClose } open={this.state.gameOver}/> :
+            null
+        }
+        <GameStart onClose={ this.handleClose } onStart={this.handleStart} open={this.state.gameStart}/>
+          <div className="page-header">
+            <h1>Geogophers Test</h1>
+          </div>
+          <br></br>
+          <input onChange={ this.onInputChange } value={ this.state.inputValue }></input>
+          <Button onClick={ this.onSubmit }>Submit</Button>
+      </div>
         <div className="maps" id="map"></div>
       </div>
       );
