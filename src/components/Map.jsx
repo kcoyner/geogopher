@@ -23,6 +23,7 @@ export default class Map extends React.Component {
     this.handleStart = this.handleStart.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
     this.isEnd = this.isEnd.bind(this);
+    this.keyPress = this.keyPress.bind(this);
   }
 
   componentDidMount() {
@@ -99,6 +100,17 @@ export default class Map extends React.Component {
       return <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
     }
   }
+  keyPress(e) {
+    if(e.keyCode == 13){
+             map.data.forEach(function(feature) {
+               if (feature.getProperty('primaryCountryName') === e.target.value) {
+                 map.data.overrideStyle(feature, {
+                   fillColor: 'green'
+                 })
+               }
+             })
+      }
+  }
 
   render() {
     return (
@@ -117,7 +129,7 @@ export default class Map extends React.Component {
             <h1>Geogophers Test</h1>
           </div>
           <br></br>
-          <input onChange={ this.onInputChange } value={ this.state.inputValue }></input>
+          <input onChange={ this.onInputChange } onKeyDown={this.keyPress} value={ this.state.inputValue }></input>
           <Button onClick={ this.onSubmit }>Submit</Button>
       </div>
         <div className="maps" id="map"></div>
