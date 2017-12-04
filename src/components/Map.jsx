@@ -18,7 +18,6 @@ export default class Map extends React.Component {
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
@@ -59,6 +58,8 @@ export default class Map extends React.Component {
       fillColor: 'red',
       strokeWeight: '0'
     });
+
+    this.nameInput.focus();
   }
   handleQuit() {
     this.setState({
@@ -67,6 +68,7 @@ export default class Map extends React.Component {
     clearInterval(this.incrementer);
   }
   handleStart() {
+        this.nameInput.focus();
         this.setState({ gameStart: false });
         this.incrementer = setInterval( () =>
         this.setState({
@@ -78,17 +80,7 @@ export default class Map extends React.Component {
     this.setState({ open: false });
     this.props.history.push('/');
   }
-  onSubmit() {
-    let ctx = this;
-    map.data.forEach(function(feature) {
-      console.log(feature)
-      if (feature.getProperty('primaryCountryName') === ctx.state.inputValue) {
-        map.data.overrideStyle(feature, {
-          fillColor: 'green'
-        })
-      }
-    })
-  }
+
   onInputChange(e) {
     this.setState({
       inputValue: e.target.value
@@ -124,13 +116,25 @@ export default class Map extends React.Component {
           <GameOver onClose={ this.handleClose } open={this.state.gameOver}/> :
             null
         }
-        <GameStart onClose={ this.handleClose } onStart={this.handleStart} open={this.state.gameStart}/>
+          <GameStart
+            onClose={ this.handleClose }
+            onStart={this.handleStart}
+            open={this.state.gameStart}
+          />
+
           <div className="page-header">
             <h1>Geogophers Test</h1>
           </div>
+
           <br></br>
-          <input onChange={ this.onInputChange } onKeyDown={this.keyPress} value={ this.state.inputValue }></input>
-          <Button onClick={ this.onSubmit }>Submit</Button>
+
+          <input
+            ref={(input) => { this.nameInput = input; }}
+            onChange={ this.onInputChange }
+            onKeyDown={this.keyPress}
+            value={ this.state.inputValue }>
+          </input>
+
       </div>
         <div className="maps" id="map"></div>
       </div>
