@@ -3,33 +3,28 @@ import { Button, Header, Image, Modal } from 'semantic-ui-react';
 import {withRouter} from "react-router-dom";
 
 class GameStart extends React.Component {
-    constructor(props) {
-        super(props);
+    // constructor(props) {
+    //     super(props);
 
-        this.state = {
-            open: true
-        };
+    //     this.handleStart = this.handleStart.bind(this);
+    //     this.handleClose = this.handleClose.bind(this);
+    // }
 
-        this.handleStart = this.handleStart.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-    }
+    // handleStart() {
+    //     this.setState({ open: false });
+    //     // Function to start timer
+    // }
 
-    handleStart() {
-        this.setState({ open: false });
-        // Function to start timer
-    }
-
-    handleClose(){
-        this.setState({ open: false });
-        this.props.history.push('/');
-    }
+    // handleClose(){
+    //     this.setState({ open: false });
+    //     this.props.history.push('/');
+    // }
 
     render() {
         return(
             <Modal
-            open={this.state.open}
-            closeOnRootNodeClick={false}
-            onClose={this.onClose}>
+            open={this.props.open}
+            closeOnRootNodeClick={false}>
                 <Modal.Header>Ready?</Modal.Header>
                 <Modal.Content>
                 <Modal.Description>
@@ -37,8 +32,8 @@ class GameStart extends React.Component {
                 </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button onClick={this.handleClose} negative>Go Back</Button>
-                    <Button onClick={this.handleStart} positive>Let's Go!</Button>
+                    <Button onClick={this.props.onClose} negative>Go Back</Button>
+                    <Button onClick={this.props.onStart} positive>Let's Go!</Button>
                 </Modal.Actions>
             </Modal>
         )
