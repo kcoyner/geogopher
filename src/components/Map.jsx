@@ -11,12 +11,18 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      gameOver: false,
+      gameOver: true,
+      gameStart: true,
+      secondsElapsed: 60,
+      quit: false,
     }
+    this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleStart = this.handleStart.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
+    this.isEnd = this.isEnd.bind(this);
   }
 
   componentDidMount() {
@@ -54,8 +60,19 @@ export default class Map extends React.Component {
     });
   }
   handleQuit() { 
-    this.setState({ gameOver : true });
+    this.setState({
+      quit: true,
+      gameOver : true });
+    clearInterval(this.incrementer);
   }
+  handleStart() {
+        this.setState({ gameStart: false });
+        this.incrementer = setInterval( () =>
+        this.setState({
+          secondsElapsed: this.state.secondsElapsed - 1
+        })
+      , 1000);
+    }
   handleClose(){
     this.setState({ open: false });
     this.props.history.push('/');
@@ -70,27 +87,36 @@ export default class Map extends React.Component {
       }
     })
   }
-
   onInputChange(e) {
     this.setState({
       inputValue: e.target.value
     })
   }
+  isEnd() {
+    if(this.state.secondsElapsed === 0) {
+      clearInterval(this.incrementer);
+      return <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
+    }
+  }
 
   render() {
     return (
       <div className="container" style={ { height: `100%` } }>
+      <h1>{this.state.secondsElapsed}</h1>
+      {this.isEnd()}
       <Button onClick={this.handleQuit}>Quit Game</Button>
-      <GameStart/>
-      <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
+      {
+        this.state.quit ?
+        <GameOver onClose={ this.handleClose } open={this.state.gameOver}/> :
+          null
+      }
+      <GameStart onClose={ this.handleClose } onStart={this.handleStart} open={this.state.gameStart}/>
         <div className="page-header">
           <h1>Geogophers Test</h1>
         </div>
         <br></br>
         <input onChange={ this.onInputChange } value={ this.state.inputValue }></input>
-
         <Button onClick={ this.onSubmit }>Submit</Button>
-
         <div className="maps" id="map"></div>
       </div>
       );
