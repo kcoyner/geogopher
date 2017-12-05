@@ -19,7 +19,8 @@ module.exports = {
       loader: 'babel-loader',
       exclude: /node_modules/,
       options: {
-        presets: ['env', 'react', 'stage-2']
+        presets: ['env', 'react', 'stage-2'],
+        plugins: ['transform-decorators-legacy']
       }
     }, {
       test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -29,7 +30,7 @@ module.exports = {
           limit: 100000,
         },
       },
-    }, 
+    },
     {
       test: /\.scss$/,
       use: extractSass.extract({
@@ -61,5 +62,8 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
+  },
+  node: {
+    fs: 'empty'
   }
 };
