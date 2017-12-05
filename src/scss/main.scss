@@ -4,7 +4,19 @@
   }
 }
 
+div.game-controls{
+  z-index: 100;
+  position: absolute;
+}
+
 .maps{
   width: 100%;
-  height: 500px;
+  height: 100vh;
+  position: absolute;
+
+}
+
+div#map{
+  top:0px;
+  z-index:0;
 }
