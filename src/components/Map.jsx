@@ -3,8 +3,17 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { initializeNewGame} from '../actions/NewGame.actions';
 
 let map;
+
+@connect((store) => {
+  return {
+    games: store.GamesListReducer.availableGames
+  }
+})
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -61,6 +70,8 @@ export default class Map extends React.Component {
       fillColor: 'red',
       strokeWeight: '0'
     });
+
+    this.props.dispatch(initializeNewGame('https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'));
 
   }
   //on quit, set change game state and clear timer
