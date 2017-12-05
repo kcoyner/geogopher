@@ -3,7 +3,7 @@
  */
 
 import axios from 'axios';
-const apiUrl = '/api/gameslist';
+const apiUrl = 'http://testing.geogopher.org/api/gameslist';
 
 export const fetchGamesList = () => {
   return (dispatch) => {
