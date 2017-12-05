@@ -26,23 +26,24 @@ class GamesList extends React.Component {
 
   render() {
     const {games} = this.props;
-    console.log((games[0]));
     return (
       <div>
         <h1>Games List</h1>
         <table className="table">
-          <tr>
-            <td>
-              { games.map((game, index) => (
-                  <div key={ index }>
-                    { game.game_name }
-                  </div>
-                )) }
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                { games.map((game, index) => (
+                    <div key={ index }>
+                      { game.game_name }
+                    </div>
+                  )) }
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
-    );
+      );
   }
 }
 
