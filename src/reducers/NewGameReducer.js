@@ -4,10 +4,16 @@ export default function reducer(state = {
   action) {
   switch (action.type) {
     case 'NEWGAME_DATA': {
-      console.log(action.payload)
+      let inputGameData = action.payload.features;
+      let outputGameData = [];
+
+      inputGameData.forEach(
+        (el) => outputGameData.push(el.properties)
+      );
+
       return {
         ...state,
-        availableGames: action.payload
+        gameData: outputGameData
       };
     }
   }
