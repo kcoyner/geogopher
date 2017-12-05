@@ -3,8 +3,17 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { initializeNewGame} from '../actions/NewGame.actions';
 
 let map;
+
+@connect((store) => {
+  return {
+    gameData: store.NewGameReducer.gameData
+  }
+})
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -62,6 +71,8 @@ export default class Map extends React.Component {
       strokeWeight: '0'
     });
 
+    this.props.dispatch(initializeNewGame('https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'));
+
   }
   //on quit, set change game state and clear timer
   handleQuit() {
@@ -101,14 +112,100 @@ export default class Map extends React.Component {
     if(e.keyCode == 13){
         let answerInputted = e.target.value;
         this.setState({inputValue: ''});
-         map.data.forEach(function(feature) {
-           if (feature.getProperty('primaryCountryName') === answerInputted) {
+        let answerSanitized;
+        //-------start basic sanitization:--------
+
+        //if text has multiple words
+        if (answerInputted.indexOf(' ') > -1) {
+          answerInputted = answerInputted.split(' ');
+          answerSanitized = answerInputted.map(function(el, idx) {
+            if (idx > 0) {
+              if (el.toLowerCase() === 'of' || el.toLowerCase() === 'the') {
+                return el
+              }
+            }
+            return el[0].toUpperCase() + el.slice(1)
+          });
+          answerSanitized = answerSanitized.join(' ');
+          console.log(answerSanitized);
+        } else if (answerInputted.length < 5) {
+        //if text is inputted as initials
+          answerSanitized = answerInputted.toUpperCase();
+          console.log(answerSanitized);
+        } else if (answerInputted.indexOf(' ') === -1) {
+          answerInputted = answerInputted.split('');
+          console.log('entered last if')
+          answerSanitized = answerInputted.map(function(el, idx) {
+            if (idx === 0) {
+              return el.toUpperCase();
+            } else {
+              return el.toLowerCase();
+            }
+          });
+          answerSanitized = answerSanitized.join('');
+          console.log(answerSanitized);
+        }
+
+        //if text has .
+        if (answerSanitized.indexOf('.') > -1) {
+          answerSanitized = answerSanitized.split('');
+          console.log(answerSanitized)
+          answerSanitized = answerSanitized.map(function(el) {
+            if (el !== '.')
+            return el.toUpperCase();
+          });
+          answerSanitized = answerSanitized.join('');
+          console.log(answerSanitized);
+        }
+
+       //loop game data (before redux implementation)
+       map.data.forEach(function(feature) {
+         //check for primary names
+         if (feature.getProperty('primaryCountryName') === answerSanitized) {
+           map.data.overrideStyle(feature, {
+             fillColor: 'green'
+           })
+         }
+         //check common names
+         if (feature.getProperty('commonCountryNames').length > 0) {
+           feature.getProperty('commonCountryNames').forEach((commonCountryName) => {
+             if (commonCountryName === answerSanitized)
+               map.data.overrideStyle(feature, {
+                 fillColor: 'green'
+               })
+           })
+         }
+         //check official name
+         if (feature.getProperty('officialCountryName') === answerSanitized) {
+            map.data.overrideStyle(feature, {
+              fillColor: 'green'
+            })
+         }
+         //check initialized names
+         if (feature.getProperty('initializedCountryNames').length > 0) {
+           feature.getProperty('initializedCountryNames').forEach((initializedCountryName) => {
+             if (initializedCountryName === answerSanitized)
              map.data.overrideStyle(feature, {
                fillColor: 'green'
              })
-           }
-         })
+           })
+         }
+         //check former names
+         if (feature.getProperty('formerCountryNames').length > 0) {
+           feature.getProperty('formerCountryNames').forEach((formerCountryName) => {
+             if (formerCountryName === answerSanitized)
+             map.data.overrideStyle(feature, {
+               fillColor: 'green'
+             })
+           })
+         }
+         //-------end basic sanitization--------
+
+        //end initial map.data.forEach
+       })
+      //end keystroke if statement
       }
+  //end keypress function
   }
 
   render() {
