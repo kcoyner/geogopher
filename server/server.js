@@ -43,12 +43,21 @@ apiRouter.route('/user')
     })
   });
 
-apiRouter.route('/gamelist')
+db.games.findAll({
+  attributes: ['game_name']
+  })
+  .then(games => {
+    // console.log(games[0].dataValues.game_name);
+  });
+
+apiRouter.route('/gameslist')
   .get((req, res) => {
-    db.games.findAll()
-      .then(game => {
-      console.log(game);
-      res.send(game);
+    db.games.findAll({
+      attributes: ['game_name']
+    })
+      .then(games => {
+      // console.log(games);
+      res.send(games);
     })
   });
 

@@ -1,14 +1,18 @@
-export default function reducer(state = {
-  availableGames: null
-}, action) {
-  switch (action.type) {
-  case 'GET_AVAILABLE_GAMES': {
-    return {
-      ...state,
-      availableGames: action.payload.availableGames
-    };
-  }
-  }
+/*
+ * src/reducers/GamesListReducer.js
+ */
 
+export default function reducer(state = {
+    availableGames: []
+  },
+  action) {
+  switch (action.type) {
+    case 'FETCH_GAMESLIST': {
+      return {
+        ...state,
+        availableGames: action.payload
+      };
+    }
+  }
   return state;
 }
