@@ -5,7 +5,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from '../../src/store'
+import store from '../../src/store';
 import GamesList from '../../src/components/GamesList';
 import { createRenderer } from 'react-test-renderer/shallow';
 
