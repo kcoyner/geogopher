@@ -1,7 +1,8 @@
 const express = require('express');
 const webpack = require('webpack');
+const cors = require('cors');
 const path = require('path');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const moment = require('moment');
 
@@ -11,6 +12,12 @@ const db = require('../db/config');
 const compiler = webpack(config);
 const apiRouter = express.Router();
 
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(webpackDevMiddleware(compiler, {
@@ -18,6 +25,13 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 app.use(express.static('../dist'));
 app.use('/api', apiRouter);
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // Declare api routes BEFORE * route
 apiRouter.route('/user')
@@ -35,7 +49,7 @@ apiRouter.route('/user')
       'is_first_login': 't',
       'last_login': date,
       'user_ip': '1.127.23.34',
-      'token':'4bDac45deUys'
+      'token': '4bDac45deUys'
     };
     db.users.create(user)
     .then(user => {
@@ -43,15 +57,15 @@ apiRouter.route('/user')
     })
   });
 
-db.games.findAll({
-  attributes: ['game_name']
-  })
-  .then(games => {
-    // console.log(games[0].dataValues.game_name);
-  });
+// db.games.findAll({
+//   attributes: ['game_name']
+//   })
+//   .then(games => {
+//     // console.log(games[0].dataValues.game_name);
+//   });
 
 apiRouter.route('/gameslist')
-  .get((req, res) => {
+  .get(cors(corsOptions), (req, res) => {
     db.games.findAll({
       attributes: ['game_name']
     })
