@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { initializeNewGame} from '../actions/NewGame.actions';
 
+
 let map;
 
 @connect((store) => {
@@ -35,6 +36,7 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
+
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: 2,
