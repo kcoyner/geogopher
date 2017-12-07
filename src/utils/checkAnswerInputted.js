@@ -9,7 +9,7 @@ export const checkAnswer = (answerInput, gameData) => {
         if (gameData[i].acceptedAnswers[j].polygonAnswered) {
           return ['answered', gameData[i].id]
         } else {
-          return ['unanswered', gameData[i].id]
+          return ['unanswered', gameData[i].index]
         }
       }
     }

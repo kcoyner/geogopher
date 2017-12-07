@@ -5,7 +5,7 @@ import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeNewGame} from '../actions/NewGame.actions';
+import { initializeNewGame, submitCorrectAnswer } from '../actions/Game.actions';
 import { sanitizeInput } from '../utils/answerSanitize';
 import { checkAnswer } from '../utils/checkAnswerInputted';
 
@@ -15,13 +15,13 @@ let map;
 
 @connect((store) => {
   return {
-    gameScore: store.NewGameReducer.gameScore,
-    startTime: store.NewGameReducer.startTime,
-    endTime: store.NewGameReducer.endTime,
-    gameData: store.NewGameReducer.gameData,
-    countPolygonsIdentified: store.NewGameReducer.countPolygonsIdentified,
-    maxCountPolygons: store.NewGameReducer.maxCountPolygons,
-    entriesMissed: store.NewGameReducer.entriesMissed,
+    startTime: store.GameReducer.startTime,
+    endTime: store.GameReducer.endTime,
+    gameData: store.GameReducer.gameData,
+    countPolygonsIdentified: store.GameReducer.countPolygonsIdentified,
+    maxCountPolygons: store.GameReducer.maxCountPolygons,
+    entriesMissed: store.GameReducer.entriesMissed,
+    totalAttempts: store.GameReducer.totalAttempts,
   }
 })
 
@@ -129,55 +129,14 @@ export default class Map extends React.Component {
         let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
         if (answerResponse[0] === 'mistake') {
           //dispatch and add to mistakes
-        } else if (answerResponse[0] === 'unanswered') {
-          map.data
-        }
+      } else if (answerResponse[0] === 'unanswered') {
+        //modify polygon fillColor
+        let polygon = map.data.getFeatureById(answerResponse[1])
+        map.data.overrideStyle(polygon, {fillColor: 'green'})
+        //dispatch to modify store
+        this.props.dispatch(submitCorrectAnswer(this.props.countPolygonsIdentified, answerResponse[1]))
+      }
 
-       //loop game data (before redux implementation)
-       map.data.forEach(function(feature) {
-         //check for primary names
-         if (feature.getProperty('primaryCountryName') === answerSanitized) {
-           map.data.overrideStyle(feature, {
-             fillColor: 'green'
-           })
-         }
-         //check common names
-         if (feature.getProperty('commonCountryNames').length > 0) {
-           feature.getProperty('commonCountryNames').forEach((commonCountryName) => {
-             if (commonCountryName === answerSanitized)
-               map.data.overrideStyle(feature, {
-                 fillColor: 'green'
-               })
-           })
-         }
-         //check official name
-         if (feature.getProperty('officialCountryName') === answerSanitized) {
-            map.data.overrideStyle(feature, {
-              fillColor: 'green'
-            })
-         }
-         //check initialized names
-         if (feature.getProperty('initializedCountryNames').length > 0) {
-           feature.getProperty('initializedCountryNames').forEach((initializedCountryName) => {
-             if (initializedCountryName === answerSanitized)
-             map.data.overrideStyle(feature, {
-               fillColor: 'green'
-             })
-           })
-         }
-         //check former names
-         if (feature.getProperty('formerCountryNames').length > 0) {
-           feature.getProperty('formerCountryNames').forEach((formerCountryName) => {
-             if (formerCountryName === answerSanitized)
-             map.data.overrideStyle(feature, {
-               fillColor: 'green'
-             })
-           })
-         }
-         //-------end basic sanitization--------
-
-        //end initial map.data.forEach
-       })
       //end keystroke if statement
       }
   //end keypress function

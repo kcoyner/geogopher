@@ -14,4 +14,12 @@ div#map {
   top: 0px;
   z-index: 0; }
 
+input.answer-input {
+  height: 30px;
+  left: 0;
+  right: 0;
+  font-size: 25px;
+  font-family: 'helvetica';
+  font-weight: bolder; }
+
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZXMuY3NzIiwic291cmNlUm9vdCI6IiJ9*/

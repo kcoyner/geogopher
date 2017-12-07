@@ -16,3 +16,13 @@ export const initializeNewGame = (apiUrl) => {
       });
   };
 };
+
+export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex) => {
+  return (dispatch) => {
+  countPolygonsIdentified = countPolygonsIdentified + 1
+  console.log(countPolygonsIdentified)
+  dispatch({ type: 'ANSWER_CORRECT',
+            payload: {countPolygonsIdentified: countPolygonsIdentified } })
+}
+
+};
