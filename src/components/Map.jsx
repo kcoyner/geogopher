@@ -67,8 +67,10 @@ export default class Map extends React.Component {
       'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json');
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
-      fillColor: 'red',
-      strokeWeight: '0'
+      fillColor: 'darkred',
+      fillOpacity: '0.8',
+      strokeColor: 'black',
+      strokeWeight: '1'
     });
 
     this.props.dispatch(initializeNewGame('https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'));
@@ -119,28 +121,16 @@ export default class Map extends React.Component {
         if (answerInputted.indexOf(' ') > -1) {
           answerInputted = answerInputted.split(' ');
           answerSanitized = answerInputted.map(function(el, idx) {
-            if (idx > 0) {
-              if (el.toLowerCase() === 'of' || el.toLowerCase() === 'the') {
-                return el
-              }
-            }
-            return el[0].toUpperCase() + el.slice(1)
+            return el.toLowerCase();
           });
           answerSanitized = answerSanitized.join(' ');
           console.log(answerSanitized);
-        } else if (answerInputted.length < 5) {
-        //if text is inputted as initials
-          answerSanitized = answerInputted.toUpperCase();
-          console.log(answerSanitized);
+        // if text is one word
         } else if (answerInputted.indexOf(' ') === -1) {
           answerInputted = answerInputted.split('');
           console.log('entered last if')
           answerSanitized = answerInputted.map(function(el, idx) {
-            if (idx === 0) {
-              return el.toUpperCase();
-            } else {
-              return el.toLowerCase();
-            }
+            return el.toLowerCase();
           });
           answerSanitized = answerSanitized.join('');
           console.log(answerSanitized);
@@ -152,7 +142,7 @@ export default class Map extends React.Component {
           console.log(answerSanitized)
           answerSanitized = answerSanitized.map(function(el) {
             if (el !== '.')
-            return el.toUpperCase();
+            return el
           });
           answerSanitized = answerSanitized.join('');
           console.log(answerSanitized);
