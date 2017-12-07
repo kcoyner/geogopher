@@ -6,13 +6,22 @@ import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { initializeNewGame} from '../actions/NewGame.actions';
+import { sanitizeInput } from '../utils/answerSanitize';
+import { checkAnswer } from '../utils/checkAnswerInputted';
+
 
 
 let map;
 
 @connect((store) => {
   return {
-    gameData: store.NewGameReducer.gameData
+    gameScore: store.NewGameReducer.gameScore,
+    startTime: store.NewGameReducer.startTime,
+    endTime: store.NewGameReducer.endTime,
+    gameData: store.NewGameReducer.gameData,
+    countPolygonsIdentified: store.NewGameReducer.countPolygonsIdentified,
+    maxCountPolygons: store.NewGameReducer.maxCountPolygons,
+    entriesMissed: store.NewGameReducer.entriesMissed,
   }
 })
 
@@ -116,38 +125,12 @@ export default class Map extends React.Component {
     if(e.keyCode == 13){
         let answerInputted = e.target.value;
         this.setState({inputValue: ''});
-        let answerSanitized;
-        //-------start basic sanitization:--------
-
-        //if text has multiple words
-        if (answerInputted.indexOf(' ') > -1) {
-          answerInputted = answerInputted.split(' ');
-          answerSanitized = answerInputted.map(function(el, idx) {
-            return el.toLowerCase();
-          });
-          answerSanitized = answerSanitized.join(' ');
-          console.log(answerSanitized);
-        // if text is one word
-        } else if (answerInputted.indexOf(' ') === -1) {
-          answerInputted = answerInputted.split('');
-          console.log('entered last if')
-          answerSanitized = answerInputted.map(function(el, idx) {
-            return el.toLowerCase();
-          });
-          answerSanitized = answerSanitized.join('');
-          console.log(answerSanitized);
-        }
-
-        //if text has .
-        if (answerSanitized.indexOf('.') > -1) {
-          answerSanitized = answerSanitized.split('');
-          console.log(answerSanitized)
-          answerSanitized = answerSanitized.map(function(el) {
-            if (el !== '.')
-            return el
-          });
-          answerSanitized = answerSanitized.join('');
-          console.log(answerSanitized);
+        let answerSanitized = sanitizeInput(answerInputted);
+        let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
+        if (answerResponse[0] === 'mistake') {
+          //dispatch and add to mistakes
+        } else if (answerResponse[0] === 'unanswered') {
+          map.data
         }
 
        //loop game data (before redux implementation)
@@ -225,6 +208,7 @@ export default class Map extends React.Component {
           <br></br>
 
           <input
+            className="answer-input"
             ref={(input) => { this.nameInput = input; }}
             onChange={ this.onInputChange }
             onKeyDown={this.keyPress}

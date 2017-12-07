@@ -21,18 +21,5 @@ export const buildGameData = (inputData) => {
     return outputCountryData;
   })
 
-  let outputGameData = {
-    gameName: null,
-    gameData: gameData,
-    gameDifficulty: null,
-    startTime: 30000, //calculate this later
-    endTime: 0,
-    timeTaken: 0,
-    maxCountPolygons: gameData.length,
-    countPolygonsIdentified: 0,
-    userName: null,
-    entriesMissed: [],
-  }
-
-  return outputGameData;
+  return gameData;
 }
