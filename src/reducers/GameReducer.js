@@ -21,12 +21,17 @@ export default function reducer(state = {
         totalAttempts: 0,
       };
 
-
     case 'ANSWER_CORRECT':
       return {
         ...state,
         gameData: action.payload.gameData,
         countPolygonsIdentified: action.payload.countPolygonsIdentified,
+      };
+
+    case 'ANSWER_INCORRECT':
+      return {
+        ...state,
+        entriesMissed: entriesMissed,
       };
 
   //end switch

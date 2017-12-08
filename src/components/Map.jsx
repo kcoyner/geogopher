@@ -5,7 +5,7 @@ import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeNewGame, submitCorrectAnswer } from '../actions/Game.actions';
+import { initializeNewGame, submitCorrectAnswer, submitMistake } from '../actions/Game.actions';
 import { sanitizeInput } from '../utils/answerSanitize';
 import { checkAnswer } from '../utils/checkAnswerInputted';
 
@@ -131,6 +131,7 @@ export default class Map extends React.Component {
         console.log(answerResponse)
         if (answerResponse[0] === 'mistake') {
           //dispatch and add to mistakes
+          this.props.dispatch(submitMistake(answerInputted, this.props.entriesMissed))
       } else if (answerResponse[0] === 'unanswered') {
         //modify polygon fillColor
         let polygon = map.data.getFeatureById(answerResponse[1])
@@ -139,7 +140,6 @@ export default class Map extends React.Component {
         //dispatch to modify store
         this.props.dispatch(submitCorrectAnswer(this.props.countPolygonsIdentified, answerResponse[1], this.props.gameData))
       }
-
       //end keystroke if statement
       }
   //end keypress function

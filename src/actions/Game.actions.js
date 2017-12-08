@@ -38,3 +38,15 @@ export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameD
   }
 
 };
+
+export const submitMistake = (answerInputted, entriesMissed) => {
+  return (dispatch) => {
+  entriesMissed.push(answerInputted)
+  dispatch({ type: 'ANSWER_INCORRECT',
+             payload: {
+               entriesMissed: entriesMissed,
+              }
+           })
+  }
+
+};
