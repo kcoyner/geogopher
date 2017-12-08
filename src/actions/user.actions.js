@@ -5,8 +5,8 @@ export const userActions = {
 };
 
 function register(user) {
-    // return dispatch => {
-    //     dispatch(request(user));
+    return dispatch => {
+        dispatch(request(user));
 
         userService.register(user)
             .then(
@@ -22,9 +22,9 @@ function register(user) {
                     // dispatch(alertActions.error(error));
                 }
             );
-    // };
+    };
 
-    // function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
+    function request(user) { return { type: 'USERS_REGISTER_REQUEST', user } }
     // function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
     // function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
