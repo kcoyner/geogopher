@@ -179,6 +179,7 @@ export default class Map extends React.Component {
       <div className="container">
         <div className="game-controls">
         <h1>{this.props.secondsElapsed}</h1>
+        <h1>Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}</h1>
         {this.isEnd()}
         <Button onClick={this.handleQuit}>Quit Game</Button>
         {
