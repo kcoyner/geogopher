@@ -39,12 +39,12 @@ export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameD
 
 };
 
-export const submitMistake = (answerInputted, entriesMissed) => {
+export const submitIncorrectEntry = (answerInputted, incorrectEntries) => {
   return (dispatch) => {
-  entriesMissed.push(answerInputted)
+  incorrectEntries.push(answerInputted)
   dispatch({ type: 'ANSWER_INCORRECT',
              payload: {
-               entriesMissed: entriesMissed,
+               incorrectEntries: incorrectEntries,
               }
            })
   }

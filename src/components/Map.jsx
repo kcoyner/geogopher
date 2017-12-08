@@ -5,7 +5,7 @@ import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeNewGame, submitCorrectAnswer, submitMistake } from '../actions/Game.actions';
+import { initializeNewGame, submitCorrectAnswer, submitIncorrectEntry } from '../actions/Game.actions';
 import { sanitizeInput } from '../utils/answerSanitize';
 import { checkAnswer } from '../utils/checkAnswerInputted';
 
@@ -20,7 +20,7 @@ let map;
     gameData: store.GameReducer.gameData,
     countPolygonsIdentified: store.GameReducer.countPolygonsIdentified,
     maxCountPolygons: store.GameReducer.maxCountPolygons,
-    entriesMissed: store.GameReducer.entriesMissed,
+    incorrectEntries: store.GameReducer.incorrectEntries,
     totalAttempts: store.GameReducer.totalAttempts,
   }
 })
@@ -127,18 +127,29 @@ export default class Map extends React.Component {
         this.setState({inputValue: ''});
         let answerSanitized = sanitizeInput(answerInputted);
         let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
-        console.log('answerResponse')
-        console.log(answerResponse)
-        if (answerResponse[0] === 'mistake') {
-          //dispatch and add to mistakes
-          this.props.dispatch(submitMistake(answerInputted, this.props.entriesMissed))
+        console.log('answerResponse');
+        console.log(answerResponse);
+        if (answerResponse[0] === 'incorrect') {
+          //dispatch and add to incorrectCountriesEntered
+          this.props.dispatch(
+            submitIncorrectEntry(
+              answerInputted,
+              this.props.incorrectEntries
+            )
+          );
       } else if (answerResponse[0] === 'unanswered') {
         //modify polygon fillColor
         let polygon = map.data.getFeatureById(answerResponse[1])
         console.log(polygon)
         map.data.overrideStyle(polygon, {fillColor: 'green'})
-        //dispatch to modify store
-        this.props.dispatch(submitCorrectAnswer(this.props.countPolygonsIdentified, answerResponse[1], this.props.gameData))
+        //dispatch to modify game data to register correct answer
+        //and increment number of polygons identified by 1
+        this.props.dispatch(
+          submitCorrectAnswer(
+            this.props.countPolygonsIdentified,
+            answerResponse[1], this.props.gameData
+          )
+        );
       }
       //end keystroke if statement
       }

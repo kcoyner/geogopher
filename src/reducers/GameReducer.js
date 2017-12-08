@@ -4,7 +4,7 @@ export default function reducer(state = {
     gameData: null,
     countPolygonsIdentified: 0,
     maxCountPolygons: 0,
-    entriesMissed: [],
+    incorrectEntries: [],
     totalAttempts: 0,
   },
   action) {
@@ -17,7 +17,7 @@ export default function reducer(state = {
         gameData: action.payload,
         countPolygonsIdentified: 0,
         maxCountPolygons: action.payload.length,
-        entriesMissed: [],
+        incorrectEntries: [],
         totalAttempts: 0,
       };
 
@@ -31,7 +31,7 @@ export default function reducer(state = {
     case 'ANSWER_INCORRECT':
       return {
         ...state,
-        entriesMissed: entriesMissed,
+        incorrectEntries: action.payload.incorrectEntries,
       };
 
   //end switch
