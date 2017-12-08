@@ -64,6 +64,18 @@ export const decrementTime = (secondsElapsed) => {
   }
 };
 
+export const incrementTotalAttempts = (totalAttempts) => {
+  return (dispatch) => {
+    totalAttempts = totalAttempts + 1;
+    dispatch({
+      type: 'INCREMENT_TOTAL_ATTEMPTS',
+      payload: {
+        totalAttempts: totalAttempts
+      }
+    });
+  }
+};
+
 export const startGame = (gameStart) => {
   return (dispatch) => {
     dispatch({

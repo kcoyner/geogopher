@@ -13,6 +13,7 @@ import {
   submitIncorrectEntry,
   decrementTime,
   startGame,
+  incrementTotalAttempts,
 } from '../actions/Game.actions';
 
 
@@ -146,19 +147,28 @@ export default class Map extends React.Component {
               this.props.incorrectEntries
             )
           );
-      } else if (answerResponse[0] === 'unanswered') {
-        //modify polygon fillColor
-        let polygon = map.data.getFeatureById(answerResponse[1])
-        map.data.overrideStyle(polygon, {fillColor: 'green'})
-        //dispatch to modify game data to register correct answer
-        //and increment number of polygons identified by 1
+        } else if (answerResponse[0] === 'unanswered') {
+          //modify polygon fillColor
+          let polygon = map.data.getFeatureById(answerResponse[1])
+          map.data.overrideStyle(polygon, {fillColor: 'green'})
+          //dispatch to modify game data to register correct answer
+          //and increment number of polygons identified by 1
+          this.props.dispatch(
+            submitCorrectAnswer(
+              this.props.countPolygonsIdentified,
+              answerResponse[1],
+              this.props.gameData
+            )
+          );
+        }
+        //increment totalAttempts
         this.props.dispatch(
-          submitCorrectAnswer(
-            this.props.countPolygonsIdentified,
-            answerResponse[1], this.props.gameData
+          incrementTotalAttempts(
+            this.props.totalAttempts
           )
         );
-      }
+
+
       //end keystroke if statement
       }
   //end keypress function

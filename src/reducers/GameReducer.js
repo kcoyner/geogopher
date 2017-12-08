@@ -1,6 +1,6 @@
 export default function reducer(state = {
       secondsElapsed: 0,
-      gameOverTimeLeft: 0,
+      gameOverTimeLeft: -1,
       userQuit: false,
       gameStart: false,
       gameOver: false,
@@ -16,7 +16,7 @@ export default function reducer(state = {
       return {
         ...state,
         secondsElapsed: 30000,
-        gameOverTimeLeft: 0,
+        gameOverTimeLeft: -1,
         userQuit: false,
         gameStart: false,
         gameOver: false,
@@ -50,6 +50,12 @@ export default function reducer(state = {
       return {
         ...state,
         secondsElapsed: action.payload.secondsElapsed,
+      };
+
+    case 'INCREMENT_TOTAL_ATTEMPTS':
+      return {
+        ...state,
+        totalAttempts: action.payload.totalAttempts,
       };
 
   //end switch
