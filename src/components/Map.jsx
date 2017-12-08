@@ -5,9 +5,15 @@ import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeNewGame, submitCorrectAnswer, submitIncorrectEntry } from '../actions/Game.actions';
 import { sanitizeInput } from '../utils/answerSanitize';
 import { checkAnswer } from '../utils/checkAnswerInputted';
+import {
+  initializeNewGame,
+  submitCorrectAnswer,
+  submitIncorrectEntry,
+  decrementTime,
+  startGame,
+} from '../actions/Game.actions';
 
 
 
@@ -15,13 +21,17 @@ let map;
 
 @connect((store) => {
   return {
-    startTime: store.GameReducer.startTime,
-    endTime: store.GameReducer.endTime,
+    secondsElapsed: store.GameReducer.secondsElapsed,
+    gameOverTimeLeft: store.GameReducer.gameOverTimeLeft,
+    userQuit: store.GameReducer.userQuit,
+    gameStart: store.GameReducer.gameStart,
+    gameOver: store.GameReducer.gameOver,
     gameData: store.GameReducer.gameData,
     countPolygonsIdentified: store.GameReducer.countPolygonsIdentified,
     maxCountPolygons: store.GameReducer.maxCountPolygons,
     incorrectEntries: store.GameReducer.incorrectEntries,
     totalAttempts: store.GameReducer.totalAttempts,
+
   }
 })
 
@@ -30,8 +40,6 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      gameOver: true,
-      gameStart: true,
       secondsElapsed: 30000,
       quit: false,
     }
@@ -96,13 +104,14 @@ export default class Map extends React.Component {
   }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
-        this.nameInput.focus();
-        this.setState({ gameStart: false });
-        this.incrementer = setInterval( () =>
-        this.setState({
-          secondsElapsed: this.state.secondsElapsed - 1
-        })
-      , 1000);
+      this.nameInput.focus();
+      this.props.dispatch(
+        startGame(this.props.gameStart)
+      );
+      this.incrementer = setInterval( () =>
+        this.props.dispatch(
+          decrementTime(this.props.secondsElapsed)
+        ), 1000);
     }
   //closes gameStart modal onClick
   handleClose(){
@@ -140,7 +149,6 @@ export default class Map extends React.Component {
       } else if (answerResponse[0] === 'unanswered') {
         //modify polygon fillColor
         let polygon = map.data.getFeatureById(answerResponse[1])
-        console.log(polygon)
         map.data.overrideStyle(polygon, {fillColor: 'green'})
         //dispatch to modify game data to register correct answer
         //and increment number of polygons identified by 1
@@ -160,18 +168,19 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
-        <h1>{this.state.secondsElapsed}</h1>
+        <h1>{this.props.secondsElapsed}</h1>
         {this.isEnd()}
         <Button onClick={this.handleQuit}>Quit Game</Button>
         {
           this.state.quit ?
-          <GameOver onClose={ this.handleClose } open={this.state.gameOver}/> :
+          <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
+          :
             null
         }
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
-            open={this.state.gameStart}
+            open={this.props.gameStart}
           />
 
           <div className="page-header">

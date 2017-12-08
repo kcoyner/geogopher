@@ -19,34 +19,56 @@ export const initializeNewGame = (apiUrl) => {
 
 export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameData) => {
   return (dispatch) => {
-  countPolygonsIdentified = countPolygonsIdentified + 1
-  gameData = gameData.map((el, idx) => {
-    if (idx === polygonIndex) {
-      el.polygonAnswered = true;
-      return el
-    } else {
-      return el
-    }
-  });
+    // incrememnt countPolygonsIdentified
+    countPolygonsIdentified = countPolygonsIdentified + 1
+    gameData = gameData.map((el, idx) => {
+      if (idx === polygonIndex) {
+        el.polygonAnswered = true;
+        return el
+      } else {
+        return el
+      }
+    });
 
-  dispatch({ type: 'ANSWER_CORRECT',
-             payload: {
-               countPolygonsIdentified: countPolygonsIdentified,
-               gameData: gameData,
-              }
-           })
+    dispatch({
+      type: 'ANSWER_CORRECT',
+      payload: {
+        countPolygonsIdentified: countPolygonsIdentified,
+        gameData: gameData,
+      }
+    });
   }
-
 };
 
 export const submitIncorrectEntry = (answerInputted, incorrectEntries) => {
   return (dispatch) => {
-  incorrectEntries.push(answerInputted)
-  dispatch({ type: 'ANSWER_INCORRECT',
-             payload: {
-               incorrectEntries: incorrectEntries,
-              }
-           })
+    incorrectEntries.push(answerInputted)
+    dispatch({
+      type: 'ANSWER_INCORRECT',
+      payload: {
+        incorrectEntries: incorrectEntries,
+      }
+    });
   }
-
 };
+
+export const decrementTime = (secondsElapsed) => {
+  return (dispatch) => {
+    secondsElapsed = secondsElapsed - 1;
+    dispatch({
+      type: 'DECREMENT_TIME',
+      payload: {
+        secondsElapsed: secondsElapsed
+      }
+    });
+  }
+};
+
+export const startGame = (gameStart) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'START_GAME',
+      payload: {gameStart: true}
+    });
+  }
+}

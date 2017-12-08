@@ -1,24 +1,36 @@
 export default function reducer(state = {
-    startTime: 0,
-    endTime: 0,
-    gameData: null,
-    countPolygonsIdentified: 0,
-    maxCountPolygons: 0,
-    incorrectEntries: [],
-    totalAttempts: 0,
+      secondsElapsed: 0,
+      gameOverTimeLeft: 0,
+      userQuit: false,
+      gameStart: false,
+      gameOver: false,
+      gameData: null,
+      countPolygonsIdentified: 0,
+      maxCountPolygons: null,
+      incorrectEntries: [],
+      totalAttempts: 0,
   },
   action) {
   switch (action.type) {
     case 'NEWGAME_DATA':
       return {
         ...state,
-        startTime: 30000,
-        endTime: 0,
+        secondsElapsed: 30000,
+        gameOverTimeLeft: 0,
+        userQuit: false,
+        gameStart: false,
+        gameOver: false,
         gameData: action.payload,
         countPolygonsIdentified: 0,
         maxCountPolygons: action.payload.length,
         incorrectEntries: [],
         totalAttempts: 0,
+      };
+
+    case 'START_GAME':
+      return {
+        ...state,
+        gameStart: action.payload.gameStart,
       };
 
     case 'ANSWER_CORRECT':
@@ -32,6 +44,12 @@ export default function reducer(state = {
       return {
         ...state,
         incorrectEntries: action.payload.incorrectEntries,
+      };
+
+    case 'DECREMENT_TIME':
+      return {
+        ...state,
+        secondsElapsed: action.payload.secondsElapsed,
       };
 
   //end switch
