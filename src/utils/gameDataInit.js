@@ -4,7 +4,7 @@ export const buildGameData = (inputData) => {
   let gameData = gameDataInput.map((el, idx) => {
     let countryData = el.properties;
     let outputCountryData = {
-      index: idx,
+      id: idx + 1,
       polygonAnswered: false,
       acceptedAnswers: [],
     }

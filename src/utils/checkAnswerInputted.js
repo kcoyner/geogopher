@@ -9,9 +9,9 @@ export const checkAnswer = (answerInput, gameData) => {
       if (answerInput === gameData[i].acceptedAnswers[j]) {
         // if the answer has already been input
         if (gameData[i].polygonAnswered) {
-          return ['answered', gameData[i].index];
+          return ['answered', gameData[i].id];
         } else {
-          return ['unanswered', gameData[i].index];
+          return ['unanswered', gameData[i].id];
         }
       }
     }
