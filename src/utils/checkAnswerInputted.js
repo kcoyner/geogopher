@@ -1,4 +1,6 @@
 export const checkAnswer = (answerInput, gameData) => {
+  console.log('answerInput')
+  console.log(answerInput)
   //loop through gamedata array
   for (var i = 0; i < gameData.length; i++) {
     //loop through accepted answers within country obj
@@ -6,8 +8,8 @@ export const checkAnswer = (answerInput, gameData) => {
       // if answer matches
       if (answerInput === gameData[i].acceptedAnswers[j]) {
         // if the answer has already been input
-        if (gameData[i].acceptedAnswers[j].polygonAnswered) {
-          return ['answered', gameData[i].id]
+        if (gameData[i].polygonAnswered) {
+          return ['answered', gameData[i].index]
         } else {
           return ['unanswered', gameData[i].index]
         }

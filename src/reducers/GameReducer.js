@@ -23,10 +23,9 @@ export default function reducer(state = {
 
 
     case 'ANSWER_CORRECT':
-    console.log(action.payload)
       return {
         ...state,
-        // gameData: action.payload,
+        gameData: action.payload.gameData,
         countPolygonsIdentified: action.payload.countPolygonsIdentified,
       };
 

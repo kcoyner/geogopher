@@ -127,14 +127,17 @@ export default class Map extends React.Component {
         this.setState({inputValue: ''});
         let answerSanitized = sanitizeInput(answerInputted);
         let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
+        console.log('answerResponse')
+        console.log(answerResponse)
         if (answerResponse[0] === 'mistake') {
           //dispatch and add to mistakes
       } else if (answerResponse[0] === 'unanswered') {
         //modify polygon fillColor
         let polygon = map.data.getFeatureById(answerResponse[1])
+        console.log(polygon)
         map.data.overrideStyle(polygon, {fillColor: 'green'})
         //dispatch to modify store
-        this.props.dispatch(submitCorrectAnswer(this.props.countPolygonsIdentified, answerResponse[1]))
+        this.props.dispatch(submitCorrectAnswer(this.props.countPolygonsIdentified, answerResponse[1], this.props.gameData))
       }
 
       //end keystroke if statement

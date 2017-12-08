@@ -17,12 +17,24 @@ export const initializeNewGame = (apiUrl) => {
   };
 };
 
-export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex) => {
+export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameData) => {
   return (dispatch) => {
   countPolygonsIdentified = countPolygonsIdentified + 1
-  console.log(countPolygonsIdentified)
+  gameData = gameData.map((el, idx) => {
+    if (idx === polygonIndex) {
+      el.polygonAnswered = true;
+      return el
+    } else {
+      return el
+    }
+  });
+
   dispatch({ type: 'ANSWER_CORRECT',
-            payload: {countPolygonsIdentified: countPolygonsIdentified } })
-}
+             payload: {
+               countPolygonsIdentified: countPolygonsIdentified,
+               gameData: gameData,
+              }
+           })
+  }
 
 };
