@@ -186,10 +186,10 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
-        <h1>{this.props.secondsElapsed}</h1>
-        <h1>Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}</h1>
+        <h1 className="time-elapsed">{this.props.secondsElapsed}</h1>
+        <h1 className="countries-answered">Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}</h1>
         {this.isEnd()}
-        <Button onClick={this.handleQuit}>Quit Game</Button>
+        <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
         {
           this.state.quit ?
           <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
@@ -216,8 +216,8 @@ export default class Map extends React.Component {
             value={ this.state.inputValue }>
           </input>
 
+          <div className="maps" id="map"></div>
       </div>
-        <div className="maps" id="map"></div>
       </div>
       );
   }

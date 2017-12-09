@@ -5,27 +5,59 @@
 }
 
 div.game-controls{
-  z-index: 100;
-  position: absolute;
-}
-
-.maps{
-  width: 100%;
+  display: grid;
+  grid-template-columns: 6fr 2fr 2fr;
+  grid-template-rows: repeat(10, 1fr);
+  grid-gap: 15px;
+  width: 100vw;
   height: 100vh;
-  position: absolute;
 
+    div#map{
+      display: grid;
+      grid-column: 1/4;
+      grid-row: 1/11;
+      z-index: 0;
+    }
+
+    input.answer-input{
+      grid-column: 1;
+      grid-row: 10;
+      height:30px;
+      left: 0;
+      right: 0;
+      font-size:25px;
+      font-family: 'helvetica';
+      font-weight: bolder;
+      z-index: 4;
+    }
+
+    .quit-game-btn{
+      grid-column: 2/3;
+      grid-row: 10;
+      z-index: 4;
+    }
+
+    .page-header{
+      grid-column: 1;
+      grid-row: 1;
+      z-index: 4;
+    }
+
+    .countries-answered{
+      grid-column: 3/4;
+      grid-row: 1;
+      z-index: 4;
+    }
+
+    .time-elapsed{
+      grid-column: 3/4;
+      grid-row: 10;
+      z-index: 4;
+    }
 }
 
-div#map{
-  top:0px;
-  z-index:0;
-}
 
-input.answer-input{
-  height:30px;
-  left: 0;
-  right: 0;
-  font-size:25px;
-  font-family: 'helvetica';
-  font-weight: bolder;
-}
+
+
+
+// answer-input, quit-game-btn, page-header, countries-answered, time-elapsed
