@@ -5,13 +5,34 @@ import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeNewGame} from '../actions/NewGame.actions';
+import { sanitizeInput } from '../utils/answerSanitize';
+import { checkAnswer } from '../utils/checkAnswerInputted';
+import {
+  initializeNewGame,
+  submitCorrectAnswer,
+  submitIncorrectEntry,
+  decrementTime,
+  startGame,
+  incrementTotalAttempts,
+} from '../actions/Game.actions';
+
+
 
 let map;
 
 @connect((store) => {
   return {
-    gameData: store.NewGameReducer.gameData
+    secondsElapsed: store.GameReducer.secondsElapsed,
+    gameOverTimeLeft: store.GameReducer.gameOverTimeLeft,
+    userQuit: store.GameReducer.userQuit,
+    gameStart: store.GameReducer.gameStart,
+    gameOver: store.GameReducer.gameOver,
+    gameData: store.GameReducer.gameData,
+    countPolygonsIdentified: store.GameReducer.countPolygonsIdentified,
+    maxCountPolygons: store.GameReducer.maxCountPolygons,
+    incorrectEntries: store.GameReducer.incorrectEntries,
+    totalAttempts: store.GameReducer.totalAttempts,
+
   }
 })
 
@@ -20,8 +41,6 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      gameOver: true,
-      gameStart: true,
       secondsElapsed: 30000,
       quit: false,
     }
@@ -35,6 +54,7 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
+
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: 2,
@@ -85,13 +105,14 @@ export default class Map extends React.Component {
   }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
-        this.nameInput.focus();
-        this.setState({ gameStart: false });
-        this.incrementer = setInterval( () =>
-        this.setState({
-          secondsElapsed: this.state.secondsElapsed - 1
-        })
-      , 1000);
+      this.nameInput.focus();
+      this.props.dispatch(
+        startGame(this.props.gameStart)
+      );
+      this.incrementer = setInterval( () =>
+        this.props.dispatch(
+          decrementTime(this.props.secondsElapsed)
+        ), 1000);
     }
   //closes gameStart modal onClick
   handleClose(){
@@ -114,85 +135,40 @@ export default class Map extends React.Component {
     if(e.keyCode == 13){
         let answerInputted = e.target.value;
         this.setState({inputValue: ''});
-        let answerSanitized;
-        //-------start basic sanitization:--------
-
-        //if text has multiple words
-        if (answerInputted.indexOf(' ') > -1) {
-          answerInputted = answerInputted.split(' ');
-          answerSanitized = answerInputted.map(function(el, idx) {
-            return el.toLowerCase();
-          });
-          answerSanitized = answerSanitized.join(' ');
-          console.log(answerSanitized);
-        // if text is one word
-        } else if (answerInputted.indexOf(' ') === -1) {
-          answerInputted = answerInputted.split('');
-          console.log('entered last if')
-          answerSanitized = answerInputted.map(function(el, idx) {
-            return el.toLowerCase();
-          });
-          answerSanitized = answerSanitized.join('');
-          console.log(answerSanitized);
+        let answerSanitized = sanitizeInput(answerInputted);
+        let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
+        console.log('answerResponse');
+        console.log(answerResponse);
+        if (answerResponse[0] === 'incorrect') {
+          //dispatch and add to incorrectCountriesEntered
+          this.props.dispatch(
+            submitIncorrectEntry(
+              answerInputted,
+              this.props.incorrectEntries
+            )
+          );
+        } else if (answerResponse[0] === 'unanswered') {
+          //modify polygon fillColor
+          let polygon = map.data.getFeatureById(answerResponse[1])
+          map.data.overrideStyle(polygon, {fillColor: 'green'})
+          //dispatch to modify game data to register correct answer
+          //and increment number of polygons identified by 1
+          this.props.dispatch(
+            submitCorrectAnswer(
+              this.props.countPolygonsIdentified,
+              answerResponse[1],
+              this.props.gameData
+            )
+          );
         }
+        //increment totalAttempts
+        this.props.dispatch(
+          incrementTotalAttempts(
+            this.props.totalAttempts
+          )
+        );
 
-        //if text has .
-        if (answerSanitized.indexOf('.') > -1) {
-          answerSanitized = answerSanitized.split('');
-          console.log(answerSanitized)
-          answerSanitized = answerSanitized.map(function(el) {
-            if (el !== '.')
-            return el
-          });
-          answerSanitized = answerSanitized.join('');
-          console.log(answerSanitized);
-        }
 
-       //loop game data (before redux implementation)
-       map.data.forEach(function(feature) {
-         //check for primary names
-         if (feature.getProperty('primaryCountryName') === answerSanitized) {
-           map.data.overrideStyle(feature, {
-             fillColor: 'green'
-           })
-         }
-         //check common names
-         if (feature.getProperty('commonCountryNames').length > 0) {
-           feature.getProperty('commonCountryNames').forEach((commonCountryName) => {
-             if (commonCountryName === answerSanitized)
-               map.data.overrideStyle(feature, {
-                 fillColor: 'green'
-               })
-           })
-         }
-         //check official name
-         if (feature.getProperty('officialCountryName') === answerSanitized) {
-            map.data.overrideStyle(feature, {
-              fillColor: 'green'
-            })
-         }
-         //check initialized names
-         if (feature.getProperty('initializedCountryNames').length > 0) {
-           feature.getProperty('initializedCountryNames').forEach((initializedCountryName) => {
-             if (initializedCountryName === answerSanitized)
-             map.data.overrideStyle(feature, {
-               fillColor: 'green'
-             })
-           })
-         }
-         //check former names
-         if (feature.getProperty('formerCountryNames').length > 0) {
-           feature.getProperty('formerCountryNames').forEach((formerCountryName) => {
-             if (formerCountryName === answerSanitized)
-             map.data.overrideStyle(feature, {
-               fillColor: 'green'
-             })
-           })
-         }
-         //-------end basic sanitization--------
-
-        //end initial map.data.forEach
-       })
       //end keystroke if statement
       }
   //end keypress function
@@ -202,18 +178,20 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
-        <h1>{this.state.secondsElapsed}</h1>
+        <h1>{this.props.secondsElapsed}</h1>
+        <h1>Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}</h1>
         {this.isEnd()}
         <Button onClick={this.handleQuit}>Quit Game</Button>
         {
           this.state.quit ?
-          <GameOver onClose={ this.handleClose } open={this.state.gameOver}/> :
+          <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
+          :
             null
         }
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
-            open={this.state.gameStart}
+            open={this.props.gameStart}
           />
 
           <div className="page-header">
@@ -223,6 +201,7 @@ export default class Map extends React.Component {
           <br></br>
 
           <input
+            className="answer-input"
             ref={(input) => { this.nameInput = input; }}
             onChange={ this.onInputChange }
             onKeyDown={this.keyPress}
