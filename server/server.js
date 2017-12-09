@@ -22,7 +22,7 @@ const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200
 };
-// app.use(express.session({ secret: 'keyboard cat' }));
+
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
