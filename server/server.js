@@ -51,15 +51,35 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:1337/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
-    //  db.users.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //    return done(err, user);
-    //  });
+  let date = moment();
+  let user = {
+    'user_id': profile.id,
+    'username': 'test', // do we really need both username and email?
+    'first_name': profile.name.givenName,
+    'last_name': profile.name.familyName,
+    'password_hash': 'asldjasldkjas',
+    'password_salt': 'sdf98SDF98+sdf1',
+    'count_games_played': 0,
+    'is_first_login': 't',
+    'last_login': date,
+    'user_ip': '1.127.23.34',
+    'token': '4bDac45deUys', // Probably don't need to store token
+    'email': profile.emails[0].value
+  }
+  db.users
+  .findOrCreate({where: {user_id: profile.id}, defaults: user})
+  .spread((user, created) => {
+    user.created = created;
+    return done(null, user);
+  });
+  // Remove once we change id from number to string
+  return done(null, user);
 }
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  user.created = true; // Delete once we get google_id added to db
+  done(null, user.user_id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -98,13 +118,12 @@ apiRouter.route('/gameslist')
       attributes: ['game_name']
     })
       .then(games => {
-      // console.log(games);
       res.send(games);
     })
 });
 
 app.get('/auth/google',
-passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback', 
 passport.authenticate('google', { failureRedirect: '/login' }),

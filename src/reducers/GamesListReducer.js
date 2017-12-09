@@ -1,7 +1,3 @@
-/*
- * src/reducers/GamesListReducer.js
- */
-
 export default function reducer(state = {
     availableGames: []
   },

@@ -25,7 +25,7 @@ class Login extends React.Component {
     return(
       <div>
         <h1>Login</h1>
-        <NavLink exact to="/register"> sign up </NavLink>
+        {/* <NavLink exact to="/register"> sign up </NavLink> */}
         <a href="/auth/google">Sign In with Google</a>
     </div>
     )
