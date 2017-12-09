@@ -22,7 +22,7 @@ const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200
 };
-// app.use(express.session({ secret: 'keyboard cat' }));
+
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
@@ -52,34 +52,24 @@ passport.use(new GoogleStrategy({
 },
 function(accessToken, refreshToken, profile, done) {
   let date = moment();
-  let user = {
-    'user_id': profile.id,
-    'username': 'test', // do we really need both username and email?
+  db.users
+  .findOrCreate({where: {google_id: profile.id}, defaults: {
+    'google_id': profile.id,
     'first_name': profile.name.givenName,
     'last_name': profile.name.familyName,
-    'password_hash': 'asldjasldkjas',
-    'password_salt': 'sdf98SDF98+sdf1',
     'count_games_played': 0,
-    'is_first_login': 't',
     'last_login': date,
-    'user_ip': '1.127.23.34',
-    'token': '4bDac45deUys', // Probably don't need to store token
     'email': profile.emails[0].value
-  }
-  db.users
-  .findOrCreate({where: {user_id: profile.id}, defaults: user})
+  }})
   .spread((user, created) => {
     user.created = created;
     return done(null, user);
   });
-  // Remove once we change id from number to string
-  return done(null, user);
 }
 ));
 
 passport.serializeUser(function(user, done) {
-  user.created = true; // Delete once we get google_id added to db
-  done(null, user.user_id);
+  done(null, user.google_id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -94,21 +84,18 @@ apiRouter.route('/user')
     let date = moment();
     // This should probably be put into some sort of helper file
     let user = {
-      'username': req.body.username,
       'first_name': req.body.firstName,
       'last_name': req.body.lastName,
       'email': req.body.email,
-      'password_hash': 'asldjasldkjas',
-      'password_salt': 'sdf98SDF98+sdf1',
       'count_games_played': 0,
-      'is_first_login': 't',
-      'last_login': date,
-      'user_ip': '1.127.23.34',
-      'token': '4bDac45deUys'
+      'last_login': date
     };
     db.users.create(user)
     .then(user => {
       res.send(user);
+    })
+    .catch(error => {
+      console.log(error);
     })
   });
 
