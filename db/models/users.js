@@ -13,53 +13,57 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false
     },
+    google_id: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     username: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     password_hash: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     password_salt: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     count_games_played: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     last_login: {
       type: Sequelize.DATE,
-      allowNull: false
+      allowNull: true
     },
     is_first_login: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       default: true
     },
     first_name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     last_name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     email: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         isEmail: true
       }
     },
     user_ip: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     token: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
   })
 };
