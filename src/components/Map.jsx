@@ -79,7 +79,18 @@ export default class Map extends React.Component {
               visibility: "off"
             }
           ]
-        }
+        },
+          {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [
+              {
+                color: "#5F9EA0",
+                fillOpacity: '0.5'
+
+              }
+            ]
+          }
       ]
     });
     //load in coordinate data with country name information
@@ -87,9 +98,9 @@ export default class Map extends React.Component {
       'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json');
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
-      fillColor: 'darkred',
-      fillOpacity: '0.8',
-      strokeColor: 'black',
+      fillColor: 'black',
+      fillOpacity: '1',
+      strokeColor: 'white',
       strokeWeight: '1'
     });
 
@@ -137,8 +148,7 @@ export default class Map extends React.Component {
         this.setState({inputValue: ''});
         let answerSanitized = sanitizeInput(answerInputted);
         let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
-        console.log('answerResponse');
-        console.log(answerResponse);
+
         if (answerResponse[0] === 'incorrect') {
           //dispatch and add to incorrectCountriesEntered
           this.props.dispatch(
@@ -150,7 +160,7 @@ export default class Map extends React.Component {
         } else if (answerResponse[0] === 'unanswered') {
           //modify polygon fillColor
           let polygon = map.data.getFeatureById(answerResponse[1])
-          map.data.overrideStyle(polygon, {fillColor: 'green'})
+          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: 'black'})
           //dispatch to modify game data to register correct answer
           //and increment number of polygons identified by 1
           this.props.dispatch(
@@ -167,8 +177,6 @@ export default class Map extends React.Component {
             this.props.totalAttempts
           )
         );
-
-
       //end keystroke if statement
       }
   //end keypress function

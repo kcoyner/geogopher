@@ -18,11 +18,16 @@ export const initializeNewGame = (apiUrl) => {
 };
 
 export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameData) => {
+  console.log('polygonsIdentified', countPolygonsIdentified);
+  console.log('polygonIndex', polygonIndex);
+  console.log('gameData', gameData);
   return (dispatch) => {
     // incrememnt countPolygonsIdentified
     countPolygonsIdentified = countPolygonsIdentified + 1
     gameData = gameData.map((el, idx) => {
-      if (idx === polygonIndex) {
+      if (el.id === polygonIndex) {
+        console.log('el.id', el.id)
+        console.log('polygonIndex', polygonIndex)
         el.polygonAnswered = true;
         return el
       } else {
