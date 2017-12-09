@@ -15,7 +15,7 @@ export default function reducer(state = {
     case 'NEWGAME_DATA':
       return {
         ...state,
-        secondsElapsed: 3,//this time will come from the database
+        secondsElapsed: 30000,//this time will come from the database
         gameOverTimeLeft: -1,
         userQuit: false,
         gameStart: false,

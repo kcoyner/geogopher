@@ -1,6 +1,6 @@
 #app {
   h1 {
-    color: fuchsia;
+    color: chartreuse;
   }
 }
 
@@ -19,22 +19,37 @@ div.game-controls{
       z-index: 0;
     }
 
-    input.answer-input{
+    input.answer-input, input.answer-input:focus{
       grid-column: 1;
       grid-row: 10;
-      height:30px;
-      left: 0;
-      right: 0;
-      font-size:25px;
+      font-size: 3vw;
       font-family: 'helvetica';
       font-weight: bolder;
       z-index: 4;
+      color: white;
+      background-color: black;
+      border: 3px solid transparent;
+      -moz-border-image: -moz-linear-gradient(top, aqua 0%, chartreuse 100%);
+      -webkit-border-image: -webkit-linear-gradient(top, aqua 0%, chartreuse 100%);
+      border-image: linear-gradient(to bottom, aqua 0%, chartreuse 100%);
+      border-image-slice: 1;
+      border-radius: 1px;
     }
 
     .quit-game-btn{
       grid-column: 2/3;
       grid-row: 10;
       z-index: 4;
+      font-size: 30px;
+      background-color: black;
+      color: white;
+      &:hover{
+        border: 3px solid chartreuse;
+        border-radius: 1px;
+        color: chartreuse;
+        background-color: black;
+        padding: 0;
+      }
     }
 
     .page-header{
@@ -49,14 +64,48 @@ div.game-controls{
       z-index: 4;
     }
 
+    .time-elapsed-title{
+      grid-column: 3/4;
+      grid-row: 9;
+      z-index: 4;
+      display: grid;
+      grid-template-rows: repeat(2, 1fr);
+      h1 {
+        grid-row: 2;
+
+      }
+    }
+
     .time-elapsed{
       grid-column: 3/4;
       grid-row: 10;
       z-index: 4;
+      font-size: 4vw;
+      margin: 0;
     }
 }
 
 
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:-moz-placeholder { /* Firefox 18- */
+    background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 
 

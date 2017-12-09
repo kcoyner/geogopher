@@ -103,8 +103,12 @@ export default class Map extends React.Component {
       strokeColor: 'white',
       strokeWeight: '1'
     });
-
-    this.props.dispatch(initializeNewGame('https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'));
+    //build game instance in redux
+    this.props.dispatch(
+      initializeNewGame(
+        'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'
+      )
+    );
 
   }
   //on quit, set change game state and clear timer
@@ -186,9 +190,22 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
-        <h1 className="time-elapsed">{this.props.secondsElapsed}</h1>
-        <h1 className="countries-answered">Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}</h1>
+        <div className="time-elapsed-title">
+          <h1>
+            Time Remaining:
+          </h1>
+        </div>
+
+        <h1 className="time-elapsed">
+          {this.props.secondsElapsed}
+        </h1>
+
+        <h1 className="countries-answered">
+          Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}
+        </h1>
+
         {this.isEnd()}
+
         <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
         {
           this.state.quit ?
