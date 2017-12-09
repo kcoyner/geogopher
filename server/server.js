@@ -29,7 +29,6 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -110,6 +109,7 @@ apiRouter.route('/gameslist')
 });
 
 app.get('/auth/google',
+
 passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback', 
