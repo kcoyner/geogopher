@@ -110,7 +110,6 @@ apiRouter.route('/gameslist')
 });
 
 app.get('/auth/google',
-
 passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback', 
