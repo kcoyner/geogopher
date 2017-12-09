@@ -3,27 +3,38 @@ const webpack = require('webpack');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+
 const moment = require('moment');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const dotenv = require('dotenv').config();
 
 const app = express();
 const config = require('../webpack.dev.js');
-const db = require('../db/config');
 const compiler = webpack(config);
 const apiRouter = express.Router();
-
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const db = require('../db/config');
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200
 };
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static('../dist'));
+
 app.use('/api', apiRouter);
 
 app.use(function(req, res, next) {
@@ -31,6 +42,30 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
+});
+
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:1337/auth/google/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+    //  db.users.findOrCreate({ googleId: profile.id }, function (err, user) {
+    //    return done(err, user);
+    //  });
+}
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 // Declare api routes BEFORE * route
@@ -57,13 +92,6 @@ apiRouter.route('/user')
     })
   });
 
-// db.games.findAll({
-//   attributes: ['game_name']
-//   })
-//   .then(games => {
-//     // console.log(games[0].dataValues.game_name);
-//   });
-
 apiRouter.route('/gameslist')
   .get(cors(corsOptions), (req, res) => {
     db.games.findAll({
@@ -73,7 +101,16 @@ apiRouter.route('/gameslist')
       // console.log(games);
       res.send(games);
     })
-  });
+});
+
+app.get('/auth/google',
+passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+app.get('/auth/google/callback', 
+passport.authenticate('google', { failureRedirect: '/login' }),
+function(req, res) {
+  res.redirect('/');
+});
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
