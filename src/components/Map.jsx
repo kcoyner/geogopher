@@ -1,12 +1,13 @@
 /*global window.google*/
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Checkbox } from 'semantic-ui-react';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sanitizeInput } from '../utils/answerSanitize';
 import { checkAnswer } from '../utils/checkAnswerInputted';
+import { toggleMissingCountries } from '../utils/toggleMissingCountries';
 import {
   initializeNewGame,
   submitCorrectAnswer,
@@ -32,7 +33,6 @@ let map;
     maxCountPolygons: store.GameReducer.maxCountPolygons,
     incorrectEntries: store.GameReducer.incorrectEntries,
     totalAttempts: store.GameReducer.totalAttempts,
-
   }
 })
 
@@ -43,6 +43,7 @@ export default class Map extends React.Component {
       inputValue: '',
       secondsElapsed: 30000,
       quit: false,
+      showMissingCountries: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -51,6 +52,7 @@ export default class Map extends React.Component {
     this.handleQuit = this.handleQuit.bind(this);
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
+    this.showMarkers = this.showMarkers.bind(this);
   }
 
   componentDidMount() {
@@ -186,6 +188,21 @@ export default class Map extends React.Component {
   //end keypress function
   }
 
+  showMarkers(e) {
+    this.setState({showMissingCountries: true})
+    toggleMissingCountries(
+      this.state.showMissingCountries,
+      this.props.gameData,
+      map,
+    );
+    setInterval( () => {
+      this.setState({showMissingCountries: false})
+    }, 3000);
+
+
+
+  }
+
   render() {
     return (
       <div className="container">
@@ -221,6 +238,7 @@ export default class Map extends React.Component {
 
           <div className="page-header">
             <h1>Geogophers Test</h1>
+            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
           </div>
 
           <br></br>
