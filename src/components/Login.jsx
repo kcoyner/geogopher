@@ -26,7 +26,6 @@ class Login extends React.Component {
       <div>
         <h1>Login</h1>
         <NavLink exact to="/register"> sign up </NavLink>
-        <Button onClick={this.toGoogleLogin}>Sign in with google</Button>
         <a href="/auth/google">Sign In with Google</a>
     </div>
     )
