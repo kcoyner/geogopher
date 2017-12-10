@@ -1,12 +1,13 @@
 /*global window.google*/
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Checkbox } from 'semantic-ui-react';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sanitizeInput } from '../utils/answerSanitize';
 import { checkAnswer } from '../utils/checkAnswerInputted';
+import { toggleMissingCountries } from '../utils/toggleMissingCountries';
 import {
   initializeNewGame,
   submitCorrectAnswer,
@@ -32,7 +33,6 @@ let map;
     maxCountPolygons: store.GameReducer.maxCountPolygons,
     incorrectEntries: store.GameReducer.incorrectEntries,
     totalAttempts: store.GameReducer.totalAttempts,
-
   }
 })
 
@@ -43,6 +43,7 @@ export default class Map extends React.Component {
       inputValue: '',
       secondsElapsed: 30000,
       quit: false,
+      showMissingCountries: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -51,6 +52,7 @@ export default class Map extends React.Component {
     this.handleQuit = this.handleQuit.bind(this);
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
+    this.showMarkers = this.showMarkers.bind(this);
   }
 
   componentDidMount() {
@@ -79,7 +81,18 @@ export default class Map extends React.Component {
               visibility: "off"
             }
           ]
-        }
+        },
+          {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [
+              {
+                color: "#5F9EA0",
+                fillOpacity: '0.5'
+
+              }
+            ]
+          }
       ]
     });
     //load in coordinate data with country name information
@@ -87,13 +100,17 @@ export default class Map extends React.Component {
       'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json');
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
-      fillColor: 'darkred',
-      fillOpacity: '0.8',
-      strokeColor: 'black',
+      fillColor: 'black',
+      fillOpacity: '1',
+      strokeColor: 'white',
       strokeWeight: '1'
     });
-
-    this.props.dispatch(initializeNewGame('https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'));
+    //build game instance in redux
+    this.props.dispatch(
+      initializeNewGame(
+        'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'
+      )
+    );
 
   }
   //on quit, set change game state and clear timer
@@ -137,8 +154,7 @@ export default class Map extends React.Component {
         this.setState({inputValue: ''});
         let answerSanitized = sanitizeInput(answerInputted);
         let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
-        console.log('answerResponse');
-        console.log(answerResponse);
+
         if (answerResponse[0] === 'incorrect') {
           //dispatch and add to incorrectCountriesEntered
           this.props.dispatch(
@@ -150,7 +166,7 @@ export default class Map extends React.Component {
         } else if (answerResponse[0] === 'unanswered') {
           //modify polygon fillColor
           let polygon = map.data.getFeatureById(answerResponse[1])
-          map.data.overrideStyle(polygon, {fillColor: 'green'})
+          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: 'black'})
           //dispatch to modify game data to register correct answer
           //and increment number of polygons identified by 1
           this.props.dispatch(
@@ -167,21 +183,47 @@ export default class Map extends React.Component {
             this.props.totalAttempts
           )
         );
-
-
       //end keystroke if statement
       }
   //end keypress function
+  }
+
+  showMarkers(e) {
+    this.setState({showMissingCountries: true})
+    toggleMissingCountries(
+      this.state.showMissingCountries,
+      this.props.gameData,
+      map,
+    );
+    setInterval( () => {
+      this.setState({showMissingCountries: false})
+    }, 3000);
+
+
+
   }
 
   render() {
     return (
       <div className="container">
         <div className="game-controls">
-        <h1>{this.props.secondsElapsed}</h1>
-        <h1>Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}</h1>
+        <div className="time-elapsed-title">
+          <h1>
+            Time Remaining:
+          </h1>
+        </div>
+
+        <h1 className="time-elapsed">
+          {this.props.secondsElapsed}
+        </h1>
+
+        <h1 className="countries-answered">
+          Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}
+        </h1>
+
         {this.isEnd()}
-        <Button onClick={this.handleQuit}>Quit Game</Button>
+
+        <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
         {
           this.state.quit ?
           <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
@@ -196,6 +238,7 @@ export default class Map extends React.Component {
 
           <div className="page-header">
             <h1>Geogophers Test</h1>
+            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
           </div>
 
           <br></br>
@@ -208,8 +251,8 @@ export default class Map extends React.Component {
             value={ this.state.inputValue }>
           </input>
 
+          <div className="maps" id="map"></div>
       </div>
-        <div className="maps" id="map"></div>
       </div>
       );
   }
