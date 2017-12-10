@@ -1,3 +1,7 @@
+/*
+ * Register.jsx
+ */
+
 import React from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -74,14 +78,10 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default RegisterPage;
+function mapStateToProps(state) {
+  return {
+      registering: state.UserReducer
+  };
+}
 
-// function mapStateToProps(state) {
-//   const { registering } = state.registration;
-//   return {
-//       registering
-//   };
-// }
-
-// const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
-// export { connectedRegisterPage as RegisterPage };
+export default connect(mapStateToProps)(RegisterPage);
