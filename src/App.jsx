@@ -12,8 +12,8 @@ export default class App extends React.Component {
     return (
       <div>
         <NavBar> </NavBar>
-        <Route path="/map" component={ Map } />
         <Route exact path="/" component={ GamesList } />
+        <Route path="/map" component={ Map } />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ RegisterPage } />
       </div>
