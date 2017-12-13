@@ -1,9 +1,11 @@
-/*
+/**
  * NavBar.test.js
  */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from '../../src/store';
 import NavBar from '../../src/components/NavBar';
 import renderer from 'react-test-renderer';
 import { Link } from 'react-router-dom';
@@ -16,21 +18,12 @@ global.requestAnimationFrme = function(callback) {
 
 describe('the map', () => {
 
-  /* These first two tests are essentially the same. The test using
-   * createRenderer does a shallow rendering, which means that children of
-   * the component will not be rendered.  Use TestUtils instead.
-   */
-
   it('renders NavBar component', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<navbar />, div);
-  });
-
-  it('renders a NavBar component', () => {
-    const navBarRenderer = createRenderer();
-    navBarRenderer.render(<NavBar/>);
-    let n = navBarRenderer.getRenderOutput();
-    expect(n.type).toBe('div');
+    ReactDOM.render(
+      <Provider store = { store }>
+      <navbar />
+      </Provider>, div);
   });
 
   it('home link matches snapshot', () => {
