@@ -3,6 +3,8 @@ import { userService } from '../services';
 export const userActions = {
     register,
     login,
+    logout,
+    selectGame
 };
 
 function register(user) {
@@ -32,11 +34,11 @@ function register(user) {
 
 function login(user) {
     return dispatch => {
-        userService.getUserInfo(user.profileObj.googleId, true)
+        userService.getUserInfo(user.profileObj, true)
             .then(
-                userId => {
-                    user.profileObj.user_id = userId;
-                    dispatch({ type: 'LOGIN_SUCCESS', payload: user.profileObj });
+                userObj => {
+                    user.profileObj.user_id = userObj;
+                    dispatch({ type: 'LOGIN_SUCCESS', payload: user.profileObj })
                 },
                 error => {
                     console.log('Error getting user info: ', error)
@@ -44,4 +46,16 @@ function login(user) {
             )
         
     }
+}
+
+function logout() {
+    userService.logout();
+    return { type: 'LOGOUT' };
+}
+
+function selectGame(game) {
+    return dispatch => {
+        return dispatch({ type: 'SELECT_GAME', payload: game});
+    }
+    
 }
