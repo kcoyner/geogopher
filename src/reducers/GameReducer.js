@@ -2,7 +2,6 @@ export default function reducer(state = {
       secondsElapsed: 0,
       gameOverTimeLeft: -1,
       userQuit: false,
-      gameStart: false,
       gameOver: false,
       gameData: null,
       countPolygonsIdentified: 0,
@@ -27,11 +26,6 @@ export default function reducer(state = {
         totalAttempts: 0,
       };
 
-    case 'START_GAME':
-      return {
-        ...state,
-        gameStart: action.payload.gameStart,
-      };
 
     case 'ANSWER_CORRECT':
       return {
