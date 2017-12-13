@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GoogleLogout } from 'react-google-login';
+import { userActions } from '../actions';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -10,6 +11,8 @@ class NavBar extends React.Component {
   }
 
   onLogoutSuccess(){
+    const { dispatch } = this.props;
+    dispatch(userActions.logout());
     console.log('logout successful');
   }
 

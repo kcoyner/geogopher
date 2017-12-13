@@ -111,19 +111,26 @@ apiRouter.route('/gameslist')
 
 apiRouter.route('/user')
   .get((req, res) => {
-    let query = {};
-    if(req.query.google) {
-      query.google_id = req.query.id;
-    } else {
-      query.id = req.query.id;
-    }
+    // let query = {};
+    // if(req.query.google) {
+    //   query.google_id = req.query.id;
+    // } else {
+    //   query.id = req.query.id;
+    // }
+    let date = moment();
     db.users
-    .findOne({
-      where: query,
-      attributes: ['user_id']
-    }).then(user => {
+    .findOrCreate({where: {google_id: req.query.googleId}, defaults: {
+      'google_id': req.query.googleid,
+      'first_name': req.query.givenName,
+      'last_name': req.query.familyName,
+      'count_games_played': 0,
+      'last_login': date,
+      'email': req.query.email
+    }})
+    .spread((user, created) => {
+      user.created = created;
       res.send(user);
-    })
+    });
   })
 app.get('/auth/google',
 passport.authenticate('google', { scope: ['email', 'profile'] }));

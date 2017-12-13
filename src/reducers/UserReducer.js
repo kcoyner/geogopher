@@ -4,7 +4,7 @@ export default function reducer(state = {
   registering: null,
 }, action) {
   switch (action.type) {
-  case 'SET_USER_GAME_SELECTED': {
+  case 'SELECT_GAME': {
     return {
       ...state,
       userGameSelected: action.payload.userGameSelected

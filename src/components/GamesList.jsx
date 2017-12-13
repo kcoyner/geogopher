@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
 import { fetchGamesList } from '../actions/GamesList.actions';
 import { userActions } from '../actions';
+import { Card, Image } from 'semantic-ui-react';
 
 @connect((state, ownProps) => {
   return {
@@ -22,10 +23,22 @@ class GamesList extends React.Component {
     this.state = {
 
     };
+    this.onGameSelect = this.onGameSelect.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchGamesList());
+  }
+
+  onGameSelect(gameIndex) {
+    this.props.dispatch(userActions.selectGame(this.props.games[gameIndex]));
+    if(this.props.user) {
+      // map to correct game based on game index
+      this.props.history.push('/map');
+    } else {
+      this.props.history.push('/login');
+    }
+    
   }
 
   render() {
@@ -38,10 +51,27 @@ class GamesList extends React.Component {
             <tr>
               <td>
                 { games.map((game, index) => (
-                    <div key={ index }>
-                      { game.game_name }
+                  <Card key={ index}>
+                  <Image src='/assets/images/avatar/large/matthew.png' />
+                  <Card.Content>
+                    <Card.Header>
+                     {game.game_name}
+                    </Card.Header>
+                    <Card.Description>
+                      Game description here
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <div>
+                      <Button onClick={() => this.onGameSelect(index)} basic>Play game</Button>
                     </div>
-                  )) }
+                  </Card.Content>
+                </Card>
+                    // <div key={ index }>
+                    //   { game.game_name }
+                    // </div>
+                  )
+                ) }
               </td>
             </tr>
           </tbody>
