@@ -103,4 +103,26 @@ deploy:
   deployment_group: geogopherTestingGroup
   region: us-east-1
   on: *5
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  local_dir: s3_upload
+  skip_cleanup: true
+  on: &6
+    repo: jaywilsonjr/geogopher
+    all_branches: true
+  bucket: gopher-codedeploy
+  upload-dir: testing
+  region: us-east-1
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: gopher-codedeploy
+  key: testing/latestTravis.zip
+  bundle_type: zip
+  application: geogopherTesting
+  deployment_group: geogopherTestingGroup
+  region: us-east-1
+  on: *6
+
 
