@@ -3,33 +3,48 @@
  */
 import axios from 'axios';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Button, Form } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-import { authActions } from '../actions';
+import { userActions } from '../actions';
+import { GoogleLogin } from 'react-google-login';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      redirect: false
-    }
-    this.toGoogleLogin = this.toGoogleLogin.bind(this);
+    this.onLoginSuccess = this.onLoginSuccess.bind(this);
+    this.onLoginFailure = this.onLoginFailure.bind(this);
   }
 
-  toGoogleLogin() {
-    axios.get('/auth/google');
+  onLoginSuccess(response) {
+    const { dispatch } = this.props;
+    console.log('success: ', response);
+    dispatch(userActions.login(response));
+  }
+  onLoginFailure(response) {
+    console.log('failure: ', response);
   }
 
   render() {
     return(
       <div>
         <h1>Login</h1>
-        <NavLink exact to="/register"> sign up </NavLink>
-        <a href="/auth/google">Sign In with Google</a>
+        <Link to="/register"> sign up </Link>
+        <GoogleLogin
+        clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={this.onLoginSuccess}
+        onFailure={this.onLoginFailure}
+        />
     </div>
     )
   }
 }
 
-export default Login;
+function mapStateToProps(state) {
+  return {};
+}
+
+export default connect(mapStateToProps)(Login);
+

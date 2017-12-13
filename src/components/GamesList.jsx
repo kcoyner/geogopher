@@ -7,17 +7,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
 import { fetchGamesList } from '../actions/GamesList.actions';
+import { userActions } from '../actions';
 
-@connect((store) => {
+@connect((state, ownProps) => {
   return {
-    games: store.GamesListReducer.availableGames
+    games: state.GamesListReducer.availableGames,
+    user: state.UserReducer.user
   }
 })
 
 class GamesList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+
+    };
   }
 
   componentDidMount() {

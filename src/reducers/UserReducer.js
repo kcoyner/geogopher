@@ -1,5 +1,5 @@
 export default function reducer(state = {
-  userName: null,
+  user: null,
   userGameSelected: null,
   registering: null,
 }, action) {
@@ -16,11 +16,14 @@ export default function reducer(state = {
       registering: true,
      };
   }
-  case 'SET_USER_NAME': {
+  case 'LOGIN_SUCCESS': {
     return {
       ...state,
-      userName: action.payload.userName
+      user: action.payload
     };
+   }
+   case 'LOGOUT': {
+     return {}
    }
   }
   return state;

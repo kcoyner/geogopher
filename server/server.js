@@ -109,13 +109,30 @@ apiRouter.route('/gameslist')
     })
 });
 
+apiRouter.route('/user')
+  .get((req, res) => {
+    let query = {};
+    if(req.query.google) {
+      query.google_id = req.query.id;
+    } else {
+      query.id = req.query.id;
+    }
+    db.users
+    .findOne({
+      where: query,
+      attributes: ['user_id']
+    }).then(user => {
+      res.send(user);
+    })
+  })
 app.get('/auth/google',
 passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback', 
 passport.authenticate('google', { failureRedirect: '/login' }),
 function(req, res) {
-  res.redirect('/');
+  console.log(req.user);
+  res.redirect('/' + req.user.user_id);
 });
 
 app.get('/*', (req, res) => {
