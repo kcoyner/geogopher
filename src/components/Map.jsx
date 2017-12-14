@@ -6,7 +6,7 @@ import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sanitizeInput } from '../utils/answerSanitize';
-import { checkAnswer } from '../utils/checkAnswerInputted';
+import { checkAnswerCountdown } from '../utils/checkAnswerInputted';
 import { toggleMissingCountries } from '../utils/toggleMissingCountries';
 import { mapDetails } from '../utils/mapDetails';
 import {
@@ -130,10 +130,13 @@ export default class Map extends React.Component {
 
     if(e.keyCode == 13){
         let answerInputted = e.target.value;
+        //clear text input after user hits enter
         this.setState({inputValue: ''});
+        //sanitize input to all lowercase and remove '.'
         let answerSanitized = sanitizeInput(answerInputted);
-        let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
-
+        //check answer for countdown game
+        let answerResponse = checkAnswerCountdown(answerSanitized, this.props.gameData);
+        
         if (answerResponse[0] === 'incorrect') {
           //dispatch and add to incorrectCountriesEntered
           this.props.dispatch(

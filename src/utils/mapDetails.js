@@ -3,7 +3,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#212121"
+        "color": "#6699cc"
       }
     ]
   },
@@ -27,7 +27,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#757575"
+        "color": "#6699cc"
       }
     ]
   },
@@ -35,7 +35,7 @@ export const mapDetails = [
     "elementType": "labels.text.stroke",
     "stylers": [
       {
-        "color": "#212121"
+        "color": "#6699cc"
       }
     ]
   },
@@ -44,7 +44,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#757575"
+        "color": "#6699cc"
       }
     ]
   },
@@ -53,7 +53,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#9e9e9e"
+        "color": "#6699cc"
       }
     ]
   },
@@ -70,7 +70,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#bdbdbd"
+        "color": "#6699cc"
       }
     ]
   },
@@ -87,7 +87,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#757575"
+        "color": "#6699cc"
       }
     ]
   },
@@ -96,7 +96,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#181818"
+        "color": "#6699cc"
       }
     ]
   },
@@ -105,7 +105,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#616161"
+        "color": "#6699cc"
       }
     ]
   },
@@ -114,7 +114,7 @@ export const mapDetails = [
     "elementType": "labels.text.stroke",
     "stylers": [
       {
-        "color": "#1b1b1b"
+        "color": "#6699cc"
       }
     ]
   },
@@ -123,7 +123,7 @@ export const mapDetails = [
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#2c2c2c"
+        "color": "#6699cc"
       }
     ]
   },
@@ -132,7 +132,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#8a8a8a"
+        "color": "#6699cc"
       }
     ]
   },
@@ -141,7 +141,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#373737"
+        "color": "#6699cc"
       }
     ]
   },
@@ -150,7 +150,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#3c3c3c"
+        "color": "#6699cc"
       }
     ]
   },
@@ -159,7 +159,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#4e4e4e"
+        "color": "#6699cc"
       }
     ]
   },
@@ -168,7 +168,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#616161"
+        "color": "#6699cc"
       }
     ]
   },
@@ -177,7 +177,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#757575"
+        "color": "#6699cc"
       }
     ]
   },
@@ -186,7 +186,7 @@ export const mapDetails = [
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#000000"
+        "color": "#6699cc"
       }
     ]
   },
@@ -204,7 +204,7 @@ export const mapDetails = [
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#3d3d3d"
+        "color": "#6699cc"
       }
     ]
   }
