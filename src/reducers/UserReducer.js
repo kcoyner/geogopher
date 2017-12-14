@@ -1,17 +1,17 @@
 export default function reducer(state = {
   user: null,
-  userGameSelected: null,
+  gameName: null,
   registering: null,
 }, action) {
   switch (action.type) {
   case 'SELECT_GAME': {
     return {
       ...state,
-      userGameSelected: action.payload
+      gameName: action.payload
     };
   }
   case 'USERS_REGISTER_REQUEST': {
-    return { 
+    return {
       ...state,
       registering: true,
      };

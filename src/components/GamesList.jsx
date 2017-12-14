@@ -33,16 +33,16 @@ class GamesList extends React.Component {
     this.props.dispatch(fetchGamesList());
   }
 
-  onGameSelect(gameIndex) {
-    this.props.dispatch(userActions.selectGame(this.props.games[gameIndex]));
-    if(this.props.user) {
+  onGameSelect(gameSelected) {
+    // if(this.props.user) {
       //dispatch game selection over to map
+      this.props.dispatch(userActions.selectGame(this.props.games[gameSelected]));
 
-      // map to correct game based on game index
       this.props.history.push('/map');
-    } else {
-      this.props.history.push('/login');
-    }
+      // map to correct game based on game index
+    // } else {
+      // this.props.history.push('/login');
+    // }
 
   }
 

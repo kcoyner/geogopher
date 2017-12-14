@@ -13,7 +13,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     console.log('User created: ', user);
                     // dispatch(success());
                     // history.push('/login');
@@ -44,7 +44,7 @@ function login(user) {
                     console.log('Error getting user info: ', error)
                 }
             )
-        
+
     }
 }
 
@@ -53,9 +53,9 @@ function logout() {
     return { type: 'LOGOUT' };
 }
 
-function selectGame(game) {
+function selectGame(gameName) {
     return dispatch => {
-        return dispatch({ type: 'SELECT_GAME', payload: game});
+        return dispatch({ type: 'SELECT_GAME', payload: gameName});
     }
-    
+
 }
