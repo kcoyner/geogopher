@@ -4,6 +4,8 @@
   }
 }
 
+
+//map component game controls styling
 div.game-controls{
   display: grid;
   grid-template-columns: 6fr 2fr 2fr;
@@ -85,7 +87,38 @@ div.game-controls{
     }
 }
 
+//games list component styling
 
+.games-list{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-template-areas: 'game game game game'
+}
+
+.ui .card{
+  grid-area: game;
+  padding: 0 auto;
+  justify-self: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// color styling for placeholders in input fields
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     background: -webkit-linear-gradient(aqua, chartreuse);
   -webkit-background-clip: text;
