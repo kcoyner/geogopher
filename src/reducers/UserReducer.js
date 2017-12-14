@@ -7,7 +7,7 @@ export default function reducer(state = {
   case 'SELECT_GAME': {
     return {
       ...state,
-      userGameSelected: action.payload.userGameSelected
+      userGameSelected: action.payload
     };
   }
   case 'USERS_REGISTER_REQUEST': {
