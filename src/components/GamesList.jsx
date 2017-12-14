@@ -15,6 +15,7 @@ const placeholderImg = require('-!file-loader?name=placeholderImg!../assets/game
 
 @connect((state, ownProps) => {
   return {
+    //take out of redux
     games: state.GamesListReducer.availableGames,
     user: state.UserReducer.user
   }

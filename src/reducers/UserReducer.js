@@ -1,13 +1,13 @@
 export default function reducer(state = {
-  user: null,
-  gameName: null,
+  userName: null,
+  gameSelected: null,
   registering: null,
 }, action) {
   switch (action.type) {
   case 'SELECT_GAME': {
     return {
       ...state,
-      gameName: action.payload
+      gameSelected: action.payload
     };
   }
   case 'USERS_REGISTER_REQUEST': {
@@ -19,7 +19,7 @@ export default function reducer(state = {
   case 'LOGIN_SUCCESS': {
     return {
       ...state,
-      user: action.payload
+      userName: action.payload
     };
    }
    case 'LOGOUT': {

@@ -1,17 +1,21 @@
 /*global window.google*/
 import React from 'react';
 import { Button, Checkbox } from 'semantic-ui-react';
+import GameSettings from './GameSettings';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { sanitizeInput } from '../utils/answerSanitize';
-import { checkAnswerCountdown } from '../utils/checkAnswerInputted';
-import { toggleMissingCountries } from '../utils/toggleMissingCountries';
-import { mapDetails } from '../utils/mapDetails';
+import {
+  sanitizeInput,
+  checkAnswerCountdown,
+  toggleMissingCountries,
+  mapDetails
+} from '../utils/index';
+
 import {
   initializeNewGame,
-  submitCorrectAnswer,
+  submitCorrectEntry,
   submitIncorrectEntry,
   decrementTime,
   startGame,
@@ -23,6 +27,36 @@ let map;
 @connect((state) => {
   return {
 
+    //pre game data
+    userName: 'SenecaTheYounger',
+    userID: 1,
+    countGamesPlayed: 10,
+    token: null,
+    lastLogin: null,
+
+    //game settings
+    gameSelected: state.GameReducer.gameSelected,
+    gameJSON: state.GameReducer.gameJSON,
+    gameCenterCoords: state.GameReducer.gameCenterCoords,
+    gameZoom: state.GameReducer.gameZoom,
+    maxCountPolygons: state.GameReducer.maxCountPolygons,
+    gameTypeSelected: state.GameReducer.gameTypeSelected,
+    gameDifficultySelected: state.GameReducer.gameDifficultySelected,
+    gameData: state.GameReducer.gameData,
+
+    //score data
+    countPolygonsIdentified: ,
+    countTotalSubmissions: ,
+    polygonsAnswered: ,
+    polygonsUnanswered: ,
+    incorrectEntries: ,
+    gameTimerStart: ,
+    gameTimerRemaining: ,
+    gameStartTimestamp: ,
+    gameEndTimestamp: ,
+    ipWhereGamePlayed: ,
+
+
     secondsElapsed: state.GameReducer.secondsElapsed,
     gameOverTimeLeft: state.GameReducer.gameOverTimeLeft,
     userQuit: state.GameReducer.userQuit,
@@ -33,7 +67,6 @@ let map;
     incorrectEntries: state.GameReducer.incorrectEntries,
     totalAttempts: state.GameReducer.totalAttempts,
 
-    gameName: state.UserReducer.gameName
 
   }
 })
@@ -154,7 +187,7 @@ export default class Map extends React.Component {
           //dispatch to modify game data to register correct answer
           //and increment number of polygons identified by 1
           this.props.dispatch(
-            submitCorrectAnswer(
+            submitCorrectEntry(
               this.props.countPolygonsIdentified,
               answerResponse[1],
               this.props.gameData
@@ -191,51 +224,54 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
-        <div className="time-elapsed-title">
-          <h1>
-            Time Remaining:
-          </h1>
-        </div>
 
-        <h1 className="time-elapsed">
-          {this.props.secondsElapsed}
-        </h1>
-
-        <h1 className="countries-answered">
-          Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}
-        </h1>
-
-        {this.isEnd()}
-
-        <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
-        {
-          this.state.quit ?
-          <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
-          :
-            null
-        }
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
             open={this.state.gameStart}
           />
 
-          <div className="page-header">
-            <h1>Geogophers Test</h1>
-            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
-          </div>
+        <div className="game-title">
+          <h1>World Countries</h1>
+          <h2>Countdown | Normal</h2>
+        </div>
 
-          <br></br>
+        <div className="show-missing-countries">
+          <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
+        </div>
 
-          <input
-            className="answer-input"
-            ref={(input) => { this.nameInput = input; }}
-            onChange={ this.onInputChange }
-            onKeyDown={this.keyPress}
-            value={ this.state.inputValue }>
-          </input>
+        <div className="time-remaining-title">
+          <h1> Time Remaining:</h1>
+        </div>
 
-          <div className="maps" id="map"></div>
+        <div className="time-remaining">
+          <h1> {this.props.secondsElapsed} </h1>
+        </div>
+
+        <div className="countries-answered">
+          <h1> Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons} </h1>
+        </div>
+
+        <input
+          className="input-entry"
+          ref={(input) => { this.nameInput = input; }}
+          onChange={ this.onInputChange }
+          onKeyDown={this.keyPress}
+          value={ this.state.inputValue }>
+        </input>
+
+        {this.isEnd()}
+
+        <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
+
+        {
+          this.state.quit ?
+          <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
+          :
+            null
+        }
+
+        <div className="maps" id="map"></div>
       </div>
       </div>
       );

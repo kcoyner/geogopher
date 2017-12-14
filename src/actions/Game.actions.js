@@ -17,7 +17,7 @@ export const initializeNewGame = (apiUrl) => {
   };
 };
 
-export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameData) => {
+export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameData) => {
   console.log('polygonsIdentified', countPolygonsIdentified);
   console.log('polygonIndex', polygonIndex);
   console.log('gameData', gameData);

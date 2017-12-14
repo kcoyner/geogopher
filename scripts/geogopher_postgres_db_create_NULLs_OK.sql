@@ -32,7 +32,8 @@ CREATE TABLE "polygons" (
 CREATE TABLE "games" (
 	"game_id" serial NOT NULL UNIQUE,
 	"game_name" varchar NOT NULL,
-	"game_data" varchar NOT NULL,
+	"game_description" varchar NOT NULL,
+	"game_json" varchar NOT NULL,
 	"game_center_coords" varchar NOT NULL,
 	"game_zoom" integer NOT NULL,
 	"max_count_polygons" integer NOT NULL,
@@ -63,7 +64,7 @@ CREATE TABLE "game_difficulties" (
 CREATE TABLE "scores" (
 	"score_id" serial NOT NULL UNIQUE,
 	"user_id" integer NOT NULL,
-	"count_polygons_identified" integer NOT NULL,
+	"count_polygons_entered" integer NOT NULL,
 	"count_total_submissions" integer NOT NULL,
 	"polygons_answered" varchar NOT NULL,
 	"polygons_unanswered" varchar NOT NULL,
@@ -71,7 +72,8 @@ CREATE TABLE "scores" (
 	"game_id" integer NOT NULL,
 	"game_type_id" integer NOT NULL,
 	"game_difficulty_id" integer NOT NULL,
-	"game_time_elapsed" varchar NOT NULL,
+	"game_timer_start" integer NOT NULL,
+	"game_timer_remaining" varchar NOT NULL,
 	"game_start_timestamp" TIMESTAMP WITH TIME ZONE,
 	"game_end_timestamp" TIMESTAMP WITH TIME ZONE,
 	"ip_where_game_played" varchar NOT NULL,
