@@ -23,15 +23,15 @@ let map;
 @connect((state) => {
   return {
 
-    secondsElapsed: store.GameReducer.secondsElapsed,
-    gameOverTimeLeft: store.GameReducer.gameOverTimeLeft,
-    userQuit: store.GameReducer.userQuit,
-    gameOver: store.GameReducer.gameOver,
-    gameData: store.GameReducer.gameData,
-    countPolygonsIdentified: store.GameReducer.countPolygonsIdentified,
-    maxCountPolygons: store.GameReducer.maxCountPolygons,
-    incorrectEntries: store.GameReducer.incorrectEntries,
-    totalAttempts: store.GameReducer.totalAttempts,
+    secondsElapsed: state.GameReducer.secondsElapsed,
+    gameOverTimeLeft: state.GameReducer.gameOverTimeLeft,
+    userQuit: state.GameReducer.userQuit,
+    gameOver: state.GameReducer.gameOver,
+    gameData: state.GameReducer.gameData,
+    countPolygonsIdentified: state.GameReducer.countPolygonsIdentified,
+    maxCountPolygons: state.GameReducer.maxCountPolygons,
+    incorrectEntries: state.GameReducer.incorrectEntries,
+    totalAttempts: state.GameReducer.totalAttempts,
 
   }
 })
