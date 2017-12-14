@@ -45,28 +45,16 @@ let map;
     gameData: state.GameReducer.gameData,
 
     //score data
-    countPolygonsIdentified: ,
-    countTotalSubmissions: ,
-    polygonsAnswered: ,
-    polygonsUnanswered: ,
-    incorrectEntries: ,
-    gameTimerStart: ,
-    gameTimerRemaining: ,
-    gameStartTimestamp: ,
-    gameEndTimestamp: ,
-    ipWhereGamePlayed: ,
-
-
-    secondsElapsed: state.GameReducer.secondsElapsed,
-    gameOverTimeLeft: state.GameReducer.gameOverTimeLeft,
-    userQuit: state.GameReducer.userQuit,
-    gameOver: state.GameReducer.gameOver,
-    gameData: state.GameReducer.gameData,
-    countPolygonsIdentified: state.GameReducer.countPolygonsIdentified,
-    maxCountPolygons: state.GameReducer.maxCountPolygons,
-    incorrectEntries: state.GameReducer.incorrectEntries,
-    totalAttempts: state.GameReducer.totalAttempts,
-
+    countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
+    countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    polygonsAnswered: state.ScoreReducer.polygonsAnswered,
+    polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
+    incorrectEntries: state.ScoreReducer.incorrectEntries,
+    gameTimerStart: state.ScoreReducer.gameTimerStart,
+    gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
+    gameStartTimestamp: state.ScoreReducer.gameStartTimestamp,
+    gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
+    ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
 
   }
 })
@@ -76,9 +64,11 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      quit: false,
-      showMissingCountries: false,
+      userQuit: false,
+      renderMissingCountriesButton: false,
+      gameSettings: true,
       gameStart: false,
+      gameEnd: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -91,13 +81,12 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
-
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
-      zoom: 2,
+      zoom: this.props.gameZoom,
       center: {
-        lat: 30,
-        lng: 31,
+        lat: this.props.gameCenterCoords[0],
+        lng: this.props.gameCenterCoords[1],
       },
       zoomControl: true,
       zoomControlOptions: {
@@ -110,28 +99,25 @@ export default class Map extends React.Component {
       styles: mapDetails
     });
     //load in coordinate data with country name information
-    map.data.loadGeoJson(
-      'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json');
+    map.data.loadGeoJson(this.props.gameJSON);
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
-      fillColor: 'black',
-      fillOpacity: '1',
-      strokeColor: 'white',
+      fillColor: 'firebrick',
+      fillOpacity: '.6',
+      strokeColor: 'orange',
       strokeWeight: '1'
     });
-    //build game instance in redux
+    //build game instance in redux and stores as gameData
     this.props.dispatch(
-      initializeNewGame(
-        'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json'
-      )
+      initializeNewGame(this.props.gameJSON)
     );
 
   }
   //on quit, set change game state and clear timer
   handleQuit() {
     this.setState({
-      quit: true,
-      gameOver : true });
+      userQuit: true,
+      gameEnd : true });
     clearInterval(this.incrementer);
   }
   //on start focus client cursor to answerInput field and start timer?
