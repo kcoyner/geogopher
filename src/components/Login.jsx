@@ -22,7 +22,9 @@ class Login extends React.Component {
     const { dispatch } = this.props;
     console.log('success: ', response);
     dispatch(userActions.login(response));
+    console.log('++++++++',this.props.userGameSelected);
     if(this.props.userGameSelected) {
+      
       // route to correct game link
       this.props.history.push('/map');
     } else {
