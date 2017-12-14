@@ -19,16 +19,16 @@ INSERT INTO polygons (polygon_id,	polygon_name,	coordinates,	polygon_accepted_na
 INSERT INTO polygons (polygon_id,	polygon_name,	coordinates,	polygon_accepted_names,	polygon_type_id, polygon_region_id) VALUES (4, 'Netherlands', '6.871668,53.416109 7.208364,53.242807 7.051668,52.64361 6.68889,52.549166 7.065557,52.385828 6.82889,51.965555 5.9625,51.807779 6.222223,51.46583 5.864721,51.046106 6.011801,50.757273 5.640833,50.839724 5.849173,51.156382 5.041391,51.486666 4.252371,51.375147 3.440832,51.53583 4.286112,51.44861 3.687502,51.709719 4.167753,51.685572 3.865557,51.814997 4.584433,52.461504 5.424444,52.248606 5.533609,52.267221 5.624723,52.354166 5.774168,52.405275 5.878057,52.509439 5.855001,52.606913 5.599443,52.658609 5.599169,52.757776 5.718351,52.838022 5.368612,52.877779 5.420557,52.964441 5.364168,53.070276 5.100279,52.948053 5.304167,52.706942 5.033335,52.634165 5.028334,52.375834 4.58,52.471666 4.734167,52.955553 6.871668,53.416109', '[Netherlands, Holland]', 1, 3);
 
 -- actual game data
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (1, 'world countries', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json', '[30, 31]', 2, 195, 1950);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (2, 'middle east & north africa', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-middle-east-and-north-africa.json', '[27,30]', 4, 21, 210);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (3, 'europe', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-europe.json', '[52,20]', 4, 44, 440);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (4, 'sub-saharan africa', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-sub-saharan-africa.json', '[0,25]', 4, 50, 500);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (5, 'carribean', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-carribean.json', '[19,-72.416667]', 4, 13, 130);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (6, 'south america', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-south-america.json', '[-17,-65]', 3, 12, 120);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (7, 'russia & central asia', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-russia-and-central-asia.json', '[48,68]', 4, 9, 90);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (8, 'south pacific', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-south-pacific.json', '[-16,167]', 3, 13, 130);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (9, 'east asia', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-east-asia.json', '[16.166667,107.833333]', 3, 23, 230);
-INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (10, 'north america', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-north-america.json', '[39.828175,-98.5795]', 3, 10, 100);
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (1, 'world countries', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json', '[30, 31]', 2, 195, '00:26:00');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (2, 'middle east & north africa', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-middle-east-and-north-africa.json', '[27,30]', 4, 21, '00:02:48');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (3, 'europe', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-europe.json', '[52,20]', 4, 44, '00:05:52');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (4, 'sub-saharan africa', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-sub-saharan-africa.json', '[0,25]', 4, 50, '00:06:40');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (5, 'carribean', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-carribean.json', '[19,-72.416667]', 4, 13, '00:01:44');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (6, 'south america', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-south-america.json', '[-17,-65]', 3, 12, '00:01:36');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (7, 'russia & central asia', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-russia-and-central-asia.json', '[48,68]', 4, 9, '00:01:12');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (8, 'south pacific', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-south-pacific.json', '[-16,167]', 3, 13, '00:01:44');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (9, 'east asia', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-east-asia.json', '[16.166667,107.833333]', 3, 23, '00:03:04');
+INSERT INTO games (game_id, game_name, game_data, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (10, 'north america', 'https://s3.amazonaws.com/gopher-geofiles/geogophers-game-north-america.json', '[39.828175,-98.5795]', 3, 10, '00:01:20');
 
 -- actual game types
 INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (1, 'Countdown', 'Name all the countries in any order before time runs out!');
@@ -37,13 +37,13 @@ INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (3,
 INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (4, 'Country to Capital', 'Name the right capital for each country shown');
 
 -- actual game modes
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (1, 'easy', '{multiplier: 1.5}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (2, 'normal', '{multiplier: 1}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (3, 'hard', '{multiplier: .5}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (4, '1 min', '{override: 1}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (5, '3 min', '{override: 3}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (6, '5 min', '{override: 5}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation, compatible_games) VALUES (7, '10 min', '{override: 10}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'easy', '{multiplier: 1.5}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (2, 'normal', '{multiplier: 1}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (3, 'hard', '{multiplier: .5}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (4, '1 min', '{override: 1}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (5, '3 min', '{override: 3}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (6, '5 min', '{override: 5}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (7, '10 min', '{override: 10}');
 
 -- sample user data
 INSERT INTO users (user_id, google_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token) VALUES (1, 'countrygal500', 'countrygal500', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 0, '2017-11-11 10:23:54+02', TRUE, 'Hannah', 'Arendt', 'iknowthings@manythings.com', '1.127.23.34', '4bDac45deUys');

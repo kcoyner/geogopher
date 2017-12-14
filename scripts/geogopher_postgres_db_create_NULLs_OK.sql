@@ -82,6 +82,7 @@ CREATE TABLE "scores" (
 
 CREATE TABLE "users" (
 	"user_id" serial NOT NULL UNIQUE,
+	"google_id" varchar,
 	"username" varchar,
 	"password_hash" varchar,
 	"password_salt" varchar,
