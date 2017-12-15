@@ -60,14 +60,19 @@ div.game-controls{
   width: 100vw;
   height: 100vh;
 
+    .game-title{
+      grid-column: 1;
+      grid-row: 1;
+      z-index: 4;
+    }
+
     div#map{
-      display: grid;
       grid-column: 1/4;
       grid-row: 1/11;
       z-index: 0;
     }
 
-    input.answer-input, input.answer-input:focus{
+    input.input-entry, input.input-entry:focus{
       grid-column: 1;
       grid-row: 10;
       font-size: 3vw;
@@ -112,7 +117,7 @@ div.game-controls{
       z-index: 4;
     }
 
-    .time-elapsed-title{
+    .time-remaining-title{
       grid-column: 3/4;
       grid-row: 9;
       z-index: 4;
@@ -124,7 +129,7 @@ div.game-controls{
       }
     }
 
-    .time-elapsed{
+    .time-remaining{
       grid-column: 3/4;
       grid-row: 10;
       z-index: 4;

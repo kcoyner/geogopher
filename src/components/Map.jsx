@@ -217,21 +217,21 @@ export default class Map extends React.Component {
       <div className="container">
         <div className="game-controls">
 
-          <GameSettings
-            onClose={ this.handleClose }
-            onContinue={this.handleSettings}
-            open={this.state.gameSettings}
-          />
+        <GameSettings
+          onClose={ this.handleClose }
+          onContinue={this.handleSettings}
+          open={this.state.gameSettings}
+        />
 
-          <GameStart
-            onClose={ this.handleClose }
-            onStart={this.handleStart}
-            open={!this.state.gameSettings && !this.state.gameStart}
-          />
+        <GameStart
+          onClose={ this.handleClose }
+          onStart={this.handleStart}
+          open={!this.state.gameSettings && !this.state.gameStart}
+        />
 
         <div className="game-title">
-          <h1>World Countries</h1>
-          <h2>Countdown | Normal</h2>
+          <h1>{ this.props.gameSelected }</h1>
+          <h2>{ this.props.gameTypeSelected+" | "+this.props.gameDifficultySelected }</h2>
         </div>
 
         <div className="show-missing-countries">
@@ -247,7 +247,8 @@ export default class Map extends React.Component {
         </div>
 
         <div className="countries-answered">
-          <h1> Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons} </h1>
+          <h1> Countries Answered:</h1>
+          <h2> {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}  </h2>
         </div>
 
         <input
