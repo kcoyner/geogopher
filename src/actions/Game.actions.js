@@ -31,6 +31,26 @@ export const selectGame = (gameSelected) => {
     })
   }
 }
+export const setGameDifficulty = (gameDifficultySelected) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'GAME_DIFFICULTY_SELECTED',
+      payload: {
+        gameDifficultySelected: gameDifficultySelected,
+      }
+    })
+  }
+}
+export const setGameType = (gameTypeSelected) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'GAME_TYPE_SELECTED',
+      payload: {
+        gameTypeSelected: gameTypeSelected,
+      }
+    })
+  }
+}
 
 export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameData) => {
   console.log('polygonsIdentified', countPolygonsIdentified);

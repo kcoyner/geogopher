@@ -31,15 +31,11 @@
 export default function reducer(state = {
       secondsElapsed: 0,
       gameOverTimeLeft: -1,
-      userQuit: false,
-      gameOver: false,
       gameData: null,
       countPolygonsIdentified: 0,
       maxCountPolygons: null,
       incorrectEntries: [],
       totalAttempts: 0,
-
-
       gameSelected: null,
       gameJSON: null,
       gameCenterCoords: null,
@@ -74,11 +70,16 @@ export default function reducer(state = {
         maxCountPolygons: action.payload.maxCountPolygons,
       };
 
-    case 'GAME_SETTINGS_SELECTED':
+    case 'GAME_TYPE_SELECTED':
       return {
         ...state,
-        gameTypeSelected: action.payloard.gameTypeSelected,
-        gameDifficultySelected: action.payloard.gameDifficultySelected,
+        gameTypeSelected: action.payload.gameTypeSelected,
+      };
+
+    case 'GAME_DIFFICULTY_SELECTED':
+      return {
+        ...state,
+        gameDifficultySelected: action.payload.gameDifficultySelected,
       };
 
     case 'GAME_DATA_BUILT':

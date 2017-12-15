@@ -13,6 +13,7 @@ import {
   setGameDifficultyID,
   setTimer,
 } from '../actions/Score.actions'
+import { setGameType, setGameDifficulty } from '../actions/Game.actions'
 import { manipulateTimer } from '../utils/manipulateTimer'
 
 @connect((state) => {
@@ -53,6 +54,7 @@ class GameStart extends React.Component {
         this.setState({gameTypeDescription: el.game_type_description});
         //dispatch gameTypeID to scores
         this.props.dispatch(setGameTypeID(el.game_type_id))
+        this.props.dispatch(setGameType(el.game_type_name))
       }
     });
   }
@@ -69,6 +71,7 @@ class GameStart extends React.Component {
         } else {
           this.props.dispatch(setTimer(manipulateTimer(timeManipulation.multiplier, this.props.gameTimerStart)))
         }
+        this.props.dispatch(setGameDifficulty(el.game_difficulty_name))
       }
     });
 

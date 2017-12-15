@@ -140,7 +140,7 @@ export default class Map extends React.Component {
     this.setState({ open: false });
     this.props.history.push('/');
   }
-  //regisers inputs entered into input field
+  //registers inputs entered into input field
   onInputChange(e) {
     this.setState({ inputValue: e.target.value })
   }
@@ -226,7 +226,7 @@ export default class Map extends React.Component {
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
-            open={!this.state.gameSettings}
+            open={!this.state.gameSettings && !this.state.gameStart}
           />
 
         <div className="game-title">
