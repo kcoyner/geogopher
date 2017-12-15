@@ -31,10 +31,10 @@ INSERT INTO games (game_id, game_name, game_description, game_json, game_center_
 INSERT INTO games (game_id, game_name, game_description, game_json, game_center_coords, game_zoom, max_count_polygons, base_time) VALUES (10, 'north america', 'Master the locations of all 10 UN Member and Observer countries','https://s3.amazonaws.com/gopher-geofiles/geogophers-game-north-america.json', '[39.828175,-98.5795]', 3, 10, '00:01:20');
 
 -- actual game types
-INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (1, 'Countdown', 'Name all the countries in any order before time runs out!');
-INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (2, 'Name The Country', 'Name each country as they are shown');
-INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (3, 'Capital to Country', 'Click the right country based on the capital shown');
-INSERT INTO game_types (game_type_id, game_type_name, game_type_info) VALUES (4, 'Country to Capital', 'Name the right capital for each country shown');
+INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VALUES (1, 'Countdown', 'Name all the countries in any order before time runs out!');
+INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VALUES (2, 'Name The Country', 'Name each country as they are shown');
+INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VALUES (3, 'Capital to Country', 'Click the right country based on the capital shown');
+INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VALUES (4, 'Country to Capital', 'Name the right capital for each country shown');
 
 -- actual game modes
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'easy', '{multiplier: 1.5}');

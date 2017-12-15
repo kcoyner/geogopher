@@ -121,6 +121,11 @@ export default class Map extends React.Component {
       gameEnd : true });
     clearInterval(this.incrementer);
   }
+  //stores game settings and opens gameStart
+  handleSettings() {
+      this.props.dispatch()
+      this.setState({gameSettings: false, gameStart: true})
+    }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
       this.nameInput.focus();
@@ -211,6 +216,12 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
+
+          <GameSettings
+            onClose={ this.handleClose }
+            onStart={this.handleSettings}
+            open={this.state.gameStart}
+          />
 
           <GameStart
             onClose={ this.handleClose }

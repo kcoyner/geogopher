@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
 import { Card, Image } from 'semantic-ui-react';
-import { selectGame, userActions, setScoreIDs, fetchGamesList } from '../actions/index'
+import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings } from '../actions/index'
 
 //pull in img no clue why it needs to be in this format.
 const placeholderImg = require('-!file-loader?name=placeholderImg!../assets/games-list-placeholder.png');
@@ -37,6 +37,9 @@ class GamesList extends React.Component {
     // if(this.props.user) {
       //dispatch game selection over to map
       this.props.dispatch(selectGame(this.props.games[gameSelected]));
+      //get game settings options queued up
+      this.props.dispatch(fetchGameSettings());
+      //set score with settings chosen this far
       this.props.dispatch(setScoreIDs(this.props.games[gameSelected]))
 
       this.props.history.push('/map');

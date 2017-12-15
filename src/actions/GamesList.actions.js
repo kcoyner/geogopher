@@ -3,19 +3,35 @@
  */
 
 import axios from 'axios';
-const apiUrl = '/api/gameslist';
+const gamesListApi = '/api/gameslist';
+const gameSettingsApi = '/api/gameSettings';
 
 export const fetchGamesList = () => {
   return (dispatch) => {
-    axios.get(apiUrl)
-      .then(response => {
-        console.log(apiUrl);
-        dispatch({ type: 'FETCH_GAMESLIST', payload: response.data });
-        return response;
+    axios.get(gamesListApi)
+      .then(res => {
+        dispatch({ type: 'FETCH_GAMESLIST', payload: res.data });
+        return res;
       })
-      .catch(error => {
-        console.log('GEOGOPHER error: ', error);
-        throw (error);
+      .catch(err => {
+        console.log('GEOGOPHER error: ', err);
+        throw (err);
       });
   };
 };
+
+export const fetchGameSettings = () => {
+  return (dispatch) => {
+    axios.get(gameSettingsApi)
+      .then(res => {
+        console.log('😙 we getting response from dataquery now')
+        console.log(res.data)
+        dispatch({type: 'FETCH_GAME_TYPES_AND_DIFFICULTIES', payload: res.data});
+        return res;
+      })
+      .catch(err => {
+        console.log('GEOGOPHER error: ', err);
+        throw (err);
+      })
+  }
+}

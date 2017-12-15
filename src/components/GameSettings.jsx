@@ -4,6 +4,7 @@ import {
   Button,
   Header,
   Image,
+  Checkbox,
   Modal } from 'semantic-ui-react';
 
 class GameStart extends React.Component {
@@ -16,7 +17,8 @@ class GameStart extends React.Component {
                 <Modal.Header>GAME SETTINGS</Modal.Header>
                 <Modal.Content>
                 <Modal.Description>
-                    
+                    Countdown: <Checkbox checked={false} onClick={ false }toggle />
+
                 </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>

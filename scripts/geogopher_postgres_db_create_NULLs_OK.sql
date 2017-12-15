@@ -46,7 +46,7 @@ CREATE TABLE "games" (
 CREATE TABLE "game_types" (
 	"game_type_id" serial NOT NULL UNIQUE,
 	"game_type_name" varchar NOT NULL,
-	"game_type_info" varchar NOT NULL,
+	"game_type_description" varchar NOT NULL,
 	CONSTRAINT game_types_pk PRIMARY KEY ("game_type_id")
 ) WITH (
   OIDS=FALSE
