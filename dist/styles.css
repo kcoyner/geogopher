@@ -1,25 +1,91 @@
 #app h1 {
-  color: fuchsia; }
+  color: chartreuse; }
 
 div.game-controls {
-  z-index: 100;
-  position: absolute; }
+  display: grid;
+  grid-template-columns: 6fr 2fr 2fr;
+  grid-template-rows: repeat(10, 1fr);
+  grid-gap: 15px;
+  width: 100vw;
+  height: 100vh; }
+  div.game-controls div#map {
+    display: grid;
+    grid-column: 1/4;
+    grid-row: 1/11;
+    z-index: 0; }
+  div.game-controls input.answer-input, div.game-controls input.answer-input:focus {
+    grid-column: 1;
+    grid-row: 10;
+    font-size: 3vw;
+    font-family: 'helvetica';
+    font-weight: bolder;
+    z-index: 4;
+    color: white;
+    background-color: black;
+    border: 3px solid transparent;
+    -moz-border-image: -moz-linear-gradient(top, aqua 0%, chartreuse 100%);
+    -webkit-border-image: -webkit-linear-gradient(top, aqua 0%, chartreuse 100%);
+    border-image: linear-gradient(to bottom, aqua 0%, chartreuse 100%);
+    border-image-slice: 1;
+    border-radius: 1px; }
+  div.game-controls .quit-game-btn {
+    grid-column: 2/3;
+    grid-row: 10;
+    z-index: 4;
+    font-size: 30px;
+    background-color: black;
+    color: white; }
+    div.game-controls .quit-game-btn:hover {
+      border: 3px solid chartreuse;
+      border-radius: 1px;
+      color: chartreuse;
+      background-color: black;
+      padding: 0; }
+  div.game-controls .page-header {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 4; }
+  div.game-controls .countries-answered {
+    grid-column: 3/4;
+    grid-row: 1;
+    z-index: 4; }
+  div.game-controls .time-elapsed-title {
+    grid-column: 3/4;
+    grid-row: 9;
+    z-index: 4;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr); }
+    div.game-controls .time-elapsed-title h1 {
+      grid-row: 2; }
+  div.game-controls .time-elapsed {
+    grid-column: 3/4;
+    grid-row: 10;
+    z-index: 4;
+    font-size: 4vw;
+    margin: 0; }
 
-.maps {
-  width: 100%;
-  height: 100vh;
-  position: absolute; }
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
 
-div#map {
-  top: 0px;
-  z-index: 0; }
+::-moz-placeholder {
+  /* Firefox 19+ */
+  background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
 
-input.answer-input {
-  height: 30px;
-  left: 0;
-  right: 0;
-  font-size: 25px;
-  font-family: 'helvetica';
-  font-weight: bolder; }
+:-ms-input-placeholder {
+  /* IE 10+ */
+  background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  background: -webkit-linear-gradient(aqua, chartreuse);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZXMuY3NzIiwic291cmNlUm9vdCI6IiJ9*/

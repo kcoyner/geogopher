@@ -80,12 +80,3 @@ export const incrementTotalAttempts = (totalAttempts) => {
     });
   }
 };
-
-export const startGame = (gameStart) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'START_GAME',
-      payload: {gameStart: true}
-    });
-  }
-}

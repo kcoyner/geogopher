@@ -101,13 +101,17 @@ apiRouter.route('/user')
 
 apiRouter.route('/gameslist')
   .get(cors(corsOptions), (req, res) => {
-    db.games.findAll({
-      attributes: ['game_name']
-    })
+    db.games.findAll()
       .then(games => {
       res.send(games);
     })
 });
+
+// game_data` varchar NOT NULL,
+// 	`game_center_coords` varchar NOT NULL,
+// 	`game_zoom` varchar NOT NULL,
+// 	`max_count_polygons` INT NOT NULL,
+// 	`base_time` TIME NOT NULL,
 
 apiRouter.route('/user')
   .get((req, res) => {
@@ -135,7 +139,7 @@ apiRouter.route('/user')
 app.get('/auth/google',
 passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-app.get('/auth/google/callback', 
+app.get('/auth/google/callback',
 passport.authenticate('google', { failureRedirect: '/login' }),
 function(req, res) {
   console.log(req.user);

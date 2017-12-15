@@ -33,12 +33,14 @@ class GamesList extends React.Component {
   onGameSelect(gameIndex) {
     this.props.dispatch(userActions.selectGame(this.props.games[gameIndex]));
     if(this.props.user) {
+      //dispatch game selection over to map
+      
       // map to correct game based on game index
       this.props.history.push('/map');
     } else {
       this.props.history.push('/login');
     }
-    
+
   }
 
   render() {

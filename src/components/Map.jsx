@@ -6,8 +6,9 @@ import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sanitizeInput } from '../utils/answerSanitize';
-import { checkAnswer } from '../utils/checkAnswerInputted';
+import { checkAnswerCountdown } from '../utils/checkAnswerInputted';
 import { toggleMissingCountries } from '../utils/toggleMissingCountries';
+import { mapDetails } from '../utils/mapDetails';
 import {
   initializeNewGame,
   submitCorrectAnswer,
@@ -17,22 +18,21 @@ import {
   incrementTotalAttempts,
 } from '../actions/Game.actions';
 
-
-
 let map;
 
 @connect((state) => {
   return {
+
     secondsElapsed: state.GameReducer.secondsElapsed,
     gameOverTimeLeft: state.GameReducer.gameOverTimeLeft,
     userQuit: state.GameReducer.userQuit,
-    gameStart: state.GameReducer.gameStart,
     gameOver: state.GameReducer.gameOver,
     gameData: state.GameReducer.gameData,
     countPolygonsIdentified: state.GameReducer.countPolygonsIdentified,
     maxCountPolygons: state.GameReducer.maxCountPolygons,
     incorrectEntries: state.GameReducer.incorrectEntries,
     totalAttempts: state.GameReducer.totalAttempts,
+
   }
 })
 
@@ -41,9 +41,9 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      secondsElapsed: 30000,
       quit: false,
       showMissingCountries: false,
+      gameStart: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -62,7 +62,7 @@ export default class Map extends React.Component {
       zoom: 2,
       center: {
         lat: 30,
-        lng: 31
+        lng: 31,
       },
       zoomControl: true,
       zoomControlOptions: {
@@ -72,32 +72,11 @@ export default class Map extends React.Component {
       mapTypeControl: false,
       mapTypeId: 'roadmap',
       //turn off all country names and labels
-      styles: [
-        {
-          featureType: "all",
-          elementType: "labels",
-          stylers: [
-            {
-              visibility: "off"
-            }
-          ]
-        },
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [
-              {
-                color: "#5F9EA0",
-                fillOpacity: '0.5'
-
-              }
-            ]
-          }
-      ]
+      styles: mapDetails
     });
     //load in coordinate data with country name information
     map.data.loadGeoJson(
-      'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json');
+      'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json');
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
       fillColor: 'black',
@@ -108,7 +87,7 @@ export default class Map extends React.Component {
     //build game instance in redux
     this.props.dispatch(
       initializeNewGame(
-        'https://s3.amazonaws.com/gopher-geofiles/geogophers-mvp-world-countries.json'
+        'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json'
       )
     );
 
@@ -123,9 +102,7 @@ export default class Map extends React.Component {
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
       this.nameInput.focus();
-      this.props.dispatch(
-        startGame(this.props.gameStart)
-      );
+      this.setState({gameStart: true})
       this.incrementer = setInterval( () =>
         this.props.dispatch(
           decrementTime(this.props.secondsElapsed)
@@ -149,12 +126,17 @@ export default class Map extends React.Component {
   }
   //keypress checks if key is 'enter'. registers value against answers and clears input
   keyPress(e) {
+    // map.setCenter({lat:24,lng:-76}) this will dynamically change map center
+
     if(e.keyCode == 13){
         let answerInputted = e.target.value;
+        //clear text input after user hits enter
         this.setState({inputValue: ''});
+        //sanitize input to all lowercase and remove '.'
         let answerSanitized = sanitizeInput(answerInputted);
-        let answerResponse = checkAnswer(answerSanitized, this.props.gameData);
-
+        //check answer for countdown game
+        let answerResponse = checkAnswerCountdown(answerSanitized, this.props.gameData);
+        
         if (answerResponse[0] === 'incorrect') {
           //dispatch and add to incorrectCountriesEntered
           this.props.dispatch(
@@ -233,7 +215,7 @@ export default class Map extends React.Component {
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
-            open={this.props.gameStart}
+            open={this.state.gameStart}
           />
 
           <div className="page-header">

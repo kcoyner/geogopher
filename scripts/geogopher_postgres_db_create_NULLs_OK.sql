@@ -45,6 +45,7 @@ CREATE TABLE "games" (
 CREATE TABLE "game_types" (
 	"game_type_id" serial NOT NULL UNIQUE,
 	"game_type_name" varchar NOT NULL,
+	"game_type_info" varchar NOT NULL,
 	CONSTRAINT game_types_pk PRIMARY KEY ("game_type_id")
 ) WITH (
   OIDS=FALSE
@@ -63,11 +64,16 @@ CREATE TABLE "scores" (
 	"score_id" serial NOT NULL UNIQUE,
 	"user_id" integer NOT NULL,
 	"count_polygons_identified" integer NOT NULL,
+	"count_total_submissions" integer NOT NULL,
+	"polygons_answered" varchar NOT NULL,
+	"polygons_unanswered" varchar NOT NULL,
+	"incorrect_entries" varchar NOT NULL,
 	"game_id" integer NOT NULL,
 	"game_type_id" integer NOT NULL,
 	"game_difficulty_id" integer NOT NULL,
-	"time_taken" varchar NOT NULL,
-	"when_game_played" TIMESTAMP WITH TIME ZONE,
+	"game_time_elapsed" varchar NOT NULL,
+	"game_start_timestamp" TIMESTAMP WITH TIME ZONE,
+	"game_end_timestamp" TIMESTAMP WITH TIME ZONE,
 	"ip_where_game_played" varchar NOT NULL,
 	CONSTRAINT scores_pk PRIMARY KEY ("score_id")
 ) WITH (
@@ -98,4 +104,3 @@ ALTER TABLE "scores" ADD CONSTRAINT "scores_fk0" FOREIGN KEY ("user_id") REFEREN
 ALTER TABLE "scores" ADD CONSTRAINT "scores_fk1" FOREIGN KEY ("game_id") REFERENCES "games"("game_id");
 ALTER TABLE "scores" ADD CONSTRAINT "scores_fk2" FOREIGN KEY ("game_type_id") REFERENCES "game_types"("game_type_id");
 ALTER TABLE "scores" ADD CONSTRAINT "scores_fk3" FOREIGN KEY ("game_difficulty_id") REFERENCES "game_difficulties"("game_difficulty_id");
-
