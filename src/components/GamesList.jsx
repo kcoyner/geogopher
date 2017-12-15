@@ -31,14 +31,14 @@ class GamesList extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(fetchGamesList());
+    //get game settings options queued up
+    this.props.dispatch(fetchGameSettings());
   }
 
   onGameSelect(gameSelected) {
     // if(this.props.user) {
       //dispatch game selection over to map
       this.props.dispatch(selectGame(this.props.games[gameSelected]));
-      //get game settings options queued up
-      this.props.dispatch(fetchGameSettings());
       //set score with settings chosen this far
       this.props.dispatch(setScoreIDs(this.props.games[gameSelected]))
 

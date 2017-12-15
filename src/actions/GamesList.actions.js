@@ -1,7 +1,3 @@
-/*
- * src/actions/GamesList.actions.js
- */
-
 import axios from 'axios';
 const gamesListApi = '/api/gameslist';
 const gameSettingsApi = '/api/gameSettings';
@@ -24,7 +20,6 @@ export const fetchGameSettings = () => {
   return (dispatch) => {
     axios.get(gameSettingsApi)
       .then(res => {
-        console.log('😙 we getting response from dataquery now')
         console.log(res.data)
         dispatch({type: 'FETCH_GAME_TYPES_AND_DIFFICULTIES', payload: res.data});
         return res;
