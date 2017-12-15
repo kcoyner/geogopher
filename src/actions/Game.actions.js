@@ -17,6 +17,21 @@ export const initializeNewGame = (apiUrl) => {
   };
 };
 
+export const selectGame = (gameSelected) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'GAME_SELECTED',
+      payload: {
+        gameSelected: gameSelected.game_name,
+        gameJSON: gameSelected.game_json,
+        gameCenterCoords: JSON.parse(gameSelected.game_center_coords),
+        gameZoom: gameSelected.game_zoom,
+        maxCountPolygons: gameSelected.max_count_polygons,
+      }
+    })
+  }
+}
+
 export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameData) => {
   console.log('polygonsIdentified', countPolygonsIdentified);
   console.log('polygonIndex', polygonIndex);

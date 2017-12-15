@@ -6,9 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
-import { fetchGamesList } from '../actions/GamesList.actions';
-import { userActions } from '../actions';
 import { Card, Image } from 'semantic-ui-react';
+import { selectGame, userActions, setScoreIDs, fetchGamesList } from '../actions/index'
 
 //pull in img no clue why it needs to be in this format.
 const placeholderImg = require('-!file-loader?name=placeholderImg!../assets/games-list-placeholder.png');
@@ -37,7 +36,8 @@ class GamesList extends React.Component {
   onGameSelect(gameSelected) {
     // if(this.props.user) {
       //dispatch game selection over to map
-      this.props.dispatch(userActions.selectGame(this.props.games[gameSelected]));
+      this.props.dispatch(selectGame(this.props.games[gameSelected]));
+      this.props.dispatch(setScoreIDs(this.props.games[gameSelected]))
 
       this.props.history.push('/map');
       // map to correct game based on game index
@@ -73,9 +73,7 @@ class GamesList extends React.Component {
                   </div>
                 </Card.Content>
               </Card>
-              // <div key={ index }>
-              //   { game.game_name }
-              // </div>
+
             )
           ) }
 

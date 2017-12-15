@@ -3,8 +3,7 @@ import { userService } from '../services';
 export const userActions = {
     register,
     login,
-    logout,
-    selectGame
+    logout
 };
 
 function register(user) {
@@ -51,11 +50,4 @@ function login(user) {
 function logout() {
     userService.logout();
     return { type: 'LOGOUT' };
-}
-
-function selectGame(gameName) {
-    return dispatch => {
-        return dispatch({ type: 'SELECT_GAME', payload: gameName});
-    }
-
 }

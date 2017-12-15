@@ -68,10 +68,10 @@ export default function reducer(state = {
       return {
         ...state,
         gameSelected: action.payload.gameSelected,
-        gameJSON: action.payloard.gameJSON,
-        gameCenterCoords: action.payloard.gameCenterCoords,
-        gameZoom: action.payloard.gameZoom,
-        maxCountPolygons: action.payloard.maxCountPolygons,
+        gameJSON: action.payload.gameJSON,
+        gameCenterCoords: action.payload.gameCenterCoords,
+        gameZoom: action.payload.gameZoom,
+        maxCountPolygons: action.payload.maxCountPolygons,
       };
 
     case 'GAME_SETTINGS_SELECTED':

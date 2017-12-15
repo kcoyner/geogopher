@@ -1,91 +1,27 @@
-    // //pre game data
-    // userName: 'SenecaTheYounger',
-    // userID: 1,
-    // countGamesPlayed: 10,
-    // token: null,
-    // lastLogin: null,
-    //
-    // //game settings
-    // gameSelected: state.GameReducer.gameSelected,
-    // gameJSON: state.GameReducer.gameJSON,
-    // gameCenterCoords: state.GameReducer.gameCenterCoords,
-    // gameZoom: state.GameReducer.gameZoom,
-    // maxCountPolygons: state.GameReducer.maxCountPolygons,
-    // gameTypeSelected: state.GameReducer.gameTypeSelected,
-    // gameDifficultySelected: state.GameReducer.gameDifficultySelected,
-    // gameData: state.GameReducer.gameData,
-    //
-    // //score data
-    // countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
-    // countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
-    // polygonsAnswered: state.ScoreReducer.polygonsAnswered,
-    // polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
-    // incorrectEntries: state.ScoreReducer.incorrectEntries,
-    // gameTimerStart: state.ScoreReducer.gameTimerStart,
-    // gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
-    // gameStartTimestamp: state.ScoreReducer.gameStartTimestamp,
-    // gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
-    // ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
-
-
 export default function reducer(state = {
-      secondsElapsed: 0,
-      gameOverTimeLeft: -1,
-      userQuit: false,
-      gameOver: false,
-      gameData: null,
-      countPolygonsIdentified: 0,
-      maxCountPolygons: null,
-      incorrectEntries: [],
-      totalAttempts: 0,
-
-
-      gameSelected: null,
-      gameJSON: null,
-      gameCenterCoords: null,
-      gameZoom: null,
-      maxCountPolygons: null,
-      gameTypeSelected: null,
-      gameDifficultySelected: null,
-      gameData: null,
+    userID: null,
+    gameID: null,
+    gameTypeID: null,
+    gameDifficultyID: null,
+    countPolygonsEntered: null,
+    countTotalSubmissions: null,
+    polygonsAnswered: null,
+    polygonsUnanswered: null,
+    incorrectEntries: null,
+    gameTimerStart: null,
+    gameTimerRemaining: null,
+    gameStartTimestamp: null,
+    gameEndTimestamp: null,
+    ipWhereGamePlayed: null,
   },
   action) {
   switch (action.type) {
-    case 'CLEAR_GAME':
+    case 'SET_GAME_ID':
       return {
         ...state,
-      gameSelected: null,
-      gameJSON: null,
-      gameCenterCoords: null,
-      gameZoom: null,
-      maxCountPolygons: null,
-      gameTypeSelected: null,
-      gameDifficultySelected: null,
-      gameData: null,
+        gameID: action.payload.gameID,
       };
 
-    case 'GAME_SELECTED':
-      return {
-        ...state,
-        gameSelected: action.payload.gameSelected,
-        gameJSON: action.payloard.gameJSON,
-        gameCenterCoords: action.payloard.gameCenterCoords,
-        gameZoom: action.payloard.gameZoom,
-        maxCountPolygons: action.payloard.maxCountPolygons,
-      };
-
-    case 'GAME_SETTINGS_SELECTED':
-      return {
-        ...state,
-        gameTypeSelected: action.payloard.gameTypeSelected,
-        gameDifficultySelected: action.payloard.gameDifficultySelected,
-      };
-
-    case 'GAME_DATA_BUILT':
-      return {
-        ...state,
-        gameData: action.payload
-      };
 
 
     case 'ANSWER_CORRECT':
