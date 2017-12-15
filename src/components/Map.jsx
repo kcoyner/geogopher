@@ -111,7 +111,7 @@ export default class Map extends React.Component {
       strokeColor: 'orange',
       strokeWeight: '1'
     });
-    //build game instance in redux and stores as gameData
+    //build gameData in redux and stores as this.props.gameData
     this.props.dispatch(
       initializeNewGame(this.props.gameJSON)
     );
@@ -126,21 +126,25 @@ export default class Map extends React.Component {
   }
   //stores game settings and opens gameStart
   handleSettings() {
-      this.setState({gameSettings: false})
-
-      if (this.props.gameTypeSelected === 'Countdown') {
-        this.setState({renderMissingCountriesButton: true})
-      }
+    //once settings are submitted, hide modal. this also prompts the gameStart modal to render
+    this.setState({gameSettings: false})
+    //show button that renders missing countries if gameSelected is Countdown
+    if (this.props.gameTypeSelected === 'Countdown') {
+      this.setState({renderMissingCountriesButton: true})
     }
+  }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
-      this.nameInput.focus();
-      this.setState({gameStart: true})
-      this.incrementer = setInterval( () =>
-        this.props.dispatch(
-          decrementTime(this.props.secondsElapsed)
-        ), 1000);
-    }
+    //focuses cursor in input-entry when user clicks 'start'
+    this.nameInput.focus();
+    //hides gameStart modal
+    this.setState({gameStart: true})
+    //starts timer
+    this.incrementer = setInterval( () =>
+      this.props.dispatch(
+        decrementTime(this.props.gameTimerRemaining)
+      ), 1000);
+  }
   //closes gameStart modal onClick
   handleClose(){
     this.setState({ open: false });
@@ -152,7 +156,7 @@ export default class Map extends React.Component {
   }
   //resets timer and returns gameOver modal
   isEnd() {
-    if(this.state.secondsElapsed === 0) {
+    if(this.state.gameTimerRemaining === 0) {
       clearInterval(this.incrementer);
       return <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
     }
@@ -181,7 +185,7 @@ export default class Map extends React.Component {
         } else if (answerResponse[0] === 'unanswered') {
           //modify polygon fillColor
           let polygon = map.data.getFeatureById(answerResponse[1])
-          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: 'black'})
+          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: '#99FF00', strokeWeight: '1'})
           //dispatch to modify game data to register correct answer
           //and increment number of polygons identified by 1
           this.props.dispatch(

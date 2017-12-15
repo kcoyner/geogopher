@@ -85,28 +85,26 @@ div.game-controls{
       font-family: 'helvetica';
       font-weight: bolder;
       z-index: 4;
-      color: white;
-      background-color: black;
-      border: 3px solid transparent;
-      -moz-border-image: -moz-linear-gradient(top, aqua 0%, chartreuse 100%);
-      -webkit-border-image: -webkit-linear-gradient(top, aqua 0%, chartreuse 100%);
-      border-image: linear-gradient(to bottom, aqua 0%, chartreuse 100%);
-      border-image-slice: 1;
-      border-radius: 1px;
+      color: black;
+      background-color: white;
+      border: 3px solid darkslategrey;
+      border-radius: 5px;
+      margin: 10px;
     }
 
     .quit-game-btn{
+      margin: 10px;
       grid-column: 2/3;
       grid-row: 10;
       z-index: 4;
       font-size: 30px;
-      background-color: black;
+      background-color: darkorange;
       color: white;
       &:hover{
-        border: 3px solid chartreuse;
-        border-radius: 1px;
-        color: chartreuse;
-        background-color: black;
+        border: 3px solid darkorange;
+        border-radius: 5px;
+        color: darkorange;
+        background-color: firebrick;
         padding: 0;
       }
     }
@@ -153,10 +151,9 @@ div.game-controls{
   grid-template-areas: 'game game game game'
 }
 
-.ui .card{
-  grid-area: game;
-  padding: 0 auto;
-  justify-self: center;
+.ui.card{
+  align-self: center;
+  justify-self:center;
 }
 
 
