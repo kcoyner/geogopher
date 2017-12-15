@@ -8,7 +8,7 @@ export const initializeNewGame = (apiUrl) => {
         return buildGameData(response.data)
       })
       .then(response => {
-        dispatch({ type: 'NEWGAME_DATA', payload: response })
+        dispatch({ type: 'GAME_DATA_BUILT', payload: response })
         return response;
       })
       .catch(error => {
