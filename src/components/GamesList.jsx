@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
 import { Card, Image } from 'semantic-ui-react';
-import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings } from '../actions/index'
+import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer } from '../actions/index'
 
 //pull in img no clue why it needs to be in this format.
 const placeholderImg = require('-!file-loader?name=placeholderImg!../assets/games-list-placeholder.png');
@@ -41,6 +41,10 @@ class GamesList extends React.Component {
       this.props.dispatch(selectGame(this.props.games[gameSelected]));
       //set score with settings chosen this far
       this.props.dispatch(setScoreIDs(this.props.games[gameSelected]))
+      //set base time before modifications in settings are made
+      this.props.dispatch(setTimer(this.props.games[gameSelected].base_time))
+
+
 
       this.props.history.push('/map');
       // map to correct game based on game index

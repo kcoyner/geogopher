@@ -74,6 +74,7 @@ export default class Map extends React.Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleStart = this.handleStart.bind(this);
+    this.handleSettings = this.handleSettings.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
@@ -123,8 +124,7 @@ export default class Map extends React.Component {
   }
   //stores game settings and opens gameStart
   handleSettings() {
-      this.props.dispatch()
-      this.setState({gameSettings: false, gameStart: true})
+      this.setState({gameSettings: false})
     }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
@@ -219,14 +219,14 @@ export default class Map extends React.Component {
 
           <GameSettings
             onClose={ this.handleClose }
-            onStart={this.handleSettings}
-            open={this.state.gameStart}
+            onContinue={this.handleSettings}
+            open={this.state.gameSettings}
           />
 
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
-            open={this.state.gameStart}
+            open={!this.state.gameSettings}
           />
 
         <div className="game-title">

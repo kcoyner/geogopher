@@ -37,13 +37,13 @@ INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VAL
 INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VALUES (4, 'Country to Capital', 'Name the right capital for each country shown');
 
 -- actual game modes
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'easy', '{multiplier: 1.5}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (2, 'normal', '{multiplier: 1}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (3, 'hard', '{multiplier: .5}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (4, '1 min', '{override: 1}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (5, '3 min', '{override: 3}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (6, '5 min', '{override: 5}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (7, '10 min', '{override: 10}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'easy', '{"multiplier": "1.5"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (2, 'normal', '{"multiplier": "1.0"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (3, 'hard', '{"multiplier": "0.5"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (4, '1 min', '{"override": "00:01:00"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (5, '3 min', '{"override": "00:03:00"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (6, '5 min', '{"override": "00:05:00"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (7, '10 min', '{"override": "00:10:00"}');
 
 -- sample user data
 INSERT INTO users (user_id, google_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token) VALUES (1, 'countrygal500', 'countrygal500', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 0, '2017-11-11 10:23:54+02', TRUE, 'Hannah', 'Arendt', 'iknowthings@manythings.com', '1.127.23.34', '4bDac45deUys');
