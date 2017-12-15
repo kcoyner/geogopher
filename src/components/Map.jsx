@@ -82,6 +82,8 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
+
+    if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: this.props.gameZoom,
@@ -125,6 +127,10 @@ export default class Map extends React.Component {
   //stores game settings and opens gameStart
   handleSettings() {
       this.setState({gameSettings: false})
+
+      if (this.props.gameTypeSelected === 'Countdown') {
+        this.setState({renderMissingCountriesButton: true})
+      }
     }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
@@ -234,9 +240,14 @@ export default class Map extends React.Component {
           <h2>{ this.props.gameTypeSelected+" | "+this.props.gameDifficultySelected }</h2>
         </div>
 
-        <div className="show-missing-countries">
-          <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
-        </div>
+        {
+          this.state.renderMissingCountriesButton
+          ?
+          <div className="show-missing-countries-button">
+            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
+          </div>
+          : null
+        }
 
         <div className="time-remaining-title">
           <h1> Time Remaining:</h1>

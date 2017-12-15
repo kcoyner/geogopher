@@ -31,6 +31,7 @@ export const selectGame = (gameSelected) => {
     })
   }
 }
+
 export const setGameDifficulty = (gameDifficultySelected) => {
   return (dispatch) => {
     dispatch({
@@ -41,6 +42,7 @@ export const setGameDifficulty = (gameDifficultySelected) => {
     })
   }
 }
+
 export const setGameType = (gameTypeSelected) => {
   return (dispatch) => {
     dispatch({
@@ -53,9 +55,9 @@ export const setGameType = (gameTypeSelected) => {
 }
 
 export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameData) => {
-  console.log('polygonsIdentified', countPolygonsIdentified);
-  console.log('polygonIndex', polygonIndex);
-  console.log('gameData', gameData);
+  // console.log('polygonsIdentified', countPolygonsIdentified);
+  // console.log('polygonIndex', polygonIndex);
+  // console.log('gameData', gameData);
   return (dispatch) => {
     // incrememnt countPolygonsIdentified
     countPolygonsIdentified = countPolygonsIdentified + 1

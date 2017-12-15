@@ -60,6 +60,12 @@ div.game-controls{
   width: 100vw;
   height: 100vh;
 
+    .show-missing-countries-button{
+      grid-column: 1;
+      grid-row: 2;
+      z-index: 4;
+    }
+
     .game-title{
       grid-column: 1;
       grid-row: 1;
