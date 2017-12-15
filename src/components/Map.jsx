@@ -10,7 +10,8 @@ import {
   sanitizeInput,
   checkAnswerCountdown,
   toggleMissingCountries,
-  mapDetails
+  mapDetails,
+  getRandomUnansweredPolygon
 } from '../utils/index';
 
 import {
@@ -144,6 +145,14 @@ export default class Map extends React.Component {
       this.props.dispatch(
         decrementTime(this.props.gameTimerRemaining)
       ), 1000);
+    //initializes random country selector if game is not countdown
+    if (this.props.gameTypeSelected !== 'Countdown') {
+      let polygonInData = getRandomUnansweredPolygon(this.props.gameData)
+      map.setZoom(6)
+      map.setCenter({lat: polygonInData.countryCenter[0], lng: polygonInData.countryCenter[1]})
+      let polygonInMap = map.data.getFeatureById(polygonInData.id)
+      map.data.overrideStyle(polygonInMap, {strokeColor: '#99FF00', strokeWeight: '3'})
+    }
   }
   //closes gameStart modal onClick
   handleClose(){
@@ -258,7 +267,7 @@ export default class Map extends React.Component {
         </div>
 
         <div className="time-remaining">
-          <h1> {this.props.secondsElapsed} </h1>
+          <h1> {this.props.gameTimerRemaining} </h1>
         </div>
 
         <div className="countries-answered">

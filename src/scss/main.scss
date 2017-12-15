@@ -129,7 +129,6 @@ div.game-controls{
       grid-template-rows: repeat(2, 1fr);
       h1 {
         grid-row: 2;
-
       }
     }
 
@@ -139,6 +138,7 @@ div.game-controls{
       z-index: 4;
       font-size: 4vw;
       margin: 0;
+      align-self:center;
     }
 }
 

@@ -66,11 +66,9 @@ class GameStart extends React.Component {
         this.props.dispatch(setGameDifficultyID(el.game_difficulty_id))
         let timeManipulation = JSON.parse(el.game_time_manipulation)
 
-        if (timeManipulation.override) {
-          this.props.dispatch(setTimer(timeManipulation.override))
-        } else {
-          this.props.dispatch(setTimer(manipulateTimer(timeManipulation.multiplier, this.props.gameTimerStart)))
-        }
+
+          this.props.dispatch(setTimer(manipulateTimer(timeManipulation, this.props.gameTimerStart)))
+
         this.props.dispatch(setGameDifficulty(el.game_difficulty_name))
       }
     });
