@@ -70,7 +70,7 @@ class GamesList extends React.Component {
                     {game.game_name}
                   </Card.Header>
                   <Card.Description>
-                    Game description here
+                    {game.game_description}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
