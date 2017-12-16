@@ -16,6 +16,7 @@ export default function reducer(state = {
   },
   action) {
   switch (action.type) {
+
     case 'SET_GAME_ID':
       return {
         ...state,
@@ -57,10 +58,10 @@ export default function reducer(state = {
         gameTimerRemaining: action.payload.gameTimerRemaining,
       };
 
-    case 'INCREMENT_TOTAL_ATTEMPTS':
+    case 'INCREMENT_TOTAL_SUBMISSIONS':
       return {
         ...state,
-        totalAttempts: action.payload.totalAttempts,
+        countTotalSubmissions: action.payload.countTotalSubmissions,
       };
 
   //end switch

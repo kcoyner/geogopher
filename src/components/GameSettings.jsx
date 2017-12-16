@@ -25,7 +25,7 @@ import { manipulateTimer } from '../utils/manipulateTimer'
 })
 
 
-class GameStart extends React.Component {
+class GameSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -115,4 +115,4 @@ class GameStart extends React.Component {
     }
 }
 
-export default withRouter(GameStart);
+export default withRouter(GameSettings);
