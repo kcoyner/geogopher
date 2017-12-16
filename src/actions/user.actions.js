@@ -49,5 +49,8 @@ function login(user) {
 
 function logout() {
     userService.logout();
-    return { type: 'LOGOUT' };
+    return dispatch => { 
+        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: 'CLEAR_GAME'});
+    };
 }
