@@ -54,7 +54,7 @@ export default function reducer(state = {
     case 'DECREMENT_TIME':
       return {
         ...state,
-        secondsElapsed: action.payload.secondsElapsed,
+        gameTimerRemaining: action.payload.gameTimerRemaining,
       };
 
     case 'INCREMENT_TOTAL_ATTEMPTS':

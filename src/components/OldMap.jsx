@@ -23,7 +23,7 @@ let map;
 @connect((state) => {
   return {
 
-    secondsElapsed: state.GameReducer.secondsElapsed,
+    gameTimerRemaining: state.GameReducer.gameTimerRemaining,
     gameOverTimeLeft: state.GameReducer.gameOverTimeLeft,
     userQuit: state.GameReducer.userQuit,
     gameOver: state.GameReducer.gameOver,
@@ -107,7 +107,7 @@ export default class Map extends React.Component {
       this.setState({gameStart: true})
       this.incrementer = setInterval( () =>
         this.props.dispatch(
-          decrementTime(this.props.secondsElapsed)
+          decrementTime(this.props.gameTimerRemaining)
         ), 1000);
     }
   //closes gameStart modal onClick
@@ -121,7 +121,7 @@ export default class Map extends React.Component {
   }
   //resets timer and returns gameOver modal
   isEnd() {
-    if(this.state.secondsElapsed === 0) {
+    if(this.state.gameTimerRemaining === 0) {
       clearInterval(this.incrementer);
       return <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
     }
@@ -198,7 +198,7 @@ export default class Map extends React.Component {
         </div>
 
         <h1 className="time-elapsed">
-          {this.props.secondsElapsed}
+          {this.props.gameTimerRemaining}
         </h1>
 
         <h1 className="countries-answered">

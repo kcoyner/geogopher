@@ -94,13 +94,13 @@ export const submitIncorrectEntry = (answerInputted, incorrectEntries) => {
   }
 };
 
-export const decrementTime = (secondsElapsed) => {
+export const decrementTime = (gameTimerRemaining) => {
   return (dispatch) => {
-    secondsElapsed = secondsElapsed - 1;
+    gameTimerRemaining = gameTimerRemaining - 1;
     dispatch({
       type: 'DECREMENT_TIME',
       payload: {
-        secondsElapsed: secondsElapsed
+        gameTimerRemaining: gameTimerRemaining
       }
     });
   }
