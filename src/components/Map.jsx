@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   sanitizeInput,
-  countdownGameLogic,
+  checkAnswerCountdown,
   toggleMissingCountries,
   mapDetails,
   getRandomUnansweredPolygon
@@ -84,7 +84,7 @@ export default class Map extends React.Component {
 
   componentDidMount() {
 
-
+    if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: this.props.gameZoom,
@@ -103,6 +103,7 @@ export default class Map extends React.Component {
       styles: mapDetails
     });
     //load in coordinate data with country name information
+    console.log(this.props.gameJSON)
     map.data.loadGeoJson(this.props.gameJSON);
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
@@ -144,24 +145,14 @@ export default class Map extends React.Component {
       this.props.dispatch(
         decrementTime(this.props.gameTimerRemaining)
       ), 1000);
-
-      //initializes game based on logic for each game
-    if (this.props.gameType === 'Countdown') {
-      countdownGameLogic(map, this.props.gameData, answerSanitized)
+    //initializes random country selector if game is not countdown
+    if (this.props.gameTypeSelected !== 'Countdown') {
+      let polygonInData = getRandomUnansweredPolygon(this.props.gameData)
+      map.setZoom(6)
+      map.setCenter({lat: polygonInData.countryCenter[0], lng: polygonInData.countryCenter[1]})
+      let polygonInMap = map.data.getFeatureById(polygonInData.id)
+      map.data.overrideStyle(polygonInMap, {strokeColor: '#99FF00', strokeWeight: '3'})
     }
-
-    if (this.props.gameType === 'Name The Country') {
-      nameTheCountryGameLogic(map, this.props.gameData, answerSanitized)
-    }
-
-    if (this.props.gameType === 'Capital to Country') {
-      capitalToCountryGameLogic(map, this.props.gameData, answerSanitized)
-    }
-
-    if (this.props.gameType === 'Country to Capitals') {
-      countryToCapitalsGameLogic(map, this.props.gameData, answerSanitized)
-    }
-
   }
   //closes gameStart modal onClick
   handleClose(){
@@ -192,52 +183,34 @@ export default class Map extends React.Component {
         //check answer for countdown game
         let answerResponse = checkAnswerCountdown(answerSanitized, this.props.gameData);
 
-        if (this.props.gameType === 'Countdown') {
-          countdownGameLogic(map, this.props.gameData, answerSanitized)
+        if (answerResponse[0] === 'incorrect') {
+          //dispatch and add to incorrectCountriesEntered
+          this.props.dispatch(
+            submitIncorrectEntry(
+              answerSubmitted,
+              this.props.incorrectEntries
+            )
+          );
+        } else if (answerResponse[0] === 'unanswered') {
+          //modify polygon fillColor
+          let polygon = map.data.getFeatureById(answerResponse[1])
+          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: '#99FF00', strokeWeight: '1'})
+          //dispatch to modify game data to register correct answer
+          //and increment number of polygons identified by 1
+          this.props.dispatch(
+            submitCorrectEntry(
+              this.props.countPolygonsEntered,
+              answerResponse[1],
+              this.props.gameData
+            )
+          );
         }
-
-        if (this.props.gameType === 'Name The Country') {
-          nameTheCountryGameLogic(map, this.props.gameData, answerSanitized)
-        }
-
-        if (this.props.gameType === 'Capital to Country') {
-          capitalToCountryGameLogic(map, this.props.gameData, answerSanitized)
-        }
-
-        if (this.props.gameType === 'Country to Capitals') {
-          countryToCapitalsGameLogic(map, this.props.gameData, answerSanitized)
-        }
-
-
-
-        // if (answerResponse[0] === 'incorrect') {
-        //   //dispatch and add to incorrectCountriesEntered
-        //   this.props.dispatch(
-        //     submitIncorrectEntry(
-        //       answerSubmitted,
-        //       this.props.incorrectEntries
-        //     )
-        //   );
-        // } else if (answerResponse[0] === 'unanswered') {
-        //   //modify polygon fillColor
-        //   let polygon = map.data.getFeatureById(answerResponse[1])
-        //   map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: '#99FF00', strokeWeight: '1'})
-        //   //dispatch to modify game data to register correct answer
-        //   //and increment number of polygons identified by 1
-        //   this.props.dispatch(
-        //     submitCorrectEntry(
-        //       this.props.countPolygonsEntered,
-        //       answerResponse[1],
-        //       this.props.gameData
-        //     )
-        //   );
-        // }
-        // //increment countTotalSubmissions which includes any submission
-        // this.props.dispatch(
-        //   incrementTotalSubmissions(
-        //     this.props.countTotalSubmissions
-        //   )
-        // );
+        //increment countTotalSubmissions which includes any submission
+        this.props.dispatch(
+          incrementTotalSubmissions(
+            this.props.countTotalSubmissions
+          )
+        );
       //end keystroke if statement
       }
   //end keypress function
@@ -315,7 +288,7 @@ export default class Map extends React.Component {
         <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
 
         {
-          this.state.userQuit ?
+          this.state.quit ?
           <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
           :
             null
