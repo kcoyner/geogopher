@@ -175,11 +175,11 @@ export default class Map extends React.Component {
     // map.setCenter({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
-        let answerInputted = e.target.value;
+        let answerSubmitted = e.target.value;
         //clear text input after user hits enter
         this.setState({inputValue: ''});
         //sanitize input to all lowercase and remove '.'
-        let answerSanitized = sanitizeInput(answerInputted);
+        let answerSanitized = sanitizeInput(answerSubmitted);
         //check answer for countdown game
         let answerResponse = checkAnswerCountdown(answerSanitized, this.props.gameData);
 
@@ -187,7 +187,7 @@ export default class Map extends React.Component {
           //dispatch and add to incorrectCountriesEntered
           this.props.dispatch(
             submitIncorrectEntry(
-              answerInputted,
+              answerSubmitted,
               this.props.incorrectEntries
             )
           );
@@ -199,7 +199,7 @@ export default class Map extends React.Component {
           //and increment number of polygons identified by 1
           this.props.dispatch(
             submitCorrectEntry(
-              this.props.countPolygonsIdentified,
+              this.props.countPolygonsEntered,
               answerResponse[1],
               this.props.gameData
             )

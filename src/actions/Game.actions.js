@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { buildGameData } from '../utils/gameDataInit';
-
+//called in map componentDidMount
 export const initializeNewGame = (apiUrl) => {
   return (dispatch) => {
     axios.get(apiUrl)
@@ -16,7 +16,7 @@ export const initializeNewGame = (apiUrl) => {
       });
   };
 };
-
+//called in gameList when user selects game
 export const selectGame = (gameSelected) => {
   return (dispatch) => {
     dispatch({
@@ -31,7 +31,7 @@ export const selectGame = (gameSelected) => {
     })
   }
 }
-
+//called in game settings when user selects game difficulty
 export const setGameDifficulty = (gameDifficultySelected) => {
   return (dispatch) => {
     dispatch({
@@ -43,6 +43,7 @@ export const setGameDifficulty = (gameDifficultySelected) => {
   }
 }
 
+//called in game settings when user selects game type
 export const setGameType = (gameTypeSelected) => {
   return (dispatch) => {
     dispatch({
@@ -54,13 +55,11 @@ export const setGameType = (gameTypeSelected) => {
   }
 }
 
-export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameData) => {
-  // console.log('polygonsIdentified', countPolygonsIdentified);
-  // console.log('polygonIndex', polygonIndex);
-  // console.log('gameData', gameData);
+export const submitCorrectEntry = (countPolygonsEntered, polygonIndex, gameData) => {
+
   return (dispatch) => {
     // incrememnt countPolygonsIdentified
-    countPolygonsIdentified = countPolygonsIdentified + 1
+    countPolygonsEntered = countPolygonsEntered + 1
     gameData = gameData.map((el, idx) => {
       if (el.id === polygonIndex) {
         console.log('el.id', el.id)
@@ -75,16 +74,16 @@ export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameDa
     dispatch({
       type: 'ANSWER_CORRECT',
       payload: {
-        countPolygonsIdentified: countPolygonsIdentified,
+        countPolygonsEntered: countPolygonsEntered,
         gameData: gameData,
       }
     });
   }
 };
 
-export const submitIncorrectEntry = (answerInputted, incorrectEntries) => {
+export const submitIncorrectEntry = (answerSubmitted, incorrectEntries) => {
   return (dispatch) => {
-    incorrectEntries.push(answerInputted)
+    incorrectEntries.push(answerSubmitted)
     dispatch({
       type: 'ANSWER_INCORRECT',
       payload: {

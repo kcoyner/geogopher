@@ -1,35 +1,4 @@
-    // //pre game data
-    // userName: 'SenecaTheYounger',
-    // userID: 1,
-    // countGamesPlayed: 10,
-    // token: null,
-    // lastLogin: null,
-    //
-    // //game settings
-    // gameSelected: state.GameReducer.gameSelected,
-    // gameJSON: state.GameReducer.gameJSON,
-    // gameCenterCoords: state.GameReducer.gameCenterCoords,
-    // gameZoom: state.GameReducer.gameZoom,
-    // maxCountPolygons: state.GameReducer.maxCountPolygons,
-    // gameTypeSelected: state.GameReducer.gameTypeSelected,
-    // gameDifficultySelected: state.GameReducer.gameDifficultySelected,
-    // gameData: state.GameReducer.gameData,
-    //
-    // //score data
-    // countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
-    // countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
-    // polygonsAnswered: state.ScoreReducer.polygonsAnswered,
-    // polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
-    // incorrectEntries: state.ScoreReducer.incorrectEntries,
-    // gameTimerStart: state.ScoreReducer.gameTimerStart,
-    // gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
-    // gameStartTimestamp: state.ScoreReducer.gameStartTimestamp,
-    // gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
-    // ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
-
-
 export default function reducer(state = {
-      secondsElapsed: 0,
       gameOverTimeLeft: -1,
       gameData: null,
       countPolygonsIdentified: 0,
@@ -47,6 +16,7 @@ export default function reducer(state = {
   },
   action) {
   switch (action.type) {
+    //not yet used, possibly not necessary
     case 'CLEAR_GAME':
       return {
         ...state,
@@ -59,7 +29,7 @@ export default function reducer(state = {
       gameDifficultySelected: null,
       gameData: null,
       };
-
+    //called in gameslist when user clicks on a game
     case 'GAME_SELECTED':
       return {
         ...state,
@@ -69,45 +39,48 @@ export default function reducer(state = {
         gameZoom: action.payload.gameZoom,
         maxCountPolygons: action.payload.maxCountPolygons,
       };
-
+    //called in gamesettings when user selects game type
     case 'GAME_TYPE_SELECTED':
       return {
         ...state,
         gameTypeSelected: action.payload.gameTypeSelected,
       };
-
+    //called in gamesettings when user selects game difficulty
     case 'GAME_DIFFICULTY_SELECTED':
       return {
         ...state,
         gameDifficultySelected: action.payload.gameDifficultySelected,
       };
-
+    //called in map on componentDidMount, action initializeNewGame
+    //passes gameData here
     case 'GAME_DATA_BUILT':
       return {
         ...state,
         gameData: action.payload
       };
-
-
+    //called in map jsx and is due to be extracted to a game logic
     case 'ANSWER_CORRECT':
       return {
         ...state,
         gameData: action.payload.gameData,
-        countPolygonsIdentified: action.payload.countPolygonsIdentified,
+        countPolygonsEntered: action.payload.countPolygonsEntered,
       };
 
+    //called in map jsx and is due to be extracted to a game logic
     case 'ANSWER_INCORRECT':
       return {
         ...state,
         incorrectEntries: action.payload.incorrectEntries,
       };
 
+    //called in map jsx and is due to be extracted to a game logic
     case 'DECREMENT_TIME':
       return {
         ...state,
         secondsElapsed: action.payload.secondsElapsed,
       };
 
+    //called in map jsx and is due to be extracted to a game logic
     case 'INCREMENT_TOTAL_ATTEMPTS':
       return {
         ...state,
