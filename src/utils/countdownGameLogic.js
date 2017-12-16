@@ -1,4 +1,4 @@
-export const checkAnswerCountdown = (answerInput, gameData) => {
+export const countdownGameLogic = (map, gameData, answerSanitized) => {
   console.log('answerInput');
   console.log(answerInput);
   //loop through gamedata array

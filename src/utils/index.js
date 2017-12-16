@@ -1,5 +1,5 @@
 export * from './answerSanitize'
-export * from './checkAnswerInputted'
+export * from './countdownGameLogic'
 export * from './gameDataInit'
 export * from './toggleMissingCountries'
 export * from './mapDetails'
