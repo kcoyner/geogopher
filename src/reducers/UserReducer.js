@@ -1,5 +1,5 @@
 export default function reducer(state = {
-  userName: null,
+  user: null,
   gameSelected: null,
   registering: null,
 }, action) {
@@ -19,7 +19,7 @@ export default function reducer(state = {
   case 'LOGIN_SUCCESS': {
     return {
       ...state,
-      userName: action.payload
+      user: action.payload
     };
    }
    case 'LOGOUT': {

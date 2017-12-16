@@ -20,12 +20,9 @@ class Login extends React.Component {
 
   onLoginSuccess(response) {
     const { dispatch } = this.props;
-    console.log('success: ', response);
+    console.log('login success: ', response);
     dispatch(userActions.login(response));
-    console.log('++++++++',this.props.userGameSelected);
-    if(this.props.userGameSelected) {
-      
-      // route to correct game link
+    if(this.props.gameSelected) {
       this.props.history.push('/map');
     } else {
       this.props.history.push('/');
@@ -40,6 +37,15 @@ class Login extends React.Component {
     return(
       <div>
         <h1>Login</h1>
+        <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
+            <Form.Field>
+              <label>Username</label>
+              <input name='email' placeholder='Email' required='true'/>
+            </Form.Field>
+            <Form.Field>
+              <label>Password</label>
+              <input name='password' placeholder='Password' type='password'required='true'/>
+            </Form.Field>
         <Link to="/register"> sign up </Link>
         <GoogleLogin
         clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
@@ -47,6 +53,7 @@ class Login extends React.Component {
         onSuccess={this.onLoginSuccess}
         onFailure={this.onLoginFailure}
         />
+        </Form>
     </div>
     )
   }
@@ -54,7 +61,7 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userGameSelected: state.UserReducer.userGameSelected
+    gameSelected: state.GameReducer.gameSelected
   };
 }
 
