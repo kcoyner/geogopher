@@ -104,14 +104,14 @@ export const decrementTime = (gameTimerRemaining) => {
     });
   }
 };
-
-export const incrementTotalAttempts = (totalAttempts) => {
+//called in map component at end of every key press ==== enter (13)
+export const incrementTotalSubmissions = (countTotalSubmissions) => {
   return (dispatch) => {
-    totalAttempts = totalAttempts + 1;
+    countTotalSubmissions = countTotalSubmissions + 1;
     dispatch({
-      type: 'INCREMENT_TOTAL_ATTEMPTS',
+      type: 'INCREMENT_TOTAL_SUBMISSIONS',
       payload: {
-        totalAttempts: totalAttempts
+        countTotalSubmissions: countTotalSubmissions
       }
     });
   }

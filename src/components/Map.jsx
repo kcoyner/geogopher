@@ -20,7 +20,7 @@ import {
   submitIncorrectEntry,
   decrementTime,
   startGame,
-  incrementTotalAttempts,
+  incrementTotalSubmissions,
 } from '../actions/Game.actions';
 
 let map;
@@ -205,10 +205,10 @@ export default class Map extends React.Component {
             )
           );
         }
-        //increment totalAttempts
+        //increment countTotalSubmissions which includes any submission
         this.props.dispatch(
-          incrementTotalAttempts(
-            this.props.totalAttempts
+          incrementTotalSubmissions(
+            this.props.countTotalSubmissions
           )
         );
       //end keystroke if statement
