@@ -36,7 +36,6 @@ class GamesList extends React.Component {
   }
 
   onGameSelect(gameSelected) {
-    // if(this.props.user) {
       //dispatch game selection over to map
       this.props.dispatch(selectGame(this.props.games[gameSelected]));
       //set score with settings chosen this far
@@ -44,14 +43,14 @@ class GamesList extends React.Component {
       //set base time before modifications in settings are made
       this.props.dispatch(setTimer(this.props.games[gameSelected].base_time))
 
-
-
-      this.props.history.push('/map');
-      // map to correct game based on game index
-    // } else {
-      // this.props.history.push('/login');
-    // }
-
+      // check to see if a user has logged in already
+      if(this.props.user) {
+        // If a user exists, map the user to the game screen
+        this.props.history.push('/map');
+      } else {
+        // Otherwise, send them to login
+      this.props.history.push('/login');
+      }
   }
 
   render() {

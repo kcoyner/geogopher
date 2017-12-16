@@ -20,11 +20,9 @@ class Login extends React.Component {
 
   onLoginSuccess(response) {
     const { dispatch } = this.props;
-    console.log('success: ', response);
+    console.log('login success: ', response);
     dispatch(userActions.login(response));
-    if(this.props.userGameSelected) {
-
-      // route to correct game link
+    if(this.props.gameSelected) {
       this.props.history.push('/map');
     } else {
       this.props.history.push('/');
@@ -63,7 +61,7 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userGameSelected: state.UserReducer.userGameSelected
+    gameSelected: state.GameReducer.gameSelected
   };
 }
 
