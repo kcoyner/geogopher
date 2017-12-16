@@ -36,7 +36,7 @@ export const manipulateTimer = (timeManip, time) => {
 
     let newSeconds = secondsManipulated % 60;
 
-    return mins * 60 + seconds;;
+    return mins * 60 + seconds;
   }
   // console.log('00:'+newMins+':'+newSeconds)
   //
