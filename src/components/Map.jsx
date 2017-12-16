@@ -1,17 +1,22 @@
 /*global window.google*/
 import React from 'react';
 import { Button, Checkbox } from 'semantic-ui-react';
+import GameSettings from './GameSettings';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { sanitizeInput } from '../utils/answerSanitize';
-import { checkAnswerCountdown } from '../utils/checkAnswerInputted';
-import { toggleMissingCountries } from '../utils/toggleMissingCountries';
-import { mapDetails } from '../utils/mapDetails';
+import {
+  sanitizeInput,
+  checkAnswerCountdown,
+  toggleMissingCountries,
+  mapDetails,
+  getRandomUnansweredPolygon
+} from '../utils/index';
+
 import {
   initializeNewGame,
-  submitCorrectAnswer,
+  submitCorrectEntry,
   submitIncorrectEntry,
   decrementTime,
   startGame,
@@ -23,15 +28,34 @@ let map;
 @connect((state) => {
   return {
 
-    secondsElapsed: state.GameReducer.secondsElapsed,
-    gameOverTimeLeft: state.GameReducer.gameOverTimeLeft,
-    userQuit: state.GameReducer.userQuit,
-    gameOver: state.GameReducer.gameOver,
-    gameData: state.GameReducer.gameData,
-    countPolygonsIdentified: state.GameReducer.countPolygonsIdentified,
+    //pre game data
+    userName: 'SenecaTheYounger',
+    userID: 1,
+    countGamesPlayed: 10,
+    token: null,
+    lastLogin: null,
+
+    //game settings
+    gameSelected: state.GameReducer.gameSelected,
+    gameJSON: state.GameReducer.gameJSON,
+    gameCenterCoords: state.GameReducer.gameCenterCoords,
+    gameZoom: state.GameReducer.gameZoom,
     maxCountPolygons: state.GameReducer.maxCountPolygons,
-    incorrectEntries: state.GameReducer.incorrectEntries,
-    totalAttempts: state.GameReducer.totalAttempts,
+    gameTypeSelected: state.GameReducer.gameTypeSelected,
+    gameDifficultySelected: state.GameReducer.gameDifficultySelected,
+    gameData: state.GameReducer.gameData,
+
+    //score data
+    countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
+    countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    polygonsAnswered: state.ScoreReducer.polygonsAnswered,
+    polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
+    incorrectEntries: state.ScoreReducer.incorrectEntries,
+    gameTimerStart: state.ScoreReducer.gameTimerStart,
+    gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
+    gameStartTimestamp: state.ScoreReducer.gameStartTimestamp,
+    gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
+    ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
 
   }
 })
@@ -41,14 +65,17 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
-      quit: false,
-      showMissingCountries: false,
+      userQuit: false,
+      renderMissingCountriesButton: false,
+      gameSettings: true,
       gameStart: false,
+      gameEnd: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleStart = this.handleStart.bind(this);
+    this.handleSettings = this.handleSettings.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
@@ -57,12 +84,13 @@ export default class Map extends React.Component {
 
   componentDidMount() {
 
+    if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
-      zoom: 2,
+      zoom: this.props.gameZoom,
       center: {
-        lat: 30,
-        lng: 31,
+        lat: this.props.gameCenterCoords[0],
+        lng: this.props.gameCenterCoords[1],
       },
       zoomControl: true,
       zoomControlOptions: {
@@ -75,51 +103,69 @@ export default class Map extends React.Component {
       styles: mapDetails
     });
     //load in coordinate data with country name information
-    map.data.loadGeoJson(
-      'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json');
+    console.log(this.props.gameJSON)
+    map.data.loadGeoJson(this.props.gameJSON);
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
-      fillColor: 'black',
-      fillOpacity: '1',
-      strokeColor: 'white',
+      fillColor: 'firebrick',
+      fillOpacity: '.6',
+      strokeColor: 'orange',
       strokeWeight: '1'
     });
-    //build game instance in redux
+    //build gameData in redux and stores as this.props.gameData
     this.props.dispatch(
-      initializeNewGame(
-        'https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json'
-      )
+      initializeNewGame(this.props.gameJSON)
     );
 
   }
   //on quit, set change game state and clear timer
   handleQuit() {
     this.setState({
-      quit: true,
-      gameOver : true });
+      userQuit: true,
+      gameEnd : true });
     clearInterval(this.incrementer);
+  }
+  //stores game settings and opens gameStart
+  handleSettings() {
+    //once settings are submitted, hide modal. this also prompts the gameStart modal to render
+    this.setState({gameSettings: false})
+    //show button that renders missing countries if gameSelected is Countdown
+    if (this.props.gameTypeSelected === 'Countdown') {
+      this.setState({renderMissingCountriesButton: true})
+    }
   }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
-      this.nameInput.focus();
-      this.setState({gameStart: true})
-      this.incrementer = setInterval( () =>
-        this.props.dispatch(
-          decrementTime(this.props.secondsElapsed)
-        ), 1000);
+    //focuses cursor in input-entry when user clicks 'start'
+    this.nameInput.focus();
+    //hides gameStart modal
+    this.setState({gameStart: true})
+    //starts timer
+    this.incrementer = setInterval( () =>
+      this.props.dispatch(
+        decrementTime(this.props.gameTimerRemaining)
+      ), 1000);
+    //initializes random country selector if game is not countdown
+    if (this.props.gameTypeSelected !== 'Countdown') {
+      let polygonInData = getRandomUnansweredPolygon(this.props.gameData)
+      map.setZoom(6)
+      map.setCenter({lat: polygonInData.countryCenter[0], lng: polygonInData.countryCenter[1]})
+      let polygonInMap = map.data.getFeatureById(polygonInData.id)
+      map.data.overrideStyle(polygonInMap, {strokeColor: '#99FF00', strokeWeight: '3'})
     }
+  }
   //closes gameStart modal onClick
   handleClose(){
     this.setState({ open: false });
     this.props.history.push('/');
   }
-  //regisers inputs entered into input field
+  //registers inputs entered into input field
   onInputChange(e) {
     this.setState({ inputValue: e.target.value })
   }
   //resets timer and returns gameOver modal
   isEnd() {
-    if(this.state.secondsElapsed === 0) {
+    if(this.state.gameTimerRemaining === 0) {
       clearInterval(this.incrementer);
       return <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
     }
@@ -136,7 +182,7 @@ export default class Map extends React.Component {
         let answerSanitized = sanitizeInput(answerInputted);
         //check answer for countdown game
         let answerResponse = checkAnswerCountdown(answerSanitized, this.props.gameData);
-        
+
         if (answerResponse[0] === 'incorrect') {
           //dispatch and add to incorrectCountriesEntered
           this.props.dispatch(
@@ -148,11 +194,11 @@ export default class Map extends React.Component {
         } else if (answerResponse[0] === 'unanswered') {
           //modify polygon fillColor
           let polygon = map.data.getFeatureById(answerResponse[1])
-          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: 'black'})
+          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: '#99FF00', strokeWeight: '1'})
           //dispatch to modify game data to register correct answer
           //and increment number of polygons identified by 1
           this.props.dispatch(
-            submitCorrectAnswer(
+            submitCorrectEntry(
               this.props.countPolygonsIdentified,
               answerResponse[1],
               this.props.gameData
@@ -189,51 +235,66 @@ export default class Map extends React.Component {
     return (
       <div className="container">
         <div className="game-controls">
-        <div className="time-elapsed-title">
-          <h1>
-            Time Remaining:
-          </h1>
+
+        <GameSettings
+          onClose={ this.handleClose }
+          onContinue={this.handleSettings}
+          open={this.state.gameSettings}
+        />
+
+        <GameStart
+          onClose={ this.handleClose }
+          onStart={this.handleStart}
+          open={!this.state.gameSettings && !this.state.gameStart}
+        />
+
+        <div className="game-title">
+          <h1>{ this.props.gameSelected }</h1>
+          <h2>{ this.props.gameTypeSelected+" | "+this.props.gameDifficultySelected }</h2>
         </div>
 
-        <h1 className="time-elapsed">
-          {this.props.secondsElapsed}
-        </h1>
+        {
+          this.state.renderMissingCountriesButton
+          ?
+          <div className="show-missing-countries-button">
+            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
+          </div>
+          : null
+        }
 
-        <h1 className="countries-answered">
-          Countries Answered: {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}
-        </h1>
+        <div className="time-remaining-title">
+          <h1> Time Remaining:</h1>
+        </div>
+
+        <div className="time-remaining">
+          <h1> {this.props.gameTimerRemaining} </h1>
+        </div>
+
+        <div className="countries-answered">
+          <h1> Countries Answered:</h1>
+          <h2> {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}  </h2>
+        </div>
+
+        <input
+          className="input-entry"
+          ref={(input) => { this.nameInput = input; }}
+          onChange={ this.onInputChange }
+          onKeyDown={this.keyPress}
+          value={ this.state.inputValue }>
+        </input>
 
         {this.isEnd()}
 
         <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
+
         {
           this.state.quit ?
           <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
           :
             null
         }
-          <GameStart
-            onClose={ this.handleClose }
-            onStart={this.handleStart}
-            open={this.state.gameStart}
-          />
 
-          <div className="page-header">
-            <h1>Geogophers Test</h1>
-            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
-          </div>
-
-          <br></br>
-
-          <input
-            className="answer-input"
-            ref={(input) => { this.nameInput = input; }}
-            onChange={ this.onInputChange }
-            onKeyDown={this.keyPress}
-            value={ this.state.inputValue }>
-          </input>
-
-          <div className="maps" id="map"></div>
+        <div className="maps" id="map"></div>
       </div>
       </div>
       );

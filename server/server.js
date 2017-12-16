@@ -107,6 +107,21 @@ apiRouter.route('/gameslist')
     })
 });
 
+apiRouter.route('/gameSettings')
+  .get(cors(corsOptions), (req, res) => {
+    db.game_types.findAll()
+      .then(gameTypes => {
+        db.game_difficulties.findAll()
+        .then(gameDifficulties => {
+          let gameSettings = {
+            game_types: gameTypes,
+            game_difficulties: gameDifficulties,
+          }
+          res.send(gameSettings);
+        })
+      })
+});
+
 // game_data` varchar NOT NULL,
 // 	`game_center_coords` varchar NOT NULL,
 // 	`game_zoom` varchar NOT NULL,

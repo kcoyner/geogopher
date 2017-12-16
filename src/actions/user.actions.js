@@ -3,8 +3,7 @@ import { userService } from '../services';
 export const userActions = {
     register,
     login,
-    logout,
-    selectGame
+    logout
 };
 
 function register(user) {
@@ -13,7 +12,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     console.log('User created: ', user);
                     // dispatch(success());
                     // history.push('/login');
@@ -44,18 +43,11 @@ function login(user) {
                     console.log('Error getting user info: ', error)
                 }
             )
-        
+
     }
 }
 
 function logout() {
     userService.logout();
     return { type: 'LOGOUT' };
-}
-
-function selectGame(game) {
-    return dispatch => {
-        return dispatch({ type: 'SELECT_GAME', payload: game});
-    }
-    
 }

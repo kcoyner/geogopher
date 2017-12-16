@@ -26,6 +26,6 @@ export const buildGameData = (inputData) => {
     //store new country object in country data
     return outputCountryData;
   })
-  
+
   return gameData;
 }

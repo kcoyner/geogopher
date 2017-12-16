@@ -8,7 +8,7 @@ export const initializeNewGame = (apiUrl) => {
         return buildGameData(response.data)
       })
       .then(response => {
-        dispatch({ type: 'NEWGAME_DATA', payload: response })
+        dispatch({ type: 'GAME_DATA_BUILT', payload: response })
         return response;
       })
       .catch(error => {
@@ -17,10 +17,47 @@ export const initializeNewGame = (apiUrl) => {
   };
 };
 
-export const submitCorrectAnswer = (countPolygonsIdentified, polygonIndex, gameData) => {
-  console.log('polygonsIdentified', countPolygonsIdentified);
-  console.log('polygonIndex', polygonIndex);
-  console.log('gameData', gameData);
+export const selectGame = (gameSelected) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'GAME_SELECTED',
+      payload: {
+        gameSelected: gameSelected.game_name,
+        gameJSON: gameSelected.game_json,
+        gameCenterCoords: JSON.parse(gameSelected.game_center_coords),
+        gameZoom: gameSelected.game_zoom,
+        maxCountPolygons: gameSelected.max_count_polygons,
+      }
+    })
+  }
+}
+
+export const setGameDifficulty = (gameDifficultySelected) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'GAME_DIFFICULTY_SELECTED',
+      payload: {
+        gameDifficultySelected: gameDifficultySelected,
+      }
+    })
+  }
+}
+
+export const setGameType = (gameTypeSelected) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'GAME_TYPE_SELECTED',
+      payload: {
+        gameTypeSelected: gameTypeSelected,
+      }
+    })
+  }
+}
+
+export const submitCorrectEntry = (countPolygonsIdentified, polygonIndex, gameData) => {
+  // console.log('polygonsIdentified', countPolygonsIdentified);
+  // console.log('polygonIndex', polygonIndex);
+  // console.log('gameData', gameData);
   return (dispatch) => {
     // incrememnt countPolygonsIdentified
     countPolygonsIdentified = countPolygonsIdentified + 1
@@ -57,13 +94,13 @@ export const submitIncorrectEntry = (answerInputted, incorrectEntries) => {
   }
 };
 
-export const decrementTime = (secondsElapsed) => {
+export const decrementTime = (gameTimerRemaining) => {
   return (dispatch) => {
-    secondsElapsed = secondsElapsed - 1;
+    gameTimerRemaining = gameTimerRemaining - 1;
     dispatch({
       type: 'DECREMENT_TIME',
       payload: {
-        secondsElapsed: secondsElapsed
+        gameTimerRemaining: gameTimerRemaining
       }
     });
   }

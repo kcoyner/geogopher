@@ -71,7 +71,8 @@ CREATE TABLE "scores" (
 	"game_id" integer NOT NULL,
 	"game_type_id" integer NOT NULL,
 	"game_difficulty_id" integer NOT NULL,
-	"game_time_elapsed" varchar NOT NULL,
+	"game_timer_remaining" varchar NOT NULL,
+
 	"game_start_timestamp" TIMESTAMP WITH TIME ZONE,
 	"game_end_timestamp" TIMESTAMP WITH TIME ZONE,
 	"ip_where_game_played" varchar NOT NULL,

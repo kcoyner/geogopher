@@ -1,17 +1,25 @@
 import React from 'react';
 import {withRouter} from "react-router-dom";
+import { connect } from 'react-redux';
 import {
   Button,
   Header,
   Image,
   Modal } from 'semantic-ui-react';
 
+  @connect((state) => {
+    return {
+      gameTypes: state.GamesListReducer.gameTypes,
+      gameDifficulties: state.GamesListReducer.gameDifficulties,
+    }
+  })
+
 class GameStart extends React.Component {
 
     render() {
         return(
             <Modal
-            open={!this.props.open}
+            open={this.props.open}
             closeOnRootNodeClick={false}>
                 <Modal.Header>Ready?</Modal.Header>
                 <Modal.Content>
