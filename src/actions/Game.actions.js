@@ -55,43 +55,9 @@ export const setGameType = (gameTypeSelected) => {
   }
 }
 
-export const submitCorrectEntry = (countPolygonsEntered, polygonIndex, gameData) => {
 
-  return (dispatch) => {
-    // incrememnt countPolygonsIdentified
-    countPolygonsEntered = countPolygonsEntered + 1
-    gameData = gameData.map((el, idx) => {
-      if (el.id === polygonIndex) {
-        console.log('el.id', el.id)
-        console.log('polygonIndex', polygonIndex)
-        el.polygonAnswered = true;
-        return el
-      } else {
-        return el
-      }
-    });
 
-    dispatch({
-      type: 'ANSWER_CORRECT',
-      payload: {
-        countPolygonsEntered: countPolygonsEntered,
-        gameData: gameData,
-      }
-    });
-  }
-};
 
-export const submitIncorrectEntry = (answerSubmitted, incorrectEntries) => {
-  return (dispatch) => {
-    incorrectEntries.push(answerSubmitted)
-    dispatch({
-      type: 'ANSWER_INCORRECT',
-      payload: {
-        incorrectEntries: incorrectEntries,
-      }
-    });
-  }
-};
 
 export const decrementTime = (gameTimerRemaining) => {
   return (dispatch) => {
@@ -100,18 +66,6 @@ export const decrementTime = (gameTimerRemaining) => {
       type: 'DECREMENT_TIME',
       payload: {
         gameTimerRemaining: gameTimerRemaining
-      }
-    });
-  }
-};
-//called in map component at end of every key press ==== enter (13)
-export const incrementTotalSubmissions = (countTotalSubmissions) => {
-  return (dispatch) => {
-    countTotalSubmissions = countTotalSubmissions + 1;
-    dispatch({
-      type: 'INCREMENT_TOTAL_SUBMISSIONS',
-      payload: {
-        countTotalSubmissions: countTotalSubmissions
       }
     });
   }

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   sanitizeInput,
-  checkAnswerCountdown,
+  countdownGameLogic,
   toggleMissingCountries,
   mapDetails,
   getRandomUnansweredPolygon
@@ -16,11 +16,7 @@ import {
 
 import {
   initializeNewGame,
-  submitCorrectEntry,
-  submitIncorrectEntry,
   decrementTime,
-  startGame,
-  incrementTotalSubmissions,
 } from '../actions/Game.actions';
 
 let map;
@@ -175,42 +171,36 @@ export default class Map extends React.Component {
     // map.setCenter({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
+      console.log(e.target.value)
+        let gameTypeSelected = this.props.gameTypeSelected
+        console.log(gameTypeSelected)
         let answerSubmitted = e.target.value;
         //clear text input after user hits enter
         this.setState({inputValue: ''});
         //sanitize input to all lowercase and remove '.'
         let answerSanitized = sanitizeInput(answerSubmitted);
         //check answer for countdown game
-        let answerResponse = checkAnswerCountdown(answerSanitized, this.props.gameData);
 
-        if (answerResponse[0] === 'incorrect') {
-          //dispatch and add to incorrectCountriesEntered
-          this.props.dispatch(
-            submitIncorrectEntry(
-              answerSubmitted,
-              this.props.incorrectEntries
-            )
-          );
-        } else if (answerResponse[0] === 'unanswered') {
-          //modify polygon fillColor
-          let polygon = map.data.getFeatureById(answerResponse[1])
-          map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: '#99FF00', strokeWeight: '1'})
-          //dispatch to modify game data to register correct answer
-          //and increment number of polygons identified by 1
-          this.props.dispatch(
-            submitCorrectEntry(
-              this.props.countPolygonsEntered,
-              answerResponse[1],
-              this.props.gameData
-            )
-          );
-        }
-        //increment countTotalSubmissions which includes any submission
-        this.props.dispatch(
-          incrementTotalSubmissions(
-            this.props.countTotalSubmissions
+        if (gameTypeSelected === 'Countdown') {
+
+          countdownGameLogic(
+            map,
+            this.props.gameData,
+            answerSanitized,
+            this.props.countPolygonsEntered,
+            this.props.countTotalSubmissions,
+            this.props.incorrectEntries,
+            this.props.dispatch
           )
-        );
+
+        } else if ( gameTypeSelected === 'Name The Country') {
+
+        } else if ( gameTypeSelected === 'Capital to Country') {
+
+        } else if ( gameTypeSelected === 'Country to Capital') {
+
+        }
+
       //end keystroke if statement
       }
   //end keypress function

@@ -43,7 +43,7 @@ export default function reducer(state = {
       return {
         ...state,
         gameData: action.payload.gameData,
-        countPolygonsIdentified: action.payload.countPolygonsIdentified,
+        countPolygonsEntered: action.payload.countPolygonsEntered,
       };
 
     case 'ANSWER_INCORRECT':

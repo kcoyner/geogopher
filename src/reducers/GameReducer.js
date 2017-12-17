@@ -1,10 +1,6 @@
 export default function reducer(state = {
-      gameOverTimeLeft: -1,
       gameData: null,
-      countPolygonsIdentified: 0,
       maxCountPolygons: null,
-      incorrectEntries: [],
-      totalAttempts: 0,
       gameSelected: null,
       gameJSON: null,
       gameCenterCoords: null,
@@ -58,34 +54,7 @@ export default function reducer(state = {
         ...state,
         gameData: action.payload
       };
-    //called in map jsx and is due to be extracted to a game logic
-    case 'ANSWER_CORRECT':
-      return {
-        ...state,
-        gameData: action.payload.gameData,
-        countPolygonsEntered: action.payload.countPolygonsEntered,
-      };
 
-    //called in map jsx and is due to be extracted to a game logic
-    case 'ANSWER_INCORRECT':
-      return {
-        ...state,
-        incorrectEntries: action.payload.incorrectEntries,
-      };
-
-    //called in map jsx and is due to be extracted to a game logic
-    case 'DECREMENT_TIME':
-      return {
-        ...state,
-        secondsElapsed: action.payload.secondsElapsed,
-      };
-
-    //called in map jsx and is due to be extracted to a game logic
-    case 'INCREMENT_TOTAL_ATTEMPTS':
-      return {
-        ...state,
-        totalAttempts: action.payload.totalAttempts,
-      };
 
   //end switch
   }
