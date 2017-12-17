@@ -262,7 +262,7 @@ export default class Map extends React.Component {
 
         <div className="countries-answered">
           <h1> Countries Answered:</h1>
-          <h2> {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}  </h2>
+          <h2> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}  </h2>
         </div>
 
         <input
