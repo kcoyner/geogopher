@@ -10,6 +10,7 @@ import {
 
 
 export const countdownGameLogic = (map, gameData, answerSanitized, countPolygonsEntered, countTotalSubmissions, incorrectEntries, dispatchFcn) => {
+  let answerExists = false;
   // //loop through gamedata array
   for (var i = 0; i < gameData.length; i++) {
   //   //loop through accepted answers within country obj
@@ -29,7 +30,8 @@ export const countdownGameLogic = (map, gameData, answerSanitized, countPolygons
             incorrectEntries,
             dispatchFcn
           );
-        } else {
+          answerExists = true;
+        } else if (!gameData[i].polygonAnswered){
           countdownCheckAnswer(
             'unanswered',
             gameData[i].id,
@@ -41,21 +43,24 @@ export const countdownGameLogic = (map, gameData, answerSanitized, countPolygons
             incorrectEntries,
             dispatchFcn
            );
+           answerExists = true;
         }
       }
     }
   }
-  countdownCheckAnswer(
-    'incorrect',
-    null,
-    gameData,
-    map,
-    answerSanitized,
-    countPolygonsEntered,
-    countTotalSubmissions,
-    incorrectEntries,
-    dispatchFcn
-   );
+  if (!answerExists) {
+    countdownCheckAnswer(
+      'incorrect',
+      null,
+      gameData,
+      map,
+      answerSanitized,
+      countPolygonsEntered,
+      countTotalSubmissions,
+      incorrectEntries,
+      dispatchFcn
+    );
+  }
 
 }
 
@@ -108,10 +113,11 @@ const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSan
     //trigger for correct sound
       //*trigger goes here*
   } else { //answer status is 'incorrect'
-    
-    //trigger for text field to shake
+
     //dispatch to store in incorrectEntries
+    dispatchFcn(submitIncorrectEntry(answerSanitized, incorrectEntries))
     //trigger for incorrect sound
+    //trigger for text field to shake
   }
 
   //increment countTotalSubmissions by one
