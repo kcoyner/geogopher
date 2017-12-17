@@ -18,17 +18,13 @@ apt-get -y install nodejs
 
 apt-get -y install npm
 
-update-alternatives --install /usr/bin/node node /usr/bin/nodejs
+update-alternatives --install /usr/bin/node node /usr/bin/nodejs 1
 
 apt-get -y install nginx
 
 rm -f /etc/nginx/sites-available/default
 
-cd /etc/nginx/sites-available
-
-wget https://s3.amazonaws.com/gopher-codedeploy/nginx-server.conf
-
-mv /etc/nginx/sites-available/nginx-server.conf /etc/nginx/sites-available/default
+aws s3 cp s3://gopher-codedeploy/scripts/nginx-server.conf /etc/nginx/sites-available/default
 
 service nginx restart
 
