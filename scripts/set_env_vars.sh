@@ -12,5 +12,5 @@ rm -f /etc/nginx/sites-available/default
 aws s3 cp s3://gopher-codedeploy/scripts/nginx-server.conf /etc/nginx/sites-available/default
 
 # Get environment variables and inject into .env
-aws s3 cp s3://gopher-codedeploy/scripts/environment-variables.txt /home/ubuntu/ersdispatch/.env
+aws s3 cp s3://gopher-codedeploy/scripts/environment-variables.txt /home/ubuntu/geogopher/.env
 
