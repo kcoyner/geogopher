@@ -122,11 +122,37 @@ apiRouter.route('/gameSettings')
       })
 });
 
-// game_data` varchar NOT NULL,
-// 	`game_center_coords` varchar NOT NULL,
-// 	`game_zoom` varchar NOT NULL,
-// 	`max_count_polygons` INT NOT NULL,
-// 	`base_time` TIME NOT NULL,
+apiRouter.route('/postScore')
+  .post((req, res) => {
+    console.log('THIS IS THE REQ BODY UP IN THAT POST SCORE 🤘')
+    console.log(req.body)
+    let score = {
+      'user_id': 1,
+      'count_polygons_entered': req.body.countPolygonsEntered,
+      'count_total_submissions': req.body.countTotalSubmissions,
+      'polygons_answered': req.body.polygonsAnswered,
+      'polygons_unanswered': req.body.polygonsUnanswered,
+      'incorrect_entries': req.body.incorrectEntries,
+      'game_id': req.body.gameID,
+      'game_type_id': req.body.gameTypeID,
+      'game_difficulty_id': req.body.gameDifficulyID,
+      'game_timer_start': req.body.gameTimerStart,
+      'game_timer_remaining': req.body.gameTimerRemaining,
+      'game_start_timestamp': req.body.gameStartTimestamp,
+      'game_end_timestamp': req.body.gameEndTimestamp,
+      'ip_where_game_played': 1,
+    }
+    db.scores.create(score)
+    .then(score => {
+      res.send(score);
+      console.log('did we ✍🏽 to the db? mayhaps')
+    })
+    .catch(error => {
+      throw error
+    })
+});
+
+
 
 apiRouter.route('/user')
   .get((req, res) => {

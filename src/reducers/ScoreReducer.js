@@ -70,7 +70,6 @@ export default function reducer(state = {
     case 'ANSWER_CORRECT':
       return {
         ...state,
-        gameData: action.payload.gameData,
         countPolygonsEntered: action.payload.countPolygonsEntered,
       };
 
@@ -90,6 +89,12 @@ export default function reducer(state = {
       return {
         ...state,
         countTotalSubmissions: action.payload.countTotalSubmissions,
+      };
+    case 'SET_POLYGONS_ANSWERED_UNANSWERED':
+      return {
+        ...state,
+        polygonsAnswered: action.payload.polygonsAnswered,
+        polygonsUnanswered: action.payload.polygonsUnanswered,
       };
 
   //end switch

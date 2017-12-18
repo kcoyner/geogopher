@@ -56,8 +56,13 @@ export const setGameType = (gameTypeSelected) => {
 }
 
 
-
-
+export const resetGame = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'RESET_GAME',
+    })
+  }
+}
 
 export const decrementTime = (gameTimerRemaining) => {
   return (dispatch) => {

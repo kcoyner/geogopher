@@ -13,9 +13,9 @@ export default function reducer(state = {
   action) {
   switch (action.type) {
     //not yet used, possibly not necessary
-    case 'CLEAR_GAME':
+    case 'RESET_GAME':
       return {
-        ...state,
+      ...state,
       gameSelected: null,
       gameJSON: null,
       gameCenterCoords: null,

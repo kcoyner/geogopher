@@ -12,7 +12,8 @@ import {
   nameTheCountryGameLogic,
   toggleMissingCountries,
   mapDetails,
-  getRandomUnansweredPolygon
+  getRandomUnansweredPolygon,
+  buildPolygonsAnsweredUnanswered,
 } from '../utils/index';
 
 import  * as actions from '../actions/index.js'
@@ -40,16 +41,21 @@ let map;
     gameData: state.GameReducer.gameData,
 
     //score data
+
     countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
     countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    gameDifficultyID: state.ScoreReducer.gameDifficultyID,
+    gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
+    gameID: state.ScoreReducer.gameID,
+    gameStartTimestamp: state.ScoreReducer.gameStartTimestamp,
+    gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
+    gameTimerStart: state.ScoreReducer.gameTimerStart,
+    gameTypeID: state.ScoreReducer.gameTypeID,
+    incorrectEntries: state.ScoreReducer.incorrectEntries,
+    ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
-    incorrectEntries: state.ScoreReducer.incorrectEntries,
-    gameTimerStart: state.ScoreReducer.gameTimerStart,
-    gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
-    gameStartTimestamp: state.ScoreReducer.gameStartTimestamp,
-    gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
-    ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
+    userID: state.ScoreReducer.userID,
 
   }
 })
@@ -68,7 +74,7 @@ export default class Map extends React.Component {
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handlePlayDifferentGame = this.handlePlayDifferentGame.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleSettings = this.handleSettings.bind(this);
     this.handleGameEnd = this.handleGameEnd.bind(this);
@@ -111,17 +117,6 @@ export default class Map extends React.Component {
       actions.initializeNewGame(this.props.gameJSON)
     );
 
-  }
-  //on quit, set change game state and clear timer
-  handleGameEnd() {
-    this.setState({
-      userQuit: true,
-      gameEnd : true });
-    clearInterval(this.incrementer);
-    //dispatches gameend gameEndTimestamp
-    this.props.dispatch(
-      actions.setGameEndTimestamp()
-    )
   }
   //stores game settings and opens gameStart
   handleSettings() {
@@ -167,10 +162,54 @@ export default class Map extends React.Component {
       nameTheCountryGameLogic(gameValues)
     }
   }
+  //on quit, set change game state and clear timer
+  handleGameEnd() {
+    this.setState({
+      userQuit: true,
+      gameEnd : true });
+      clearInterval(this.incrementer);
+      //dispatches gameend gameEndTimestamp
+      this.props.dispatch(
+        actions.setGameEndTimestamp()
+      )
+      //builds and dispatches polygons answered/unanswered arrays for convenience
+      this.props.dispatch(
+        actions.setPolygonsAnsweredUnanswered(
+          buildPolygonsAnsweredUnanswered(this.props.gameData)
+        )
+      )
+    }
   //closes gameStart modal onClick
-  handleClose(){
+  handlePlayDifferentGame() {
+    //package Score
+    let currentScore = {
+      countPolygonsEntered: this.props.countPolygonsEntered,
+      countTotalSubmissions: this.props.countTotalSubmissions,
+      gameDifficultyID: this.props.gameDifficultyID,
+      gameEndTimestamp: this.props.gameEndTimestamp,
+      gameID: this.props.gameID,
+      gameStartTimestamp: this.props.gameStartTimestamp,
+      gameTimerRemaining: this.props.gameTimerRemaining,
+      gameTimerStart: this.props.gameTimerStart,
+      gameTypeID: this.props.gameTypeID,
+      incorrectEntries: this.props.incorrectEntries,
+      ipWhereGamePlayed: this.props.ipWhereGamePlayed,
+      polygonsAnswered: this.props.polygonsAnswered,
+      polygonsUnanswered: this.props.polygonsUnanswered,
+      userID: this.props.userID,
+    }
+    //need to confirm whether all state must be returned back to init
     this.setState({ open: false });
     this.props.history.push('/');
+    //clear game and score reducers
+    this.props.dispatch(actions.postScore(currentScore))
+
+    // this.props.dispatch(actions.resetGame())
+    //
+    // this.props.dispatch(actions.resetScore())
+
+
+
   }
   //registers inputs entered into input field
   onInputChange(e) {
@@ -264,7 +303,7 @@ export default class Map extends React.Component {
         />
 
         <GameOver
-          onClose={ this.handleClose }
+          onDifferentGame={ this.handlePlayDifferentGame }
           onStart={this.handleStart}
           open={this.state.gameEnd}
         />
@@ -305,7 +344,7 @@ export default class Map extends React.Component {
         </input>
 
 
-        <Button className="quit-game-btn" onClick={this.handleGameEnd}>Quit Game</Button>
+        <Button className="quit-game-btn" onClick={this.handleGameEnd}>Quit</Button>
 
 
         <div className="maps" id="map"></div>

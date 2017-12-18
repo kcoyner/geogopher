@@ -1,3 +1,13 @@
+import axios from 'axios';
+
+export const resetScore = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'RESET_SCORE'
+    })
+  }
+}
+
 export const setScoreIDs = (gameSelected) => {
   return (dispatch) => {
     dispatch({
@@ -45,7 +55,6 @@ export const setTimer = (time) => {
 
 export const setGameStartTimestamp = () => {
   let currentTime = Date.now()
-
     return (dispatch) => {
       dispatch({
         type: "SET_GAME_START_TIMESTAMP",
@@ -58,7 +67,6 @@ export const setGameStartTimestamp = () => {
 
 export const setGameEndTimestamp = () => {
   let currentTime = Date.now()
-
     return (dispatch) => {
       dispatch({
         type: "SET_GAME_END_TIMESTAMP",
@@ -69,11 +77,29 @@ export const setGameEndTimestamp = () => {
     }
 }
 
+export const setPolygonsAnsweredUnanswered = (polygons) => {
+    return (dispatch) => {
+      dispatch({
+        type: "SET_POLYGONS_ANSWERED_UNANSWERED",
+        payload: {
+          polygonsAnswered: polygons.answered,
+          polygonsUnanswered: polygons.unanswered,
+        }
+      })
+    }
+}
+
 export const submitCorrectEntry = (countPolygonsEntered, polygonIndex, gameData) => {
 
   return (dispatch) => {
     // incrememnt countPolygonsIdentified
     countPolygonsEntered = countPolygonsEntered + 1
+    //something interesting here about gameData. this variable is technically not a 'score' related action or
+    //related to the score table. but because the entry submission process changes both gameData and scores, variables from
+    //two reducers exist in these submit___Entry actions. Because all of the reducers are combined via combineReducers,
+    //gameData is successfully stored in the GameReducer from this Scores.Actions file.
+    // ------TLDR ------
+    // gameData techincally belongs in the Games.actions file
     gameData = gameData.map((el, idx) => {
       if (el.id === polygonIndex) {
         el.polygonAnswered = true;
@@ -114,6 +140,19 @@ export const incrementTotalSubmissions = (countTotalSubmissions) => {
       payload: {
         countTotalSubmissions: countTotalSubmissions
       }
+    });
+  }
+};
+
+
+export const postScore = (score) => {
+return (dispatch) => {
+  axios.post('/api/postScore', score)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+      throw (error);
     });
   }
 };
