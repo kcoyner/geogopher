@@ -17,6 +17,24 @@ export default function reducer(state = {
   action) {
   switch (action.type) {
 
+    case 'RESET_SCORE':
+      return {
+        userID: null,
+        gameID: null,
+        gameTypeID: null,
+        gameDifficultyID: null,
+        countPolygonsEntered: 0,
+        countTotalSubmissions: 0,
+        polygonsAnswered: [],
+        polygonsUnanswered: [],
+        incorrectEntries: [],
+        gameTimerStart: null,
+        gameTimerRemaining: null,
+        gameStartTimestamp: null,
+        gameEndTimestamp: null,
+        ipWhereGamePlayed: null,
+      }
+
     case 'SET_GAME_ID':
       return {
         ...state,
@@ -38,11 +56,20 @@ export default function reducer(state = {
         gameTimerStart: action.payload.gameTimerStart,
         gameTimerRemaining: action.payload.gameTimerRemaining,
       };
+    case 'SET_GAME_START_TIMESTAMP':
+      return {
+        ...state,
+        gameStartTimestamp: action.payload.gameStartTimestamp,
+      };
+    case 'SET_GAME_END_TIMESTAMP':
+      return {
+        ...state,
+        gameEndTimestamp: action.payload.gameEndTimestamp,
+      };
 
     case 'ANSWER_CORRECT':
       return {
         ...state,
-        gameData: action.payload.gameData,
         countPolygonsEntered: action.payload.countPolygonsEntered,
       };
 
@@ -62,6 +89,12 @@ export default function reducer(state = {
       return {
         ...state,
         countTotalSubmissions: action.payload.countTotalSubmissions,
+      };
+    case 'SET_POLYGONS_ANSWERED_UNANSWERED':
+      return {
+        ...state,
+        polygonsAnswered: action.payload.polygonsAnswered,
+        polygonsUnanswered: action.payload.polygonsUnanswered,
       };
 
   //end switch
