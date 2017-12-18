@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Ensure all files are owned by ubuntu
 cd /home/ubuntu
 chown -R ubuntu:ubuntu ./geogopher
 
