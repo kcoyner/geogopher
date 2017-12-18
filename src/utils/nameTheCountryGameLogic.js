@@ -2,52 +2,44 @@ import { getRandomUnansweredPolygon } from './index'
 
 import { submitCorrectEntry, submitIncorrectEntry, incrementTotalSubmissions, } from '../actions/Score.actions';
 
+/**
+ * Game logic needed for nameTheCountry type of game. Makes changes to the map.
+ * @function nameTheCountryGameLogic
+ * @param gameValues
+ * @param { Object } highlightedCountry
+ */
 export const nameTheCountryGameLogic = (gameValues, highlightedCountry) => {
 
   //if a highlighted country has not been passed in, then it came from Map's handleStart
   if (!highlightedCountry) {
-    //set highlightedCountry to randomPolygon in gameData
-    // let highlightedCountry = (getRandomUnansweredPolygon(gameValues.gameData))
 
     // invoking the callback function
     getRandomUnansweredPolygon(gameValues.gameData, function(highlightedCountry) {
+
       // set the zoom (probably need to fix this at some point)
       gameValues.map.setZoom(6);
+
       // set the map center to the coordinates of the randomly selected polygon
       gameValues.map.setCenter({
         lat: highlightedCountry.countryCenter[0],
         lng: highlightedCountry.countryCenter[1]
       });
+
       // get the polygon in the map
       let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id);
+
       //modify the colors of polygon in the map
       gameValues.map.data.overrideStyle(polygonInMap, {
         fillColor: '#00FFFF',
         strokeColor: '#FFD700',
         strokeWeight: '3'
       });
+
       //set state to keep highlighted polygon in global scope
       gameValues.reactThis.setState({
         highlightedPolygon: highlightedCountry
       });
     });
-
-    // if(Object.prototype.toString.call(highlightedCountry) === '[object Undefined]'){
-    //   console.log('I HAVE NO CLUE WHY ITS UNDEFINED BUT LETS RUN IT AGAIN')
-    //   nameTheCountryGameLogic(gameValues)
-    // }
-    // set the zoom (probably need to fix this at some point)
-    // gameValues.map.setZoom(6)
-    // set the map center to the coordinates of the randomly selected polygon
-    // gameValues.map.setCenter({ lat: highlightedCountry.countryCenter[0], lng: highlightedCountry.countryCenter[1] })
-    // get the polygon in the map
-    // let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
-    //modify the colors of polygon in the map
-    // gameValues.map.data.overrideStyle(polygonInMap, { fillColor: '#00FFFF', strokeColor: '#FFD700', strokeWeight: '3' })
-    //set state to keep highlighted polygon in global scope
-    // gameValues.reactThis.setState({highlightedPolygon: highlightedCountry})
-    // return;
-
 
   } else {
     //declare logic variables
