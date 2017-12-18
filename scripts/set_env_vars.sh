@@ -1,5 +1,9 @@
 #!/bin/bash
 
+apt-get -y install python3-pip
+pip3 install --upgrade pip
+pip3 install awscli
+
 sleep 1
 
 # Replace the default nginx website config with a proxy to our node app
