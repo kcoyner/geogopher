@@ -15,10 +15,7 @@ import {
   getRandomUnansweredPolygon
 } from '../utils/index';
 
-import {
-  initializeNewGame,
-  decrementTime,
-} from '../actions/Game.actions';
+import  * as actions from '../actions/index.js'
 
 let map;
 
@@ -107,11 +104,11 @@ export default class Map extends React.Component {
       fillColor: 'firebrick',
       fillOpacity: '.6',
       strokeColor: 'orange',
-      strokeWeight: '1'
+      strokeWeight: '2'
     });
     //build gameData in redux and stores as this.props.gameData
     this.props.dispatch(
-      initializeNewGame(this.props.gameJSON)
+      actions.initializeNewGame(this.props.gameJSON)
     );
 
   }
@@ -121,6 +118,10 @@ export default class Map extends React.Component {
       userQuit: true,
       gameEnd : true });
     clearInterval(this.incrementer);
+    //dispatches gameend gameEndTimestamp
+    this.props.dispatch(
+      actions.setGameEndTimestamp()
+    )
   }
   //stores game settings and opens gameStart
   handleSettings() {
@@ -155,8 +156,12 @@ export default class Map extends React.Component {
     //starts timer
     this.incrementer = setInterval( () =>
       this.props.dispatch(
-        decrementTime(this.props.gameTimerRemaining)
+        actions.decrementTime(this.props.gameTimerRemaining)
       ), 1000);
+    //dispatches gamestart gameStartTimestamp
+    this.props.dispatch(
+      actions.setGameStartTimestamp()
+    )
     //initializes random country selector if game is not countdown
     if (this.props.gameTypeSelected !== 'Countdown') {
       nameTheCountryGameLogic(gameValues)
@@ -216,7 +221,6 @@ export default class Map extends React.Component {
       } else if ( gameTypeSelected === 'Name the Country') {
 
         nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
-
 
       } else if ( gameTypeSelected === 'Capital to Country') {
 

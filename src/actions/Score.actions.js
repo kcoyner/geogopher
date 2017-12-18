@@ -43,6 +43,32 @@ export const setTimer = (time) => {
     }
 }
 
+export const setGameStartTimestamp = () => {
+  let currentTime = Date.now()
+
+    return (dispatch) => {
+      dispatch({
+        type: "SET_GAME_START_TIMESTAMP",
+        payload: {
+          gameStartTimestamp: currentTime,
+        }
+      })
+    }
+}
+
+export const setGameEndTimestamp = () => {
+  let currentTime = Date.now()
+
+    return (dispatch) => {
+      dispatch({
+        type: "SET_GAME_END_TIMESTAMP",
+        payload: {
+          gameEndTimestamp: currentTime,
+        }
+      })
+    }
+}
+
 export const submitCorrectEntry = (countPolygonsEntered, polygonIndex, gameData) => {
 
   return (dispatch) => {

@@ -17,6 +17,24 @@ export default function reducer(state = {
   action) {
   switch (action.type) {
 
+    case 'RESET_SCORE':
+      return {
+        userID: null,
+        gameID: null,
+        gameTypeID: null,
+        gameDifficultyID: null,
+        countPolygonsEntered: 0,
+        countTotalSubmissions: 0,
+        polygonsAnswered: [],
+        polygonsUnanswered: [],
+        incorrectEntries: [],
+        gameTimerStart: null,
+        gameTimerRemaining: null,
+        gameStartTimestamp: null,
+        gameEndTimestamp: null,
+        ipWhereGamePlayed: null,
+      }
+
     case 'SET_GAME_ID':
       return {
         ...state,
@@ -37,6 +55,16 @@ export default function reducer(state = {
         ...state,
         gameTimerStart: action.payload.gameTimerStart,
         gameTimerRemaining: action.payload.gameTimerRemaining,
+      };
+    case 'SET_GAME_START_TIMESTAMP':
+      return {
+        ...state,
+        gameStartTimestamp: action.payload.gameStartTimestamp,
+      };
+    case 'SET_GAME_END_TIMESTAMP':
+      return {
+        ...state,
+        gameEndTimestamp: action.payload.gameEndTimestamp,
       };
 
     case 'ANSWER_CORRECT':
