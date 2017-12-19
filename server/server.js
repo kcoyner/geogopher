@@ -11,6 +11,9 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const dotenv = require('dotenv').config();
 
+// require("babel-core/register");
+// require("babel-polyfill");
+
 const app = express();
 const config = require('../webpack.dev.js');
 const compiler = webpack(config);
