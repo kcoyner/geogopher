@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Header, Image, Modal } from 'semantic-ui-react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import  * as actions from '../actions/index.js'
+import  * as actions from '../actions/index.js';
+import { formatSecondsToMMSS } from '../utils/index';
 
 @connect((state) => {
   return {
@@ -54,7 +55,7 @@ class GameOver extends React.Component {
                       <h1>Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}</h1>
                     </div>
                     <div className="game-over-time-score">
-                      <h1>Time Remaining: {this.props.gameTimerRemaining}</h1>
+                      <h1>Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}</h1>
                     </div>
                     <div className="game-over-polygons-answered">
                       <h1>Countries Answered</h1>

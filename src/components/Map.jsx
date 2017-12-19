@@ -16,9 +16,10 @@ import {
   mapDetails,
   getRandomUnansweredPolygon,
   buildPolygonsAnsweredUnanswered,
+  formatSecondsToMMSS
 } from '../utils/index';
 
-import  * as actions from '../actions/index.js'
+import * as actions from '../actions/index.js'
 
 let map;
 
@@ -330,7 +331,7 @@ export default class Map extends React.Component {
         </div>
 
         <div className="time-remaining">
-          <h1> {this.props.gameTimerRemaining} </h1>
+          <h1> {formatSecondsToMMSS(this.props.gameTimerRemaining)} </h1>
         </div>
 
         <div className="countries-answered">
