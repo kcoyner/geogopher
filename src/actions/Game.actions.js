@@ -55,6 +55,17 @@ export const setGameType = (gameTypeSelected) => {
   }
 }
 
+export const setBaseTime = (baseTime) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_BASE_TIME',
+      payload: {
+        baseTime: baseTime,
+      }
+    })
+  }
+}
+
 
 export const resetGame = () => {
   return (dispatch) => {

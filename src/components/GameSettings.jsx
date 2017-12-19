@@ -21,6 +21,7 @@ import { manipulateTimer } from '../utils/manipulateTimer'
     gameTypes: state.GamesListReducer.gameTypes,
     gameDifficulties: state.GamesListReducer.gameDifficulties,
     gameTimerStart: state.ScoreReducer.gameTimerStart,
+    baseTime: state.GameReducer.baseTime
   }
 })
 
@@ -60,15 +61,19 @@ class GameSettings extends React.Component {
   }
 
   handleDifficultySettings(value) {
-    ////set gameTimerRemaining, gameTimerStart, gameDifficultyID
-    //this.props.gameDifficulties.forEach((el) => {
-    //  if(el.game_difficulty_name === value) {
-    //    this.props.dispatch(setGameDifficultyID(el.game_difficulty_id))
-    //    let timeManipulation = JSON.parse(el.game_time_manipulation)
-    //      this.props.dispatch(setTimer(manipulateTimer(timeManipulation, this.props.gameTimerStart)))
-    //    this.props.dispatch(setGameDifficulty(el.game_difficulty_name))
-      // }
-    // }
+    //set gameTimerRemaining, gameTimerStart, gameDifficultyID
+    this.props.gameDifficulties.forEach((el) => {
+      if(el.game_difficulty_name === value) {
+        this.props.dispatch(setGameDifficultyID(el.game_difficulty_id))
+        let timeManipulation = JSON.parse(el.game_time_manipulation)
+          this.props.dispatch(
+            setTimer(
+              manipulateTimer(timeManipulation, this.props.baseTime)
+            )
+          )
+        this.props.dispatch(setGameDifficulty(el.game_difficulty_name))
+       }
+    });
   }
 
     render() {
