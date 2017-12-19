@@ -47,7 +47,7 @@ CREATE TABLE "games" (
 	"game_zoom" integer NOT NULL,
 	"max_count_polygons" integer NOT NULL,
 	-- base_time before difficulty settings are applied
-	"base_time" TIME NOT NULL,
+	"base_time" integer NOT NULL,
 	CONSTRAINT games_pk PRIMARY KEY ("game_id")
 ) WITH (
   OIDS=FALSE
@@ -98,7 +98,7 @@ CREATE TABLE "scores" (
 	"game_timer_start" integer NOT NULL,
 	-- current value during game. this is 0
 	-- for users who ran the clock to the end
-	"game_timer_remaining" varchar NOT NULL,
+	"game_timer_remaining" integer NOT NULL,
 	"game_start_timestamp" TIMESTAMP WITH TIME ZONE,
 	"game_end_timestamp" TIMESTAMP WITH TIME ZONE,
 	"ip_where_game_played" varchar NOT NULL,

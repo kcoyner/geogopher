@@ -9,6 +9,7 @@ export default function reducer(state = {
       gameTypeSelected: null,
       gameDifficultySelected: null,
       gameData: null,
+      baseTime: null,
   },
   action) {
   switch (action.type) {
@@ -34,6 +35,12 @@ export default function reducer(state = {
         gameCenterCoords: action.payload.gameCenterCoords,
         gameZoom: action.payload.gameZoom,
         maxCountPolygons: action.payload.maxCountPolygons,
+      };
+    //
+    case 'SET_BASE_TIME':
+      return {
+        ...state,
+        baseTime: action.payload.baseTime,
       };
     //called in gamesettings when user selects game type
     case 'GAME_TYPE_SELECTED':

@@ -57,7 +57,9 @@ let map;
     ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
-    userID: state.ScoreReducer.userID,
+    // TODO: in the user login routines, we need to take the userID and stick
+    // it in the store
+    // userID: state.ScoreReducer.userID,
 
   }
 })

@@ -44,8 +44,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null,
     },
     base_time: {
-      type: Sequelize.DATE,
+      type: Sequelize.INTEGER,
       allowNull: false
     }
-  })
+  });
 };

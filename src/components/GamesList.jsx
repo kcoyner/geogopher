@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
 import { Card, Image } from 'semantic-ui-react';
-import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer } from '../actions/index'
+import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer, setBaseTime } from '../actions/index'
 
 //pull in img no clue why it needs to be in this format.
 const placeholderImg = require('-!file-loader?name=placeholderImg!../assets/games-list-placeholder.png');
@@ -41,7 +41,7 @@ class GamesList extends React.Component {
       //set score with settings chosen this far
       this.props.dispatch(setScoreIDs(this.props.games[gameSelected]))
       //set base time before modifications in settings are made
-      this.props.dispatch(setTimer(this.props.games[gameSelected].base_time))
+      this.props.dispatch(setBaseTime(this.props.games[gameSelected].base_time))
 
       // check to see if a user has logged in already
       if(this.props.user) {
