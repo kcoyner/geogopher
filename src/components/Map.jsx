@@ -1,3 +1,5 @@
+"use strict";
+
 /*global window.google*/
 import React from 'react';
 import { Button, Checkbox } from 'semantic-ui-react';
@@ -179,8 +181,9 @@ export default class Map extends React.Component {
         )
       )
     }
+
   //closes gameStart modal onClick
-  handlePlayDifferentGame() {
+  async handlePlayDifferentGame() {
     //package Score
     let currentScore = {
       countPolygonsEntered: this.props.countPolygonsEntered,
@@ -202,15 +205,13 @@ export default class Map extends React.Component {
     this.setState({ open: false });
     this.props.history.push('/');
     //clear game and score reducers
-    this.props.dispatch(actions.postScore(currentScore))
+    this.props.dispatch(await actions.postScore(currentScore))
 
-    // this.props.dispatch(actions.resetGame())
-    //
-    // this.props.dispatch(actions.resetScore())
+    this.props.dispatch(actions.resetGame())
 
-
-
+    this.props.dispatch(actions.resetScore())
   }
+
   //registers inputs entered into input field
   onInputChange(e) {
     this.setState({ inputValue: e.target.value })
