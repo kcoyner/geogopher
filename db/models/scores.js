@@ -25,7 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
       }
     },
-    count_polygons_identified: Sequelize.INTEGER,
+    count_polygons_entered: Sequelize.INTEGER,
+    count_total_submissions: Sequelize.INTEGER,
+    polygons_answered: Sequelize.STRING,
+    polygons_unanswered: Sequelize.STRING,
+    incorrect_entries: Sequelize.STRING,
     game_id: {
       type: Sequelize.INTEGER,
       references: {
@@ -50,8 +54,10 @@ module.exports = (sequelize, DataTypes) => {
         deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
       }
     },
-    time_taken: Sequelize.STRING,
-    when_game_played: Sequelize.DATE,
+    game_timer_start: Sequelize.INTEGER,
+    game_timer_remaining: Sequelize.STRING,
+    game_start_timestamp: Sequelize.DATE,
+    game_end_timestamp: Sequelize.DATE,
     ip_where_game_played: Sequelize.STRING
   })
 };
