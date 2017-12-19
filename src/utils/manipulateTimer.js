@@ -1,18 +1,12 @@
 export const manipulateTimer = (timeManip, time) => {
 
 
-
-  if (timeManip.multiplier === '1.0'){
-    return time
+  if (timeManip.multiplier === '1.0') {
+    return time;
   }
 
   if (timeManip.override) {
-    let newTime = timeManip.override.split(':')
-    let mins = parseInt(newTime[1]);
-    let seconds = parseInt(newTime[2]);
-    let totalSeconds = mins * 60 + seconds;
-
-    return totalSeconds;
+    return timeManip.override;
   } else {
 
     let timeManipulation = parseFloat(timeManip.multiplier);
@@ -31,7 +25,7 @@ export const manipulateTimer = (timeManip, time) => {
     let newMins = Math.floor(secondsManipulated / 60);
 
     if (newMins.toString().length === 1) {
-      newMins = '0'+newMins
+      newMins = '0' + newMins
     }
 
     let newSeconds = secondsManipulated % 60;

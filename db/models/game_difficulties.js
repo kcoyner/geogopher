@@ -21,5 +21,5 @@ module.exports = (sequelize, DataTypes) => {
       type: Sequelize.STRING,
       allowNull: false
     }
-  })
+  });
 };

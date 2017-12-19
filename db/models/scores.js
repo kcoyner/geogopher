@@ -55,9 +55,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     game_timer_start: Sequelize.INTEGER,
-    game_timer_remaining: Sequelize.STRING,
+    game_timer_remaining: Sequelize.INTEGER,
     game_start_timestamp: Sequelize.DATE,
     game_end_timestamp: Sequelize.DATE,
     ip_where_game_played: Sequelize.STRING
-  })
+  });
 };
