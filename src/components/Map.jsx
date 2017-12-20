@@ -72,6 +72,7 @@ export default class Map extends React.Component {
       inputValue: '',
       userQuit: false,
       renderMissingCountriesButton: false,
+      renderSkipCountryButton: false,
       gameSettings: true,
       gameStart: false,
       gameEnd: false,
@@ -86,6 +87,7 @@ export default class Map extends React.Component {
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.showMarkers = this.showMarkers.bind(this);
+    this.skipCountry = this.skipCountry.bind(this);
   }
 
   componentDidMount() {
@@ -128,9 +130,11 @@ export default class Map extends React.Component {
     //once settings are submitted, hide modal. this also prompts the gameStart modal to render
     this.setState({gameSettings: false})
     //show button that renders missing countries if gameSelected is Countdown
-    if (this.props.gameTypeSelected === 'Countdown') {
-      this.setState({renderMissingCountriesButton: true})
-    }
+    this.props.gameTypeSelected === 'Countdown' ?
+      this.setState({renderMissingCountriesButton: true}) : null
+    //show button that allows user to skip if gameSelected is name the country
+    this.props.gameTypeSelected === 'Name the Country' ?
+      this.setState({renderSkipCountryButton: true}) : null
   }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
@@ -288,6 +292,23 @@ export default class Map extends React.Component {
     }, 3000);
   }
 
+  skipCountry(e) {
+
+    let gameValues = {
+
+      map: map,
+      countTotalSubmissions: this.props.countTotalSubmissions,
+      dispatchFcn: this.props.dispatch,
+      gameData: this.props.gameData,
+      reactThis: this,
+      highlightedPolygon: this.state.highlightedPolygon,
+      handleGameEnd: this.handleGameEnd,
+
+    }
+
+    nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon, true);
+  }
+
   render() {
     return (
       <div className="container">
@@ -322,6 +343,15 @@ export default class Map extends React.Component {
           ?
           <div className="show-missing-countries-button">
             <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
+          </div>
+          : null
+        }
+
+        {
+          this.state.renderSkipCountryButton
+          ?
+          <div className="show-skip-country-button">
+            <Button className="skip-country-btn" onClick={ this.skipCountry }>Skip</Button>
           </div>
           : null
         }

@@ -110,7 +110,7 @@ export const submitCorrectEntry = (countPolygonsEntered, polygonIndex, gameData)
     });
 
     dispatch({
-      type: 'ANSWER_CORRECT',
+      type: 'ENTRY_CORRECT',
       payload: {
         countPolygonsEntered: countPolygonsEntered,
         gameData: gameData,
@@ -123,9 +123,30 @@ export const submitIncorrectEntry = (answerSubmitted, incorrectEntries) => {
   return (dispatch) => {
     incorrectEntries.push(answerSubmitted)
     dispatch({
-      type: 'ANSWER_INCORRECT',
+      type: 'ENTRY_INCORRECT',
       payload: {
         incorrectEntries: incorrectEntries,
+      }
+    });
+  }
+};
+
+export const submitSkippedEntry = (polygonIndex, gameData) => {
+  return (dispatch) => {
+
+    gameData = gameData.map((el, idx) => {
+      if (el.id === polygonIndex) {
+        el.polygonAnswered = true;
+        return el
+      } else {
+        return el
+      }
+    });
+
+    dispatch({
+      type: 'ENTRY_SKIPPED',
+      payload: {
+        gameData: gameData,
       }
     });
   }
