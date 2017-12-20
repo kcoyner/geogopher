@@ -103,6 +103,7 @@ export const nameTheCountryGameLogic = (gameValues, highlightedCountry, skipCoun
         //end of forEach that cycles through accepted answers
       })
 
+    
 
     }
 
