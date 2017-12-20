@@ -350,9 +350,7 @@ export default class Map extends React.Component {
         {
           this.state.renderSkipCountryButton
           ?
-          <div className="show-skip-country-button">
             <Button className="skip-country-btn" onClick={ this.skipCountry }>Skip</Button>
-          </div>
           : null
         }
 
