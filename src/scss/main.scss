@@ -71,10 +71,13 @@ div.game-controls{
       grid-row: 10;
       z-index: 4;
       font-size: 30px;
-      background-color: darkgoldenrod;
+      background-color: goldenrod;
       color: white;
-      &hover{
-        background-color: goldenrod;
+      &:hover{
+        background-color: darkgoldenrod;
+        color: white;
+        border: 3px solid white;
+        border-radius: 5px;
       }
     }
 
@@ -148,7 +151,7 @@ div.game-controls{
       grid-column: 7/8;
       grid-row: 10;
       z-index: 4;
-      font-size: 4vw;
+      font-size: 30px;
       margin: 0;
       align-self:center;
     }
