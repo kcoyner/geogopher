@@ -67,13 +67,19 @@ export default function reducer(state = {
         gameEndTimestamp: action.payload.gameEndTimestamp,
       };
 
-    case 'ANSWER_CORRECT':
+    case 'ENTRY_CORRECT':
       return {
         ...state,
         countPolygonsEntered: action.payload.countPolygonsEntered,
       };
 
-    case 'ANSWER_INCORRECT':
+    case 'ENTRY_INCORRECT':
+      return {
+        ...state,
+        incorrectEntries: action.payload.incorrectEntries,
+      };
+
+    case 'ENTRY_SKIPPED':
       return {
         ...state,
         incorrectEntries: action.payload.incorrectEntries,

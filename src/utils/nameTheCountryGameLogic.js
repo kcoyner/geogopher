@@ -1,6 +1,6 @@
 import { getRandomUnansweredPolygon } from './index'
 
-import { submitCorrectEntry, submitIncorrectEntry, incrementTotalSubmissions, } from '../actions/Score.actions';
+import { submitCorrectEntry, submitIncorrectEntry, incrementTotalSubmissions, submitSkippedEntry } from '../actions/Score.actions';
 
 /**
  * Game logic needed for nameTheCountry type of game. Makes changes to the map.
@@ -8,7 +8,7 @@ import { submitCorrectEntry, submitIncorrectEntry, incrementTotalSubmissions, } 
  * @param gameValues
  * @param { Object } highlightedCountry
  */
-export const nameTheCountryGameLogic = (gameValues, highlightedCountry) => {
+export const nameTheCountryGameLogic = (gameValues, highlightedCountry, skipCountry) => {
 
   //if a highlighted country has not been passed in, then it came from Map's handleStart
   if (!highlightedCountry) {
@@ -42,43 +42,75 @@ export const nameTheCountryGameLogic = (gameValues, highlightedCountry) => {
     });
 
   } else {
+
     //declare logic variables
-    let answerCorrect = false;
+    let allowNextCountry = false;
     let moreCountriesLeft = false
 
-    //if a highlightedCountry does exist, loop through its accepted answers
-    highlightedCountry.acceptedAnswers.forEach((el) => {
-      //if user input matches an acceptable answer
-      if (gameValues.submissionSanitized === el) {
-        //get the polygon in the map
-        let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
-        //modify the colors of polygon in the map
-        gameValues.map.data.overrideStyle(polygonInMap, {
-          fillColor: '#7FF000',
-          strokeColor: '#FFD700',
-          strokeWeight: '3'
-        })
-        //dispatch gameData to show TRUE for polygonsAnswered
-        gameValues.dispatchFcn(
-          submitCorrectEntry(
-            gameValues.countPolygonsEntered,
-            highlightedCountry.id,
-            gameValues.gameData
-          )
+    //if user is skipping the country
+    if (skipCountry) {
+
+      let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
+      //modify the colors of polygon in the map
+      gameValues.map.data.overrideStyle(polygonInMap, {
+        fillColor: 'grey',
+        strokeColor: 'darkslategrey',
+        strokeWeight: '3'
+      })
+      //dispatch gameData to show TRUE for polygonAnswered, but not increment countPolygonsEntered
+      gameValues.dispatchFcn(
+        submitSkippedEntry(
+          highlightedCountry.id,
+          gameValues.gameData
         )
-        //set answer status to correct
-        answerCorrect = true;
-        //make local modification to gameData
-        gameValues.gameData.forEach((el) => {
-          if (el.id === highlightedCountry.id) {
-            el.polygonAnswered = true;
-          }
-        })
-      //end of if statement that matches submission to accepted answer
-      }
-    //end of forEach that cycles through accepted answers
-    })
-    if (answerCorrect) {
+      )
+
+      //set answer status to correct
+      allowNextCountry = true;
+
+    } else {
+
+      //if a highlightedCountry does exist and user isnt skipping entry, loop through its accepted answers
+      highlightedCountry.acceptedAnswers.forEach((el) => {
+        //if user input matches an acceptable answer
+        if (gameValues.submissionSanitized === el) {
+          //get the polygon in the map
+          let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
+          //modify the colors of polygon in the map
+          gameValues.map.data.overrideStyle(polygonInMap, {
+            fillColor: '#7FF000',
+            strokeColor: '#FFD700',
+            strokeWeight: '3'
+          })
+          //dispatch gameData to show TRUE for polygonsAnswered
+          gameValues.dispatchFcn(
+            submitCorrectEntry(
+              gameValues.countPolygonsEntered,
+              highlightedCountry.id,
+              gameValues.gameData
+            )
+          )
+          //set answer status to correct
+          allowNextCountry = true;
+          //make local modification to gameData
+          gameValues.gameData.forEach((el) => {
+            if (el.id === highlightedCountry.id) {
+              el.polygonAnswered = true;
+            }
+          })
+          //end of if statement that matches submission to accepted answer
+        }
+        //end of forEach that cycles through accepted answers
+      })
+
+    
+
+    }
+
+
+
+
+    if (allowNextCountry) {
       //if there are more unansweredPolygons, run function again
       gameValues.gameData.forEach((el) => {
         if (!el.polygonAnswered) {
@@ -96,6 +128,8 @@ export const nameTheCountryGameLogic = (gameValues, highlightedCountry) => {
         )
       )
     }
+
+
   //end of else statement
   }
 

@@ -53,7 +53,7 @@ li {
 //map component game controls styling
 div.game-controls{
   display: grid;
-  grid-template-columns: 6fr 2fr 2fr;
+  grid-template-columns: repeat(7, 2fr);
   grid-template-rows: repeat(10, 1fr);
   grid-gap: 15px;
   width: 100vw;
@@ -65,6 +65,22 @@ div.game-controls{
       z-index: 4;
     }
 
+    .skip-country-btn{
+      margin: 10px;
+      grid-column: 5/6;
+      grid-row: 10;
+      z-index: 4;
+      font-size: 30px;
+      background-color: goldenrod;
+      color: white;
+      &:hover{
+        background-color: darkgoldenrod;
+        color: white;
+        border: 3px solid white;
+        border-radius: 5px;
+      }
+    }
+
     .game-title{
       grid-column: 1;
       grid-row: 1;
@@ -72,13 +88,13 @@ div.game-controls{
     }
 
     div#map{
-      grid-column: 1/4;
+      grid-column: 1/8;
       grid-row: 1/11;
       z-index: 0;
     }
 
     input.input-entry, input.input-entry:focus{
-      grid-column: 1;
+      grid-column: 1/5;
       grid-row: 10;
       font-size: 3vw;
       font-family: 'helvetica';
@@ -93,7 +109,7 @@ div.game-controls{
 
     .quit-game-btn{
       margin: 10px;
-      grid-column: 2/3;
+      grid-column: 6/7;
       grid-row: 10;
       z-index: 4;
       font-size: 30px;
@@ -115,13 +131,13 @@ div.game-controls{
     }
 
     .countries-answered{
-      grid-column: 3/4;
+      grid-column: 7/8;
       grid-row: 1;
       z-index: 4;
     }
 
     .time-remaining-title{
-      grid-column: 3/4;
+      grid-column: 7/8;
       grid-row: 9;
       z-index: 4;
       display: grid;
@@ -132,10 +148,10 @@ div.game-controls{
     }
 
     .time-remaining{
-      grid-column: 3/4;
+      grid-column: 7/8;
       grid-row: 10;
       z-index: 4;
-      font-size: 4vw;
+      font-size: 30px;
       margin: 0;
       align-self:center;
     }
