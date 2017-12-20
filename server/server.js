@@ -48,60 +48,22 @@ app.use(function(req, res, next) {
 });
 
 
-passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:1337/auth/google/callback"
-},
-function(accessToken, refreshToken, profile, done) {
-  let date = moment();
-  db.users
-  .findOrCreate({where: {google_id: profile.id}, defaults: {
-    'google_id': profile.id,
-    'first_name': profile.name.givenName,
-    'last_name': profile.name.familyName,
-    'count_games_played': 0,
-    'last_login': date,
-    'email': profile.emails[0].value
-  }})
-  .spread((user, created) => {
-    user.created = created;
-    return done(null, user);
-  });
-}
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.google_id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//     User.findOne({ username: username }, function(err, user) {
+//       if (err) { return done(err); }
+//       if (!user) {
+//         return done(null, false, { message: 'Incorrect username.' });
+//       }
+//       if (!user.validPassword(password)) {
+//         return done(null, false, { message: 'Incorrect password.' });
+//       }
+//       return done(null, user);
+//     });
+//   }
+// ));
 
 // Declare api routes BEFORE * route
-apiRouter.route('/user')
-  .post((req, res) => {
-    let date = moment();
-    // This should probably be put into some sort of helper file
-    let user = {
-      'first_name': req.body.firstName,
-      'last_name': req.body.lastName,
-      'email': req.body.email,
-      'count_games_played': 0,
-      'last_login': date
-    };
-    db.users.create(user)
-    .then(user => {
-      res.send(user);
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  });
-
 apiRouter.route('/gameslist')
   .get(cors(corsOptions), (req, res) => {
     db.games.findAll()
@@ -157,14 +119,17 @@ apiRouter.route('/postScore')
 
 
 
+apiRouter.route('/login')
+  .get((req, res) => {
+    db.users.findOne({ where: { email: 'testing_login@mail.com'}})
+    .then(user => {
+      console.log(user);
+    })
+    // const User = new db.users;
+  });
+
 apiRouter.route('/user')
   .get((req, res) => {
-    // let query = {};
-    // if(req.query.google) {
-    //   query.google_id = req.query.id;
-    // } else {
-    //   query.id = req.query.id;
-    // }
     let date = moment();
     db.users
     .findOrCreate({where: {google_id: req.query.googleId}, defaults: {
@@ -180,15 +145,25 @@ apiRouter.route('/user')
       res.send(user);
     });
   })
-app.get('/auth/google',
-passport.authenticate('google', { scope: ['email', 'profile'] }));
-
-app.get('/auth/google/callback',
-passport.authenticate('google', { failureRedirect: '/login' }),
-function(req, res) {
-  console.log(req.user);
-  res.redirect('/' + req.user.user_id);
-});
+  .post((req, res) => {
+    let date = moment();
+    // This should probably be put into some sort of helper file
+    let user = {
+      'first_name': req.body.firstName,
+      'last_name': req.body.lastName,
+      'email': req.body.email,
+      'count_games_played': 0,
+      'last_login': date,
+      'password_hash': req.body.password
+    };
+    db.users.create(user)
+    .then(user => {
+      res.send(user);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  });
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));

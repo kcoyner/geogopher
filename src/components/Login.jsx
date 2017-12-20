@@ -14,12 +14,18 @@ class Login extends React.Component {
     super(props);
     this.onLoginSuccess = this.onLoginSuccess.bind(this);
     this.onLoginFailure = this.onLoginFailure.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit() {
+    const { dispatch } = this.props;
+    dispatch(userActions.login());
   }
 
   onLoginSuccess(response) {
     const { dispatch } = this.props;
     console.log('login success: ', response);
-    dispatch(userActions.login(response));
+    dispatch(userActions.login(response, true));
     if(this.props.gameSelected) {
       this.props.history.push('/map');
     } else {
@@ -38,13 +44,14 @@ class Login extends React.Component {
         <h1>Login</h1>
         <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
             <Form.Field>
-              <label>Username</label>
+              <label>Email</label>
               <input name='email' placeholder='Email' required='true'/>
             </Form.Field>
             <Form.Field>
               <label>Password</label>
               <input name='password' placeholder='Password' type='password'required='true'/>
             </Form.Field>
+<<<<<<< HEAD
 
         <div className="divider"></div>
 
@@ -53,6 +60,11 @@ class Login extends React.Component {
 
         <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
 
+=======
+            <Button type='submit'>Submit</Button>
+        <Link to="/register"> sign up </Link>
+        </Form>
+>>>>>>> Successfully hashing password
         <GoogleLogin
         className="google-btn"
         clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
@@ -60,10 +72,13 @@ class Login extends React.Component {
         onSuccess={this.onLoginSuccess}
         onFailure={this.onLoginFailure}
         />
+<<<<<<< HEAD
 
         <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
 
         </Form>
+=======
+>>>>>>> Successfully hashing password
     </div>
     )
   }

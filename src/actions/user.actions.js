@@ -1,4 +1,5 @@
 import { userService } from '../services';
+import axios from 'axios';
 
 export const userActions = {
     register,
@@ -31,9 +32,11 @@ function register(user) {
     // function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function login(user) {
+function login(user, google) {
     return dispatch => {
-        userService.getUserInfo(user.profileObj, true)
+        // If the user is logging in through google...
+        if(google) {
+            userService.getUserInfo(user.profileObj, true)
             .then(
                 userObj => {
                     user.profileObj.user_id = userObj;
@@ -43,7 +46,11 @@ function login(user) {
                     console.log('Error getting user info: ', error)
                 }
             )
-
+        } else {
+            // Vanilla email and username login
+            axios.get('/api/login');
+            
+        }
     }
 }
 

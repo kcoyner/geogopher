@@ -24,7 +24,6 @@ function getUserInfo(userObj, google) {
         .then(function(response) {
             let user = {};
             localStorage.setItem('user', JSON.stringify(response.data.user_id));
-            console.log(localStorage);
             return response.data.user_id;
         })
         .catch(function(error) {
