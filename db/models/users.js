@@ -4,9 +4,10 @@
  */
 
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('users', {
+   const User = sequelize.define('users', {
     user_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -65,5 +66,43 @@ module.exports = (sequelize, DataTypes) => {
       type: Sequelize.STRING,
       allowNull: true
     },
-  })
+  } 
+)
+
+User.prototype.validPassword = function validPassword(password) {
+ const hash = this.password_hash;
+ return new Promise(function(resolve, reject) {
+   bcrypt.compare(password, hash).then(function(res) {
+    return resolve(res);
+  });
+ }) 
+}
+
+User.beforeCreate(function(user, options) {
+  if(user.google_id === null || user.google_id === undefined) {
+    return hashPassword(user.password_hash)
+    .then(success => {
+      user.password_hash = success;
+    })
+    .catch(err => {
+      if (err) console.log(err);
+    });
+  } else {
+    return;
+  }
+});
+
+return User;
 };
+
+function hashPassword(password) {
+  return new Promise(function(resolve, reject) {
+    bcrypt.genSalt(10, function(err, salt) {
+      if (err) return reject(err);
+      bcrypt.hash(password, salt, function(err, hash) {
+        if (err) return reject(err);
+        return resolve(hash);
+      });
+    });
+  });
+}
