@@ -161,9 +161,9 @@ div.game-controls{
 
 .games-list{
   display:grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
   grid-gap: 10px;
-  grid-template-areas: 'game game game game'
+
 }
 
 .ui.card{
@@ -250,4 +250,9 @@ button.ui.button.login-btn{
       color: firebrick;
       font-size: 1.5em;
     }
+}
+
+.polygon-info-window {
+  color: black;
+  font-size: 30px;
 }
