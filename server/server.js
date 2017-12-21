@@ -47,22 +47,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-// passport.use(new LocalStrategy(
-//   function(username, password, done) {
-//     User.findOne({ username: username }, function(err, user) {
-//       if (err) { return done(err); }
-//       if (!user) {
-//         return done(null, false, { message: 'Incorrect username.' });
-//       }
-//       if (!user.validPassword(password)) {
-//         return done(null, false, { message: 'Incorrect password.' });
-//       }
-//       return done(null, user);
-//     });
-//   }
-// ));
-
 // Declare api routes BEFORE * route
 apiRouter.route('/gameslist')
   .get(cors(corsOptions), (req, res) => {
@@ -120,13 +104,25 @@ apiRouter.route('/postScore')
 
 
 apiRouter.route('/login')
-  .get((req, res) => {
-    db.users.findOne({ where: { email: 'testing_login@mail.com'}})
-    .then(user => {
-      console.log(user);
-    })
-    // const User = new db.users;
-  });
+  .post((req, res) => {
+    const email = req.body.email,
+        password = req.body.password;
+    db.users.findOne({ where: { email: email } }).then(function (user) {
+      if(!user) {
+        console.log('user does not exist');
+      } else {
+      user.validPassword(password)
+        .then(validUser => {
+          if(validUser) {
+            console.log('valid user');
+            res.send(user);
+          } else {
+            console.log('wrong password');
+          }
+        })
+      }
+    });
+  })
 
 apiRouter.route('/user')
   .get((req, res) => {

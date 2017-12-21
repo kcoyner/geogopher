@@ -12,14 +12,31 @@ import { GoogleLogin } from 'react-google-login';
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: '',
+      password: '',
+      
+    }
     this.onLoginSuccess = this.onLoginSuccess.bind(this);
     this.onLoginFailure = this.onLoginFailure.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     const { dispatch } = this.props;
-    dispatch(userActions.login());
+    dispatch(await userActions.login(this.state, false))
+    .then(user => {
+      this.props.history.push('/');
+    })
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    const { user } = this.state;
+    this.setState({
+        [name] : value
+    });
   }
 
   onLoginSuccess(response) {
@@ -51,7 +68,6 @@ class Login extends React.Component {
               <label>Password</label>
               <input name='password' placeholder='Password' type='password'required='true'/>
             </Form.Field>
-<<<<<<< HEAD
 
         <div className="divider"></div>
 
@@ -60,11 +76,6 @@ class Login extends React.Component {
 
         <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
 
-=======
-            <Button type='submit'>Submit</Button>
-        <Link to="/register"> sign up </Link>
-        </Form>
->>>>>>> Successfully hashing password
         <GoogleLogin
         className="google-btn"
         clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
@@ -72,13 +83,10 @@ class Login extends React.Component {
         onSuccess={this.onLoginSuccess}
         onFailure={this.onLoginFailure}
         />
-<<<<<<< HEAD
 
         <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
 
         </Form>
-=======
->>>>>>> Successfully hashing password
     </div>
     )
   }

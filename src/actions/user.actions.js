@@ -15,7 +15,7 @@ function register(user) {
             .then(
                 user => {
                     console.log('User created: ', user);
-                    // dispatch(success());
+                    dispatch(success(user));
                     // history.push('/login');
                     // dispatch(alertActions.success('Registration successful'));
                 },
@@ -28,7 +28,7 @@ function register(user) {
     };
 
     function request(user) { return { type: 'USERS_REGISTER_REQUEST', user } }
-    // function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function success(user) { return { type: 'REGISTER_SUCCESS', payload: user } }
     // function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
@@ -36,7 +36,7 @@ function login(user, google) {
     return dispatch => {
         // If the user is logging in through google...
         if(google) {
-            userService.getUserInfo(user.profileObj, true)
+            return userService.getUserInfo(user.profileObj, true)
             .then(
                 userObj => {
                     user.profileObj.user_id = userObj;
@@ -47,8 +47,17 @@ function login(user, google) {
                 }
             )
         } else {
-            // Vanilla email and username login
-            axios.get('/api/login');
+            return userService.login(user)
+                .then(
+                    user => {
+                        dispatch({ type: 'LOGIN_SUCCESS', payload: user })
+                        return user;
+                    },
+                    error => {
+                        return error;
+                    }
+                )
+
             
         }
     }

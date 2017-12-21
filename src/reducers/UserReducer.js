@@ -1,6 +1,7 @@
 export default function reducer(state = {
   user: null,
   gameSelected: null,
+  registeredUser: null,
   registering: null,
 }, action) {
   switch (action.type) {
@@ -15,6 +16,12 @@ export default function reducer(state = {
       ...state,
       registering: true,
      };
+  }
+  case 'REGISTER_SUCCESS': {
+    return {
+      ...state,
+      user: action.payload
+    }
   }
   case 'LOGIN_SUCCESS': {
     return {

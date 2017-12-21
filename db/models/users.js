@@ -66,8 +66,17 @@ module.exports = (sequelize, DataTypes) => {
       type: Sequelize.STRING,
       allowNull: true
     },
-  }
+  } 
 )
+
+User.prototype.validPassword = function validPassword(password) {
+ const hash = this.password_hash;
+ return new Promise(function(resolve, reject) {
+   bcrypt.compare(password, hash).then(function(res) {
+    return resolve(res);
+  });
+ }) 
+}
 
 User.beforeCreate(function(user, options) {
   if(user.google_id === null || user.google_id === undefined) {
