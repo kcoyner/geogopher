@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GoogleLogout } from 'react-google-login';
 import { userActions } from '../actions';
@@ -16,6 +16,7 @@ class NavBar extends React.Component {
     const { dispatch } = this.props;
     dispatch(userActions.logout());
     console.log('logout successful');
+    this.props.history.push('/login');
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -74,4 +75,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default withRouter(connect(mapStateToProps)(NavBar));

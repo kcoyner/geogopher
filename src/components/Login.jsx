@@ -39,16 +39,17 @@ class Login extends React.Component {
     });
   }
 
-  onLoginSuccess(response) {
+  async onLoginSuccess(response) {
     const { dispatch } = this.props;
     console.log('login success: ', response);
-    dispatch(userActions.login(response, true));
-    if(this.props.gameSelected) {
-      this.props.history.push('/map');
-    } else {
-      this.props.history.push('/');
-    }
-
+    dispatch(await userActions.login(response, true))
+    .then(() => {
+      if(this.props.gameSelected) {
+        this.props.history.push('/map');
+      } else {
+        this.props.history.push('/');
+      }
+    })
   }
   onLoginFailure(response) {
     console.log('failure: ', response);
@@ -68,14 +69,9 @@ class Login extends React.Component {
               <label>Password</label>
               <input name='password' placeholder='Password' type='password'required='true'/>
             </Form.Field>
-
         <div className="divider"></div>
-
-
         <Button className="login-btn" content="Login"/>
-
         <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
-
         <GoogleLogin
         className="google-btn"
         clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
@@ -83,9 +79,7 @@ class Login extends React.Component {
         onSuccess={this.onLoginSuccess}
         onFailure={this.onLoginFailure}
         />
-
         <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
-
         </Form>
     </div>
     )

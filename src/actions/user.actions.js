@@ -57,15 +57,14 @@ function login(user, google) {
                         return error;
                     }
                 )
-
-            
         }
     }
 }
 
 function logout() {
-    userService.logout();
+    
     return dispatch => { 
+        return userService.logout();
         dispatch({ type: 'LOGOUT' });
         dispatch({ type: 'CLEAR_GAME'});
     };
