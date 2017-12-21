@@ -3,7 +3,8 @@ import axios from 'axios';
 export const userService = {
     register,
     getUserInfo,
-    logout
+    logout,
+    login,
 };
 
 function register(user) {
@@ -33,4 +34,15 @@ function getUserInfo(userObj, google) {
 
 function logout() {
    localStorage.removeItem('user');
+}
+
+function login(user) {
+    return axios.post('/api/login', user )
+    .then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data.user_id));
+        return response.data;
+    })
+    .catch(function(error) {
+        return error;
+    })
 }
