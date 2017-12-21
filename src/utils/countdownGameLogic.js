@@ -41,7 +41,7 @@ let endGame = true;
       endGame = false;
     }
   })
-  
+
   // if all polygons are answered
   if (endGame) {
     gameValues.handleGameEnd();
@@ -79,8 +79,8 @@ const countdownAnswerResponse = ( answerStatus, polygonID, gameValues ) => {
               {
                 fillOpacity: '0.5',
                 fillColor: '#7FF000',
-                strokeColor: '#FFD700',
-                strokeWeight: '1',
+                strokeColor: '#008000',
+                strokeWeight: '2',
               }
             ),1000)
     //trigger for already-answered sound
@@ -92,8 +92,8 @@ const countdownAnswerResponse = ( answerStatus, polygonID, gameValues ) => {
         {
           fillOpacity: '0.5',
           fillColor: '#7FF000',
-          strokeColor: '#FFD700',
-          strokeWeight: '1',
+          strokeColor: '#008000',
+          strokeWeight: '2',
         }
       );
     //dispatch gameData to reflect true on polygonAnswered

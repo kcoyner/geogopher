@@ -1,5 +1,4 @@
 const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-marker.png');
-const imgFromAssets2 = require('-!file-loader?name=markerImg!../assets/geogopher-marker-2.png');
 
 export const toggleMissingCountries = (toggle, gameData, map) => {
   //declare empty array of missing countries
@@ -21,7 +20,7 @@ export const toggleMissingCountries = (toggle, gameData, map) => {
       //create a marker (this will auto render on map)
         let marker = new google.maps.Marker({
           map: map,
-          icon: imgFromAssets2,
+          icon: imgFromAssets,
           draggable: false,
           animation: null,
           position: {lat: el.countryCenter[0], lng: el.countryCenter[1]}
