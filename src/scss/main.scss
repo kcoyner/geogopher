@@ -199,7 +199,7 @@ div.game-controls{
                          ".. timehead timehead scorehead scorehead .."
                          ".. timedisp timedisp scoredisp scoredisp .."
                          ".. ..       ..       ..        ..        .."
-                         ".. ..       ..       ..        ..        .."
+                         ".. hintdisp hintdisp hintdisp  hintdisp  .."
                          ".. inputent inputent inputent  inputent  .."
                          ".. hint     advance  ..        quit      .."
                          ".. ..       ..       ..        ..        ..";
@@ -215,6 +215,14 @@ div.game-controls{
       grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
       height: 92vh;
     }
+}
+
+.hint-display{
+  grid-area: hintdisp;
+  z-index: 4;
+  font-size: 1.5;
+  color: red;
+  background-color: white;
 }
 
 .time-remaining-title{
@@ -341,23 +349,14 @@ button.ui.button.quit-game-btn{
   display: grid;
   max-width: 100vw;
   max-height: 95vh;
-  grid-template-columns: 1fr 10fr 1fr;
-  grid-template-areas: "..    gap      .."
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas: "..    gap              .."
                        "..    loginwidget      ..";
       div.gap{
         grid-area: gap;
         height: 300px;
       }
 
-  @media screen and (max-width: 1299px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 24fr 1fr;
-  }
-
-  @media screen and (min-width: 1300px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 60fr 1fr;
-  }
 }
 
 

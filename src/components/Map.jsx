@@ -77,6 +77,7 @@ export default class Map extends React.Component {
       gameStart: false,
       gameEnd: false,
       highlightedPolygon: null,
+      currentHint: null,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -88,6 +89,7 @@ export default class Map extends React.Component {
     this.keyPress = this.keyPress.bind(this);
     this.showMarkers = this.showMarkers.bind(this);
     this.skipCountry = this.skipCountry.bind(this);
+    this.showHint = this.showHint.bind(this);
   }
 
   componentDidMount() {
@@ -292,6 +294,20 @@ export default class Map extends React.Component {
     }, 3000);
   }
 
+  showHint() {
+
+    let gameTypeSelected = this.props.gameTypeSelected;
+
+    if (gameTypeSelected === 'Name the Country') {
+      let hint = this.state.highlightedPolygon.acceptedAnswers[0][0]
+      this.setState({currentHint: `This country starts with a "${hint}"`})
+      setTimeout(()=>this.setState({currentHint: null}),1000)
+
+    } else if (gameTypeSelected === 'Countdown') {
+
+    }
+  }
+
   skipCountry(e) {
 
     let gameValues = {
@@ -345,6 +361,14 @@ export default class Map extends React.Component {
           <div className="polygon-score"> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons} </div>
 
           {
+            this.state.currentHint !== null
+            ?
+            <div className="hint-display">{this.state.currentHint}</div>
+            :
+            null
+          }
+
+          {
             true // future state boolean for if game requires input or not (geoclick)
             // does not require input, but instead the field is replaced
             ?
@@ -362,7 +386,7 @@ export default class Map extends React.Component {
           {
             true
             ?
-            <Button className="hint-btn" onClick={ console.log("build hint logic") }>HINT</Button>
+            <Button className="hint-btn" onClick={ this.showHint }>HINT</Button>
             :
             null
           }
