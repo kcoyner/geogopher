@@ -15,7 +15,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      
+
     }
     this.onLoginSuccess = this.onLoginSuccess.bind(this);
     this.onLoginFailure = this.onLoginFailure.bind(this);
@@ -63,28 +63,33 @@ class Login extends React.Component {
   render() {
     return(
       <div>
-        <h1>Login</h1>
-        <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
-            <Form.Field>
-              <label>Email</label>
-              <input name='email' placeholder='Email' required='true'/>
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input name='password' placeholder='Password' type='password'required='true'/>
-            </Form.Field>
-        <div className="divider"></div>
-        <Button className="login-btn" content="Login"/>
-        <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
-        <GoogleLogin
-        className="google-btn"
-        clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
-        buttonText="Login with Google"
-        onSuccess={this.onLoginSuccess}
-        onFailure={this.onLoginFailure}
-        />
-        <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
-        </Form>
+
+        <div className="login-page-container">
+          <div className="gap"></div>
+          <div className="login-widget">
+          <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
+              <Form.Field>
+                <label>Email</label>
+                <input name='email' placeholder='Email' required='true'/>
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input name='password' placeholder='Password' type='password'required='true'/>
+              </Form.Field>
+          <div className="divider"></div>
+          <Button className="login-btn" content="Login"/>
+          <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
+          <GoogleLogin
+          className="google-btn"
+          clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
+          buttonText="Login with Google"
+          onSuccess={this.onLoginSuccess}
+          onFailure={this.onLoginFailure}
+          />
+          <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
+          </Form>
+        </div>
+      </div>
     </div>
     )
   }

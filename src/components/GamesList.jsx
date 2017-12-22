@@ -57,7 +57,6 @@ class GamesList extends React.Component {
       this.props.dispatch(setScoreIDs(this.props.games[gameSelected]))
       //set base time before modifications in settings are made
       this.props.dispatch(setBaseTime(this.props.games[gameSelected].base_time))
-
       // check to see if a user has logged in already
       if(this.props.user) {
         // If a user exists, map the user to the game screen
@@ -78,6 +77,8 @@ class GamesList extends React.Component {
 
 
       <div className="home-page-container">
+
+        <div className="gap"></div>
 
         <div className="splash">
           <h1>KNOW YOUR GLOBE</h1>
@@ -100,7 +101,11 @@ class GamesList extends React.Component {
                 (game, index) => (
 
                   <Card key={index} >
-                    <div className="select-this-game"><h1>PLAY</h1></div>
+                    {/* on hover, this div covers the thumb */}
+                    <div className="select-this-game"
+                      onClick={() => this.onGameSelect(index)}>
+                      <h1>PLAY</h1>
+                    </div>
                     <Image src={thmbArr[index]}
                           onClick={() => this.onGameSelect(index)}
                         />
