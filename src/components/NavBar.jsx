@@ -2,12 +2,7 @@ import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
-<<<<<<< 6d491b92b0ded047ff539dfb56428104fbbbaa65
-
-import { Menu, Image, Button } from 'semantic-ui-react';
-=======
-import { Menu, Image, Dropdown } from 'semantic-ui-react';
->>>>>>> these changes fix a error i introduced in a failed attempt at refactoring login for future component reuse. they also introducea dropdown menu in the map view, which helps keep the game screen as clean as possible
+import { Menu, Image, Dropdown, Button } from 'semantic-ui-react';
 
 const geogopherLogo = require('-!url-loader?name=geogopher-logo!../assets/geogopher-logo.svg');
 
