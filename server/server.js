@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
+const generateName = require('sillyname');
 const moment = require('moment');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -177,7 +178,7 @@ apiRouter.route('/anonymous')
     let user = {
       'count_games_played': 0,
       'last_login': date,
-      'username': 'anonymous'
+      'username': generateName()
     };
     const anonymousUser = db.users.build(user);
     res.send(anonymousUser);
