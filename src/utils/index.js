@@ -8,3 +8,4 @@ export * from './getRandomUnansweredPolygon';
 export * from './nameTheCountryGameLogic';
 export * from './buildPolygonsAnsweredUnanswered';
 export * from './formatTime';
+export * from './buildUnansweredPolygons';

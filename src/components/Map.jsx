@@ -2,7 +2,7 @@
 
 /*global window.google*/
 import React from 'react';
-import { Button, Checkbox } from 'semantic-ui-react';
+import { Button, Checkbox, Icon } from 'semantic-ui-react';
 import GameSettings from './GameSettings';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
@@ -77,6 +77,7 @@ export default class Map extends React.Component {
       gameStart: false,
       gameEnd: false,
       highlightedPolygon: null,
+      currentHint: null,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -88,9 +89,10 @@ export default class Map extends React.Component {
     this.keyPress = this.keyPress.bind(this);
     this.showMarkers = this.showMarkers.bind(this);
     this.skipCountry = this.skipCountry.bind(this);
+    this.showHint = this.showHint.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
@@ -120,7 +122,7 @@ export default class Map extends React.Component {
       strokeWeight: '2'
     });
     //build gameData in redux and stores as this.props.gameData
-    this.props.dispatch(
+    await this.props.dispatch(
       actions.initializeNewGame(this.props.gameJSON)
     );
 
@@ -292,6 +294,32 @@ export default class Map extends React.Component {
     }, 3000);
   }
 
+  showHint() {
+
+    let gameTypeSelected = this.props.gameTypeSelected;
+
+    if (gameTypeSelected === 'Name the Country') {
+      //get first letter of country that was selected
+      let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
+      //declare base sentence
+      let hintSentence = 'This country starts with a';
+      //if first letter of country is a vowel, change
+      //from 'a' to 'an'
+      ['a','e','i','o','u'].forEach((el) => {
+        if (el === hint) {
+          hintSentence = hintSentence + 'n';
+        }
+      })
+      //change state to show hint
+      this.setState({currentHint: `${hintSentence} "${hint.toUpperCase()}"`})
+      //set state back to null
+      setTimeout(()=>this.setState({currentHint: null}),2000)
+
+    } else if (gameTypeSelected === 'Countdown') {
+
+    }
+  }
+
   skipCountry(e) {
 
     let gameValues = {
@@ -311,77 +339,93 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="game-container">
+
+        <div className="game-region">{ this.props.gameSelected }</div>
+        <div className="game-type">{ this.props.gameTypeSelected}</div>
+        <div className="game-difficulty">{ this.props.gameDifficultySelected }</div>
+        <div className="maps" id="map"></div>
 
         <div className="game-controls">
 
-        <GameSettings
-          onClose={ this.handleClose }
-          onContinue={this.handleSettings}
-          open={this.state.gameSettings}
-        />
+          <GameSettings
+            onClose={ this.handleClose }
+            onContinue={this.handleSettings}
+            open={this.state.gameSettings}
+          />
 
-        <GameStart
-          onClose={ this.handleClose }
-          onStart={this.handleStart}
-          open={!this.state.gameSettings && !this.state.gameStart}
-        />
+          <GameStart
+            onClose={ this.handleClose }
+            onStart={this.handleStart}
+            open={!this.state.gameSettings && !this.state.gameStart}
+          />
 
-        <GameOver
-          onDifferentGame={ this.handlePlayDifferentGame }
-          onStart={this.handleStart}
-          open={this.state.gameEnd}
-        />
+          <GameOver
+            onDifferentGame={ this.handlePlayDifferentGame }
+            onStart={this.handleStart}
+            open={this.state.gameEnd}
+          />
 
-        <div className="game-title">
-          <h1>{ this.props.gameSelected }</h1>
-          <h2>{ this.props.gameTypeSelected+" | "+this.props.gameDifficultySelected }</h2>
+          <div className="time-remaining-title"> Time Remaining: </div>
+          <div className="polygon-score-title"> Countries Answered: </div>
+
+          <div className="time-remaining"> {formatSecondsToMMSS(this.props.gameTimerRemaining)} </div>
+          <div className="polygon-score"> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons} </div>
+
+          {
+            this.state.currentHint !== null
+            ?
+            <div className="hint-display"><h1>{this.state.currentHint}</h1></div>
+            :
+            null
+          }
+
+          {
+            true // future state boolean for if game requires input or not (geoclick)
+            // does not require input, but instead the field is replaced
+            ?
+            <input
+              className="entry-display"
+              ref={(input) => { this.nameInput = input; }}
+              onChange={ this.onInputChange }
+              onKeyDown={this.keyPress}
+              value={ this.state.inputValue }>
+            </input>
+            :
+            null
+          }
+
+          {
+            true
+            ?
+            <Button className="hint-btn" onClick={ this.showHint }>HINT</Button>
+            :
+            null
+          }
+
+          {
+            this.state.renderMissingCountriesButton
+            ?
+            <Button className="advance-btn" onClick={ this.showMarkers } icon="globe"/>
+            : null
+          }
+
+          {
+            this.state.renderSkipCountryButton
+            ?
+            <Button className="advance-btn" onClick={ this.skipCountry }>SKIP</Button>
+            : null
+          }
+
+          <Button className="quit-game-btn" onClick={this.handleGameEnd}>QUIT</Button>
+
+          {/* end game controls */}
         </div>
-
-        {
-          this.state.renderMissingCountriesButton
-          ?
-          <div className="show-missing-countries-button">
-            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
-          </div>
-          : null
-        }
-
-        {
-          this.state.renderSkipCountryButton
-          ?
-            <Button className="skip-country-btn" onClick={ this.skipCountry }>Skip</Button>
-          : null
-        }
-
-        <div className="time-remaining-title">
-          <h1> Time Remaining:</h1>
-        </div>
-
-        <div className="time-remaining">
-          <h1> {formatSecondsToMMSS(this.props.gameTimerRemaining)} </h1>
-        </div>
-
-        <div className="countries-answered">
-          <h1> Countries Answered:</h1>
-          <h2> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}  </h2>
-        </div>
-
-        <input
-          className="input-entry"
-          ref={(input) => { this.nameInput = input; }}
-          onChange={ this.onInputChange }
-          onKeyDown={this.keyPress}
-          value={ this.state.inputValue }>
-        </input>
-
-
-        <Button className="quit-game-btn" onClick={this.handleGameEnd}>Quit</Button>
-
-
-        <div className="maps" id="map"></div>
+        {/* end game container */}
       </div>
-      </div>
+      // end return for render
       );
-  }
+    // end render
+    }
+//end class constructor
 }

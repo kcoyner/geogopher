@@ -2,7 +2,10 @@ import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
-import { Menu, Button } from 'semantic-ui-react';
+import { Menu, Image, Dropdown, Button } from 'semantic-ui-react';
+
+const geogopherLogo = require('-!url-loader?name=geogopher-logo!../assets/geogopher-logo.svg');
+
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -35,21 +38,38 @@ class NavBar extends React.Component {
       <div className="navbar">
         <nav>
                 <Menu>
+
+                  <Menu.Menu position='left'>
+                      <Image className='geogopher-navbar-logo' src={geogopherLogo}/>
+                  </Menu.Menu>
                   <Menu.Menu position='right'>
                     <Menu.Item>
-                     <NavLink exact to="/"> games list </NavLink>
+                     <NavLink exact to="/"> PLAY </NavLink>
                     </Menu.Item>
                     <Menu.Item>
-                     <NavLink to="/map"> map </NavLink>
+                     <NavLink to="/"> EXPLORE </NavLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                     <NavLink to="/"> SCORES </NavLink>
                     </Menu.Item>
                     <Menu.Item>
                        {user ? (
-                         <div>
-                         <p>{user.givenName}</p>
-                         <Button onClick={this.onLogout}>Logout</Button>
-                         </div>
+
+                         <Dropdown text={user.givenName} pointing className='user-account-menu-dropdown'>
+                          <Dropdown.Menu>
+                            <Dropdown.Header>Account</Dropdown.Header>
+                            <Dropdown.Divider />
+                            <Dropdown.Item>
+                              <Button
+                              buttonText="Logout"
+                              onClick={this.onLogout}
+                            >Logout</Button>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+
                        ) : (
-                         <NavLink to="/login"> login </NavLink>
+                        <NavLink to="/login"> login </NavLink>
                        )}
                     </Menu.Item>
                   </Menu.Menu>
