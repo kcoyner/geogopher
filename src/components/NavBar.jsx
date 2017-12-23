@@ -1,22 +1,30 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { GoogleLogout } from 'react-google-login';
 import { userActions } from '../actions';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Button } from 'semantic-ui-react';
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: ''
+    }
 
-    this.onLogoutSuccess = this.onLogoutSuccess.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
-  onLogoutSuccess(){
+  async onLogout(){
     const { dispatch } = this.props;
-    dispatch(userActions.logout());
-    console.log('logout successful');
-    this.props.history.push('/login');
+    dispatch(await userActions.logout())
+    .then(user => {
+      if(!user) {
+        console.log("logout successful!");
+        this.props.history.push('/login');
+      } else {
+        console.log("there was a problem logging out");
+      }
+    });
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -27,40 +35,24 @@ class NavBar extends React.Component {
       <div className="navbar">
         <nav>
                 <Menu>
-
                   <Menu.Menu position='right'>
-
                     <Menu.Item>
-
                      <NavLink exact to="/"> games list </NavLink>
-
                     </Menu.Item>
-
                     <Menu.Item>
-
                      <NavLink to="/map"> map </NavLink>
-
                     </Menu.Item>
-
                     <Menu.Item>
-
                        {user ? (
                          <div>
                          <p>{user.givenName}</p>
-                         <GoogleLogout
-                         buttonText="Logout"
-                         onLogoutSuccess={this.onLogoutSuccess}
-                         >
-                         </GoogleLogout>
+                         <Button onClick={this.onLogout}>Logout</Button>
                          </div>
                        ) : (
                          <NavLink to="/login"> login </NavLink>
                        )}
-
                     </Menu.Item>
-
                   </Menu.Menu>
-
                 </Menu>
 
         </nav>

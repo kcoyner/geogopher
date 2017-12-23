@@ -27,7 +27,11 @@ class Login extends React.Component {
     const { dispatch } = this.props;
     dispatch(await userActions.login(this.state, false))
     .then(user => {
-      this.props.history.push('/');
+      if(this.props.gameSelected) {
+        this.props.history.push('/map');
+      } else {
+        this.props.history.push('/');
+      }
     })
   }
 

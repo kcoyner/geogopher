@@ -9,6 +9,10 @@ import 'core-js/es6/set';
 
 import App from './App';
 
+if(localStorage.user) {
+  store.dispatch({ type: 'LOGIN_SUCCESS', payload: localStorage.user });
+}
+
 ReactDOM.render(<Provider store={ store }>
   <Router>
     <App />

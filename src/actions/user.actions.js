@@ -34,9 +34,8 @@ function register(user) {
 
 function login(user, google) {
     return dispatch => {
-        // If the user is logging in through google...
         if(google) {
-            return userService.getUserInfo(user.profileObj, true)
+            return userService.getGoogleUserInfo(user.profileObj, true)
             .then(
                 userObj => {
                     user.profileObj.user_id = userObj;
@@ -62,10 +61,12 @@ function login(user, google) {
 }
 
 function logout() {
-    
     return dispatch => { 
-        return userService.logout();
-        dispatch({ type: 'LOGOUT' });
-        dispatch({ type: 'CLEAR_GAME'});
+        return userService.logout()
+            .then( () => {
+                dispatch({ type: 'LOGOUT' });
+                dispatch({ type: 'CLEAR_GAME'});
+                return;
+            })
     };
 }

@@ -124,6 +124,15 @@ apiRouter.route('/login')
     });
   })
 
+apiRouter.route('/userId')
+  .get((req, res) => {
+    db.users.findOne({
+      where: {user_id: req.query}
+    }).then(user => {
+      res.send(user);
+    })
+  })
+
 apiRouter.route('/user')
   .get((req, res) => {
     let date = moment();
