@@ -55,13 +55,12 @@ class NavBar extends React.Component {
                     <Menu.Item>
                        {user ? (
 
-                         <Dropdown text={user.givenName} pointing className='user-account-menu-dropdown'>
+                         <Dropdown text={user.first_name || user.username} pointing className='user-account-menu-dropdown'>
                           <Dropdown.Menu>
                             <Dropdown.Header>Account</Dropdown.Header>
                             <Dropdown.Divider />
                             <Dropdown.Item>
                               <Button
-                              buttonText="Logout"
                               onClick={this.onLogout}
                             >Logout</Button>
                             </Dropdown.Item>

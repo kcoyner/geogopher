@@ -35,15 +35,17 @@ class RegisterPage extends React.Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
 
     this.setState({ submitted: true });
     const { user } = this.state;
     const { dispatch } = this.props;
     if (user.firstName && user.lastName && user.username && user.password && user.email) {
-        dispatch(userActions.register(user));
-        this.props.history.push('/');
+        dispatch(await userActions.register(user))
+          .then(() => {
+            this.props.history.push('/');
+          })
     }
   }
 

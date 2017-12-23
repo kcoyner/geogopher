@@ -8,13 +8,24 @@ export const userService = {
 };
 
 function register(user) {
-    return axios.post('/api/user', user)
-      .then(function (response) {
-          return response.data;
-      })
-      .catch(function (error) {
-       return error;
-      });
+    let body = user || { 'anonymous': true };
+    if(body.anonymous) {
+        return axios.post('/api/anonymous', body)
+            .then(function (response) {
+                return response.data
+            })
+            .catch(function (error) {
+                return error;
+            })
+    } else {
+        return axios.post('/api/user', body)
+        .then(function (response) {
+            return response.data;
+        })
+        .catch(function (error) {
+         return error;
+        });
+    }
 }
 
 function getUserInfo(userId) {
@@ -32,7 +43,7 @@ function getGoogleUserInfo(userObj, google) {
         .then(function(response) {
             let user = {};
             localStorage.setItem('user', JSON.stringify(response.data));
-            return response.data.user_id;
+            return response.data;
         })
         .catch(function(error) {
             return error;
@@ -41,9 +52,7 @@ function getGoogleUserInfo(userObj, google) {
 
 function logout() {
     return new Promise(function(resolve) {
-        console.log("+++++++++",localStorage);
         localStorage.removeItem('user');
-        console.log(localStorage);
         return resolve(localStorage.user);
       });
 }

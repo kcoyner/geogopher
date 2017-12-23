@@ -61,8 +61,16 @@ class Login extends React.Component {
     console.log('failure: ', response);
   }
 
-  onPlayAnonymous() {
-
+  async onPlayAnonymous() {
+    const { dispatch } = this.props;
+    dispatch(await userActions.register())
+      .then(() => {
+        if(this.props.gameSelected) {
+          this.props.history.push('/map');
+        } else {
+          this.props.history.push('/');
+        }
+      })
   }
 
 

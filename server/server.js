@@ -147,6 +147,7 @@ apiRouter.route('/user')
     }})
     .spread((user, created) => {
       user.created = created;
+      console.log(user);
       res.send(user);
     });
   })
@@ -169,6 +170,18 @@ apiRouter.route('/user')
       console.log(error);
     })
   });
+
+apiRouter.route('/anonymous')
+  .post((req, res) => {
+    let date = moment();
+    let user = {
+      'count_games_played': 0,
+      'last_login': date,
+      'username': 'anonymous'
+    };
+    const anonymousUser = db.users.build(user);
+    res.send(anonymousUser);
+  })
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
