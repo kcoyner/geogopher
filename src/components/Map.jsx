@@ -92,7 +92,7 @@ export default class Map extends React.Component {
     this.showHint = this.showHint.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
@@ -122,7 +122,7 @@ export default class Map extends React.Component {
       strokeWeight: '2'
     });
     //build gameData in redux and stores as this.props.gameData
-    this.props.dispatch(
+    await this.props.dispatch(
       actions.initializeNewGame(this.props.gameJSON)
     );
 

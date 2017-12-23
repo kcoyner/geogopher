@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { buildGameData } from '../utils/gameDataInit';
+import { buildGameData, buildUnansweredPolygons } from '../utils/index';
 //called in map componentDidMount
 export const initializeNewGame = (apiUrl) => {
   return (dispatch) => {
@@ -9,7 +9,11 @@ export const initializeNewGame = (apiUrl) => {
       })
       .then(response => {
         dispatch({ type: 'GAME_DATA_BUILT', payload: response })
-        return response;
+        return buildUnansweredPolygons(response);
+      })
+      .then(polygonsUnanswered => {
+        dispatch({ type: 'SET_UNANSWERED', payload: polygonsUnanswered })
+        return polygonsUnanswered
       })
       .catch(error => {
         throw (error);

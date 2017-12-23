@@ -66,6 +66,11 @@ export default function reducer(state = {
         ...state,
         gameEndTimestamp: action.payload.gameEndTimestamp,
       };
+    case 'SET_UNANSWERED_POLYGONS':
+      return {
+        ...state,
+        polygonsUnanswered: action.payload.polygonsUnanswered,
+      };
 
     case 'ENTRY_CORRECT':
       return {
