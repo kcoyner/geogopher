@@ -299,9 +299,21 @@ export default class Map extends React.Component {
     let gameTypeSelected = this.props.gameTypeSelected;
 
     if (gameTypeSelected === 'Name the Country') {
-      let hint = this.state.highlightedPolygon.acceptedAnswers[0][0]
-      this.setState({currentHint: `This country starts with a "${hint}"`})
-      setTimeout(()=>this.setState({currentHint: null}),1000)
+      //get first letter of country that was selected
+      let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
+      //declare base sentence
+      let hintSentence = 'This country starts with a';
+      //if first letter of country is a vowel, change
+      //from 'a' to 'an'
+      ['a','e','i','o','u'].forEach((el) => {
+        if (el === hint) {
+          hintSentence = hintSentence + 'n';
+        }
+      })
+      //change state to show hint
+      this.setState({currentHint: `${hintSentence} "${hint.toUpperCase()}"`})
+      //set state back to null
+      setTimeout(()=>this.setState({currentHint: null}),2000)
 
     } else if (gameTypeSelected === 'Countdown') {
 
@@ -363,7 +375,7 @@ export default class Map extends React.Component {
           {
             this.state.currentHint !== null
             ?
-            <div className="hint-display">{this.state.currentHint}</div>
+            <div className="hint-display"><h1>{this.state.currentHint}</h1></div>
             :
             null
           }
