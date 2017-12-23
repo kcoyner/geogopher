@@ -60,17 +60,16 @@ class NavBar extends React.Component {
                             <Dropdown.Header>Account</Dropdown.Header>
                             <Dropdown.Divider />
                             <Dropdown.Item>
-                              <GoogleLogout
+                              <Button
                               buttonText="Logout"
                               onClick={this.onLogout}
-                              >
-                              </GoogleLogout>
+                            >Logout</Button>
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
 
                        ) : (
-                         <NavLink to="/login"> login </NavLink>
+                        <NavLink to="/login"> login </NavLink>
                        )}
                     </Menu.Item>
                   </Menu.Menu>
