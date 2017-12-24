@@ -58,6 +58,7 @@ typings/
 .env
 
 # bundled JS file
+dist/
 dist/bundle.js
 dist/bundle.js.gz
 

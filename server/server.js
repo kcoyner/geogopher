@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
+const generateName = require('sillyname');
 const moment = require('moment');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -147,6 +148,7 @@ apiRouter.route('/user')
     }})
     .spread((user, created) => {
       user.created = created;
+      console.log(user);
       res.send(user);
     });
   })
@@ -169,6 +171,27 @@ apiRouter.route('/user')
       console.log(error);
     })
   });
+
+apiRouter.route('/anonymous')
+  .post((req, res) => {
+    let date = moment();
+    let user = {
+      'count_games_played': 0,
+      'last_login': date,
+      'username': generateName()
+    };
+    const anonymousUser = db.users.build(user);
+    res.send(anonymousUser);
+  })
+
+apiRouter.route('/scores')
+  .get((req, res) => {
+    db.scores.findAll( {
+      attributes: ['game_id', 'user_id', 'count_polygons_entered']})
+      .then(scores => {
+        res.send(scores);
+      })
+  })
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));

@@ -5,6 +5,7 @@ import GamesList from './components/GamesList';
 import Map from './components/Map';
 import Login from './components/Login';
 import RegisterPage from './components/Register';
+import HighScores from './components/HighScores';
 
 export default class App extends React.Component {
 
@@ -16,6 +17,7 @@ export default class App extends React.Component {
         <Route path="/map" component={ Map } />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ RegisterPage } />
+        <Route exact path="/high-scores" component={ HighScores } />
       </div>
     )
   }

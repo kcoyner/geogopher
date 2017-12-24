@@ -21,6 +21,7 @@ class Login extends React.Component {
     this.onLoginFailure = this.onLoginFailure.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onPlayAnonymous = this.onPlayAnonymous.bind(this);
   }
 
   async handleSubmit() {
@@ -55,15 +56,27 @@ class Login extends React.Component {
       }
     })
   }
+
   onLoginFailure(response) {
     console.log('failure: ', response);
+  }
+
+  async onPlayAnonymous() {
+    const { dispatch } = this.props;
+    dispatch(await userActions.register())
+      .then(() => {
+        if(this.props.gameSelected) {
+          this.props.history.push('/map');
+        } else {
+          this.props.history.push('/');
+        }
+      })
   }
 
 
   render() {
     return(
       <div>
-
         <div className="login-page-container">
           <div className="gap"></div>
           <div className="login-widget">
@@ -86,7 +99,7 @@ class Login extends React.Component {
           onSuccess={this.onLoginSuccess}
           onFailure={this.onLoginFailure}
           />
-          <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
+          <Button className="anonymous-btn"  onClick={this.onPlayAnonymous} content="Play as Anonymous"/>
           </Form>
         </div>
       </div>

@@ -10,19 +10,14 @@ export const userActions = {
 function register(user) {
     return dispatch => {
         dispatch(request(user));
-
-        userService.register(user)
+        return userService.register(user)
             .then(
                 user => {
                     console.log('User created: ', user);
                     dispatch(success(user));
-                    // history.push('/login');
-                    // dispatch(alertActions.success('Registration successful'));
                 },
                 error => {
                     console.log('Error registering user: ', error);
-                    // dispatch(failure(error));
-                    // dispatch(alertActions.error(error));
                 }
             );
     };
@@ -34,12 +29,12 @@ function register(user) {
 
 function login(user, google) {
     return dispatch => {
+        // If the user is logging in through google...
         if(google) {
             return userService.getGoogleUserInfo(user.profileObj, true)
             .then(
                 userObj => {
-                    user.profileObj.user_id = userObj;
-                    dispatch({ type: 'LOGIN_SUCCESS', payload: user.profileObj })
+                    dispatch({ type: 'LOGIN_SUCCESS', payload: userObj })
                 },
                 error => {
                     console.log('Error getting user info: ', error)
