@@ -46,4 +46,6 @@ describe('the map', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  // When a user logs out, there shouldn't be a user object within localStorage
+
 });

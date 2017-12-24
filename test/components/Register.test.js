@@ -23,4 +23,9 @@ describe('the register', () => {
       </Provider>, div);
   });
 
+  // Previously registered user cannot register more than once
+    // unique email, username
+
+  // After registering, the user must have a first_name, last_name, user_id OR google_id, email, and username
+
 });

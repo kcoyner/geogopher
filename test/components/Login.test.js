@@ -36,5 +36,8 @@ describe('the login', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  // Register a user then try to login as that user
+
+  // When a user logs in, there should be a user obj saved to localStorage
 
 });
