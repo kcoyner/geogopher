@@ -184,6 +184,15 @@ apiRouter.route('/anonymous')
     res.send(anonymousUser);
   })
 
+apiRouter.route('/scores')
+  .get((req, res) => {
+    db.scores.findAll( {
+      attributes: ['game_id', 'user_id', 'count_polygons_entered']})
+      .then(scores => {
+        res.send(scores);
+      })
+  })
+
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
 });
