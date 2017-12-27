@@ -15,7 +15,6 @@ import {
   toggleMissingCountries,
   mapDetails,
   getRandomUnansweredPolygon,
-  buildPolygonsAnsweredUnanswered,
   formatSecondsToMMSS
 } from '../utils/index';
 

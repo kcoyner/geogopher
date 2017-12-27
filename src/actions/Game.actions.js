@@ -9,11 +9,7 @@ export const initializeNewGame = (apiUrl) => {
       })
       .then(response => {
         dispatch({ type: 'GAME_DATA_BUILT', payload: response })
-        return buildUnansweredPolygons(response);
-      })
-      .then(polygonsUnanswered => {
-        dispatch({ type: 'SET_UNANSWERED', payload: polygonsUnanswered })
-        return polygonsUnanswered
+        return response
       })
       .catch(error => {
         throw (error);
