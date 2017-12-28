@@ -5,8 +5,10 @@ export default function reducer(state = {
     gameDifficultyID: null,
     countPolygonsEntered: 0,
     countTotalSubmissions: 0,
+    countTotalHints: 0,
     polygonsAnswered: [],
     polygonsUnanswered: [],
+    polygonsSkipped: [],
     incorrectEntries: [],
     gameTimerStart: null,
     gameTimerRemaining: null,
@@ -25,8 +27,10 @@ export default function reducer(state = {
         gameDifficultyID: null,
         countPolygonsEntered: 0,
         countTotalSubmissions: 0,
+        countTotalHints: 0,
         polygonsAnswered: [],
         polygonsUnanswered: [],
+        polygonsSkipped: [],
         incorrectEntries: [],
         gameTimerStart: null,
         gameTimerRemaining: null,
@@ -56,16 +60,19 @@ export default function reducer(state = {
         gameTimerStart: action.payload.gameTimerStart,
         gameTimerRemaining: action.payload.gameTimerRemaining,
       };
+
     case 'SET_GAME_START_TIMESTAMP':
       return {
         ...state,
         gameStartTimestamp: action.payload.gameStartTimestamp,
       };
+
     case 'SET_GAME_END_TIMESTAMP':
       return {
         ...state,
         gameEndTimestamp: action.payload.gameEndTimestamp,
       };
+
     case 'SET_UNANSWERED_POLYGONS':
       return {
         ...state,
@@ -87,7 +94,7 @@ export default function reducer(state = {
     case 'ENTRY_SKIPPED':
       return {
         ...state,
-        incorrectEntries: action.payload.incorrectEntries,
+
       };
 
     case 'DECREMENT_TIME':
@@ -101,11 +108,19 @@ export default function reducer(state = {
         ...state,
         countTotalSubmissions: action.payload.countTotalSubmissions,
       };
-    case 'SET_POLYGONS_ANSWERED_UNANSWERED':
+
+    case 'INCREMENT_TOTAL_HINTS':
+      return {
+        ...state,
+        countTotalHints: action.payload.countTotalHints,
+      };
+
+    case 'SET_POLYGON_RESULTS':
       return {
         ...state,
         polygonsAnswered: action.payload.polygonsAnswered,
         polygonsUnanswered: action.payload.polygonsUnanswered,
+        polygonsSkipped: action.payload.polygonsSkipped,
       };
 
   //end switch

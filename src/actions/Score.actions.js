@@ -77,13 +77,14 @@ export const setGameEndTimestamp = () => {
     }
 }
 
-export const setPolygonsAnsweredUnanswered = (polygons) => {
+export const setPolygonResults = (polygons) => {
     return (dispatch) => {
       dispatch({
-        type: "SET_POLYGONS_ANSWERED_UNANSWERED",
+        type: "SET_POLYGON_RESULTS",
         payload: {
           polygonsAnswered: polygons.answered,
           polygonsUnanswered: polygons.unanswered,
+          polygonsSkipped: polygons.skipped,
         }
       })
     }
@@ -162,6 +163,18 @@ export const incrementTotalSubmissions = (countTotalSubmissions) => {
       type: 'INCREMENT_TOTAL_SUBMISSIONS',
       payload: {
         countTotalSubmissions: countTotalSubmissions
+      }
+    });
+  }
+};
+
+export const incrementTotalHints = (countTotalHints) => {
+  return (dispatch) => {
+    countTotalHints = countTotalHints + 1;
+    dispatch({
+      type: 'INCREMENT_TOTAL_HINTS',
+      payload: {
+        countTotalHints: countTotalHints
       }
     });
   }

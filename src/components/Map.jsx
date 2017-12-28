@@ -15,6 +15,7 @@ import {
   toggleMissingCountries,
   mapDetails,
   getRandomUnansweredPolygon,
+  buildPolygonResults,
   formatSecondsToMMSS
 } from '../utils/index';
 
@@ -46,6 +47,7 @@ let map;
 
     countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
     countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    countTotalHints: state.ScoreReducer.countTotalHints,
     gameDifficultyID: state.ScoreReducer.gameDifficultyID,
     gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
     gameID: state.ScoreReducer.gameID,
@@ -57,6 +59,7 @@ let map;
     ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
+    polygonsSkipped: state.ScoreReducer.polygonsSkipped,
     // TODO: in the user login routines, we need to take the userID and stick
     // it in the store
     // userID: state.ScoreReducer.userID,
@@ -184,8 +187,8 @@ export default class Map extends React.Component {
       )
       //builds and dispatches polygons answered/unanswered arrays for convenience
       this.props.dispatch(
-        actions.setPolygonsAnsweredUnanswered(
-          buildPolygonsAnsweredUnanswered(this.props.gameData)
+        actions.setPolygonResults(
+          buildPolygonResults(this.props.gameData)
         )
       )
     }
@@ -196,6 +199,7 @@ export default class Map extends React.Component {
     let currentScore = {
       countPolygonsEntered: this.props.countPolygonsEntered,
       countTotalSubmissions: this.props.countTotalSubmissions,
+      countTotalHints: this.props.countTotalHints,
       gameDifficultyID: this.props.gameDifficultyID,
       gameEndTimestamp: this.props.gameEndTimestamp,
       gameID: this.props.gameID,
@@ -207,6 +211,7 @@ export default class Map extends React.Component {
       ipWhereGamePlayed: this.props.ipWhereGamePlayed,
       polygonsAnswered: this.props.polygonsAnswered,
       polygonsUnanswered: this.props.polygonsUnanswered,
+      polygonsSkipped: this.props.polygonsSkipped,
       userID: this.props.userID,
     }
     //need to confirm whether all state must be returned back to init
@@ -224,7 +229,7 @@ export default class Map extends React.Component {
   onInputChange(e) {
     this.setState({ inputValue: e.target.value })
   }
-  //resets timer and returns gameOver modal
+  //i dont think this is used at all...
   isEnd() {
     if(this.state.gameTimerRemaining === 0) {
       clearInterval(this.incrementer);
@@ -358,6 +363,11 @@ export default class Map extends React.Component {
 
       }
     }
+
+    //incrementHints
+    this.props.dispatch(
+      actions.incrementTotalHints(this.props.countTotalHints)
+    );
 
   }
 

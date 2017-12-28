@@ -81,12 +81,16 @@ CREATE TABLE "scores" (
 	"count_polygons_entered" integer NOT NULL,
 	-- total submissions including re-entry
 	"count_total_submissions" integer NOT NULL,
+	-- total hints used
+	"count_total_hints" integer NOT NULL,
 	-- array of polygon names
 	"polygons_answered" varchar NOT NULL,
 	-- array of polygon names left over.
 	-- a player with all polygons answered will
 	-- have an empty array
 	"polygons_unanswered" varchar NOT NULL,
+	-- array of polygon names skipped
+	"polygons_skipped" varchar NOT NULL,
 	-- array of unmatched entries
 	"incorrect_entries" varchar NOT NULL,
 	"game_id" integer NOT NULL,

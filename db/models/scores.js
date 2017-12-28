@@ -27,8 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     count_polygons_entered: Sequelize.INTEGER,
     count_total_submissions: Sequelize.INTEGER,
+    count_total_hints: Sequelize.INTEGER,
     polygons_answered: Sequelize.STRING,
     polygons_unanswered: Sequelize.STRING,
+    polygons_skipped: Sequelize.STRING,
     incorrect_entries: Sequelize.STRING,
     game_id: {
       type: Sequelize.INTEGER,

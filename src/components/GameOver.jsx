@@ -30,6 +30,7 @@ import { formatSecondsToMMSS } from '../utils/index';
     countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
+    polygonsSkipped: state.ScoreReducer.polygonsSkipped,
     incorrectEntries: state.ScoreReducer.incorrectEntries,
     gameTimerStart: state.ScoreReducer.gameTimerStart,
     gameTimerRemaining: state.ScoreReducer.gameTimerRemaining,
@@ -73,6 +74,20 @@ class GameOver extends React.Component {
                         )
                       )} </ul>
                     </div>
+                    {
+                    this.props.gameTypeSelected !== 'Countdown'
+                    ?
+                    <div className="game-over-polygons-skipped">
+                      <h1>Countries Skipped</h1>
+                      <ul> {
+                        this.props.polygonsSkipped.map((polygon) => (
+                          <li key={polygon.id}>{polygon.name}</li>
+                        )
+                      )} </ul>
+                    </div>
+                    :
+                    null
+                    }
                   </div>
                 </Modal.Description>
                 </Modal.Content>
