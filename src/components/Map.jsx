@@ -296,12 +296,12 @@ export default class Map extends React.Component {
   showHint() {
 
     let gameTypeSelected = this.props.gameTypeSelected;
+    //declare base sentence
+    let hintSentence = 'This country starts with a';
 
     if (gameTypeSelected === 'Name the Country') {
       //get first letter of country that was selected
       let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
-      //declare base sentence
-      let hintSentence = 'This country starts with a';
       //if first letter of country is a vowel, change
       //from 'a' to 'an'
       ['a','e','i','o','u'].forEach((el) => {
@@ -316,7 +316,49 @@ export default class Map extends React.Component {
 
     } else if (gameTypeSelected === 'Countdown') {
 
+      for (let i = 0; i < this.props.gameData.length; i++){
+        let el = this.props.gameData[i]
+        if (el.polygonUnanswered){
+          let hint = el.acceptedAnswers[0][0];
+          ['a','e','i','o','u'].forEach((vowel) => {
+            if (vowel === hint) {
+              hintSentence = hintSentence + 'n';
+            }
+          })
+                map.setCenter({
+                  lat: el.polygonCenterCoords[0],
+                  lng: el.polygonCenterCoords[1]
+                });
+                map.setZoom(el.polygonZoomLevel);
+
+                map.data.overrideStyle(
+                  map.data.getFeatureById(el.id),
+                    {
+                      fillColor: 'aqua',
+                      strokeColor: 'fuchsia',
+                      strokeWeight: '4'
+                    });
+
+              //change state to show hint
+              this.setState({currentHint: `${hintSentence} "${hint.toUpperCase()}"`})
+              //set state back to null
+              setTimeout(()=>{
+                this.setState({currentHint: null})
+                map.data.overrideStyle(
+                  map.data.getFeatureById(el.id),
+                  {
+                    fillColor: 'firebrick',
+                    fillOpacity: '.6',
+                    strokeColor: 'orange',
+                    strokeWeight: '2'
+                  });
+              },2000)
+              break;
+        }
+
+      }
     }
+
   }
 
   skipCountry(e) {
