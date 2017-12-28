@@ -11,7 +11,7 @@ export const buildGameData = (inputData) => {
       polygonAnswered: false,
       polygonUnanswered: true,
       polygonSkipped: false,
-      acceptedAnswers: new Set(),
+      acceptedAnswers: [],
       polygonZoomLevel: el.properties.countryZoomLevel,
       polygonCenterCoords: el.properties.countryCenter,
       polygonCapitalName: el.properties.countryCapitalName,
@@ -20,7 +20,7 @@ export const buildGameData = (inputData) => {
     //loop through all country names
     for (let key in countryData) {
       //excluding irrelevant keys
-      if (key !== 'countryCapitalCenter' || key !== 'countryCapitalName' || key !== 'countryCenter' || key !== 'countryZoomLevel') {
+      if (key !== 'countryCapitalCenter' && key !== 'countryCapitalName' && key !== 'countryCenter' && key !== 'countryZoomLevel') {
         if (Array.isArray(countryData[key]) && countryData[key].length > 0) {
           outputCountryData.acceptedAnswers = outputCountryData.acceptedAnswers.concat(countryData[key]);
         }

@@ -103,6 +103,7 @@ export const submitCorrectEntry = (countPolygonsEntered, polygonIndex, gameData)
     gameData = gameData.map((el, idx) => {
       if (el.id === polygonIndex) {
         el.polygonAnswered = true;
+        el.polygonUnanswered = false;
         return el
       } else {
         return el
@@ -136,7 +137,8 @@ export const submitSkippedEntry = (polygonIndex, gameData) => {
 
     gameData = gameData.map((el, idx) => {
       if (el.id === polygonIndex) {
-        el.polygonAnswered = true;
+        el.polygonSkipped = true;
+        el.polygonUnanswered = false;
         return el
       } else {
         return el
