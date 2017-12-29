@@ -17,18 +17,18 @@ const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-
     // a random polygon is returned from gameData, invoking cb using random polygon as 'highlightedCountry'
     getRandomUnansweredPolygon(gameValues.gameData, function(highlightedCountry) {
       // set the zoom (probably need to fix this at some point)
-      gameValues.map.setZoom(6);
+      gameValues.map.setZoom(highlightedCountry.polygonZoomLevel);
       // set the map center to the coordinates of the randomly selected polygon
       gameValues.map.setCenter({
-        lat: highlightedCountry.countryCenter[0],
-        lng: highlightedCountry.countryCenter[1]
+        lat: highlightedCountry.polygonCenterCoords[0],
+        lng: highlightedCountry.polygonCenterCoords[1]
       });
       // get the polygon in the map
       let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id);
       //modify the colors of polygon in the map
       gameValues.map.data.overrideStyle(polygonInMap, {
-        fillColor: '#00FFFF',
-        strokeColor: '#FFD700',
+        fillColor: 'aqua',
+        strokeColor: 'fuchsia',
         strokeWeight: '4'
       });
       //set state to keep highlighted polygon in global scope
@@ -60,7 +60,7 @@ const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-
           icon: imgFromAssets,
           draggable: false,
           animation: null,
-          position: { lat: highlightedCountry.countryCenter[0], lng: highlightedCountry.countryCenter[1] }
+          position: { lat: highlightedCountry.polygonCenterCoords[0], lng: highlightedCountry.polygonCenterCoords[1] }
         })
         // instantiate an info window to contain the name of the country being skipped
        let infoWindow = new google.maps.InfoWindow();
@@ -120,7 +120,7 @@ const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-
       if (allowNextCountry) {
         //determine whether there are more countries left to answer
         gameValues.gameData.forEach((el) => {
-          if (!el.polygonAnswered) {
+          if (el.polygonUnanswered) {
             moreCountriesLeft = true;
           }
         })

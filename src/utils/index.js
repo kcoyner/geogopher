@@ -6,6 +6,5 @@ export * from './mapDetails';
 export * from './manipulateTimer';
 export * from './getRandomUnansweredPolygon';
 export * from './nameTheCountryGameLogic';
-export * from './buildPolygonsAnsweredUnanswered';
+export * from './buildPolygonResults';
 export * from './formatTime';
-export * from './buildUnansweredPolygons';

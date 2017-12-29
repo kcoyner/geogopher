@@ -11,7 +11,7 @@ export const getRandomUnansweredPolygon = (gameData, callback) => {
   const fetchRandomUnanswered = (gameData) => {
     let randomPolygon = gameData[Math.floor(Math.random() * gameData.length)];
 
-    if (randomPolygon.polygonAnswered) {
+    if (!randomPolygon.polygonUnanswered) {
       fetchRandomUnanswered(gameData);
     } else {
       console.log('THIS IS THE RANDOM POLYGON');

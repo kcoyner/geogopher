@@ -15,7 +15,7 @@ import {
   toggleMissingCountries,
   mapDetails,
   getRandomUnansweredPolygon,
-  buildPolygonsAnsweredUnanswered,
+  buildPolygonResults,
   formatSecondsToMMSS
 } from '../utils/index';
 
@@ -47,6 +47,7 @@ let map;
 
     countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
     countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    countTotalHints: state.ScoreReducer.countTotalHints,
     gameDifficultyID: state.ScoreReducer.gameDifficultyID,
     gameEndTimestamp: state.ScoreReducer.gameEndTimestamp,
     gameID: state.ScoreReducer.gameID,
@@ -58,6 +59,7 @@ let map;
     ipWhereGamePlayed: state.ScoreReducer.ipWhereGamePlayed,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
+    polygonsSkipped: state.ScoreReducer.polygonsSkipped,
     // TODO: in the user login routines, we need to take the userID and stick
     // it in the store
     // userID: state.ScoreReducer.userID,
@@ -185,8 +187,8 @@ export default class Map extends React.Component {
       )
       //builds and dispatches polygons answered/unanswered arrays for convenience
       this.props.dispatch(
-        actions.setPolygonsAnsweredUnanswered(
-          buildPolygonsAnsweredUnanswered(this.props.gameData)
+        actions.setPolygonResults(
+          buildPolygonResults(this.props.gameData)
         )
       )
     }
@@ -197,6 +199,7 @@ export default class Map extends React.Component {
     let currentScore = {
       countPolygonsEntered: this.props.countPolygonsEntered,
       countTotalSubmissions: this.props.countTotalSubmissions,
+      countTotalHints: this.props.countTotalHints,
       gameDifficultyID: this.props.gameDifficultyID,
       gameEndTimestamp: this.props.gameEndTimestamp,
       gameID: this.props.gameID,
@@ -208,6 +211,7 @@ export default class Map extends React.Component {
       ipWhereGamePlayed: this.props.ipWhereGamePlayed,
       polygonsAnswered: this.props.polygonsAnswered,
       polygonsUnanswered: this.props.polygonsUnanswered,
+      polygonsSkipped: this.props.polygonsSkipped,
       userID: this.props.userID,
     }
     //need to confirm whether all state must be returned back to init
@@ -225,7 +229,7 @@ export default class Map extends React.Component {
   onInputChange(e) {
     this.setState({ inputValue: e.target.value })
   }
-  //resets timer and returns gameOver modal
+  //i dont think this is used at all...
   isEnd() {
     if(this.state.gameTimerRemaining === 0) {
       clearInterval(this.incrementer);
@@ -297,12 +301,12 @@ export default class Map extends React.Component {
   showHint() {
 
     let gameTypeSelected = this.props.gameTypeSelected;
+    //declare base sentence
+    let hintSentence = 'This country starts with a';
 
     if (gameTypeSelected === 'Name the Country') {
       //get first letter of country that was selected
       let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
-      //declare base sentence
-      let hintSentence = 'This country starts with a';
       //if first letter of country is a vowel, change
       //from 'a' to 'an'
       ['a','e','i','o','u'].forEach((el) => {
@@ -317,7 +321,54 @@ export default class Map extends React.Component {
 
     } else if (gameTypeSelected === 'Countdown') {
 
+      for (let i = 0; i < this.props.gameData.length; i++){
+        let el = this.props.gameData[i]
+        if (el.polygonUnanswered){
+          let hint = el.acceptedAnswers[0][0];
+          ['a','e','i','o','u'].forEach((vowel) => {
+            if (vowel === hint) {
+              hintSentence = hintSentence + 'n';
+            }
+          })
+                map.setCenter({
+                  lat: el.polygonCenterCoords[0],
+                  lng: el.polygonCenterCoords[1]
+                });
+                map.setZoom(el.polygonZoomLevel);
+
+                map.data.overrideStyle(
+                  map.data.getFeatureById(el.id),
+                    {
+                      fillColor: 'aqua',
+                      strokeColor: 'fuchsia',
+                      strokeWeight: '4'
+                    });
+
+              //change state to show hint
+              this.setState({currentHint: `${hintSentence} "${hint.toUpperCase()}"`})
+              //set state back to null
+              setTimeout(()=>{
+                this.setState({currentHint: null})
+                map.data.overrideStyle(
+                  map.data.getFeatureById(el.id),
+                  {
+                    fillColor: 'firebrick',
+                    fillOpacity: '.6',
+                    strokeColor: 'orange',
+                    strokeWeight: '2'
+                  });
+              },2000)
+              break;
+        }
+
+      }
     }
+
+    //incrementHints
+    this.props.dispatch(
+      actions.incrementTotalHints(this.props.countTotalHints)
+    );
+
   }
 
   skipCountry(e) {

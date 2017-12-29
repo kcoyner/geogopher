@@ -23,7 +23,7 @@ export const toggleMissingCountries = (toggle, gameData, map) => {
           icon: imgFromAssets,
           draggable: false,
           animation: null,
-          position: {lat: el.countryCenter[0], lng: el.countryCenter[1]}
+          position: {lat: el.polygonCenterCoords[0], lng: el.polygonCenterCoords[1]}
         });
         //push marker into missingCountries array
         missingCountries.push(marker)

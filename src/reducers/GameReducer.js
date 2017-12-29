@@ -25,6 +25,7 @@ export default function reducer(state = {
       gameTypeSelected: null,
       gameDifficultySelected: null,
       gameData: null,
+      baseTime: null,
       };
     //called in gameslist when user clicks on a game
     case 'GAME_SELECTED':
