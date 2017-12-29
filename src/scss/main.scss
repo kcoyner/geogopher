@@ -94,6 +94,38 @@ img.ui.image.geogopher-navbar-logo{
     }
 }
 
+// game type select Modal
+
+.ui.modal>.content>.description.game-type-select{
+  display: grid;
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: " ..     typetitle     .."
+                       " cdn       rs        geo"
+                       " ..        ..        .. ";
+}
+
+.game-type-title{
+  grid-area: typetitle;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+.ui.move.reveal.select-countdown{
+  grid-area: cdn;
+  justify-self: center;
+}
+
+.ui.move.reveal.select-random-select{
+  grid-area: rs;
+  justify-self: center;
+}
+
+.ui.move.reveal.select-geoclick{
+  grid-area: geo;
+  justify-self: center;
+}
+
 
 //game settings modal
 
