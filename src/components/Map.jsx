@@ -17,7 +17,8 @@ import {
   mapDetails,
   getRandomUnansweredPolygon,
   buildPolygonResults,
-  formatSecondsToMMSS
+  formatSecondsToMMSS,
+  geoClickGameLogic,
 } from '../utils/index';
 
 import * as actions from '../actions/index.js'
@@ -84,6 +85,8 @@ export default class Map extends React.Component {
       gameEnd: false,
       highlightedPolygon: null,
       currentHint: null,
+      geoClickPolygonDisplay: '',
+      playGeoClick: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -256,7 +259,7 @@ export default class Map extends React.Component {
   }
   //keypress checks if key is 'enter'. registers value against answers and clears input
   keyPress(e) {
-    // map.setCenter({lat:24,lng:-76}) this will dynamically change map center
+    // map.panTo({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
       console.log('this.state.gameEnd')
@@ -294,6 +297,8 @@ export default class Map extends React.Component {
         nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
 
       } else {
+
+        geoClickGameLogic()
 
       }
 
@@ -346,7 +351,7 @@ export default class Map extends React.Component {
               hintSentence = hintSentence + 'n';
             }
           })
-                map.setCenter({
+                map.panTo({
                   lat: el.polygonCenterCoords[0],
                   lng: el.polygonCenterCoords[1]
                 });
@@ -454,9 +459,13 @@ export default class Map extends React.Component {
           }
 
           {
-            true // future state boolean for if game requires input or not (geoclick)
-            // does not require input, but instead the field is replaced
+            this.state.playGeoClick
             ?
+            <div
+              className="geoClick-display">
+              {this.state.geoClickPolygonDisplay}
+            </div>
+            :
             <input
               className="entry-display"
               ref={(input) => { this.nameInput = input; }}
@@ -464,8 +473,6 @@ export default class Map extends React.Component {
               onKeyDown={this.keyPress}
               value={ this.state.inputValue }>
             </input>
-            :
-            null
           }
 
           {

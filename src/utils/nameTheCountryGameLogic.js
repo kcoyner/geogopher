@@ -18,8 +18,10 @@ const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-
     getRandomUnansweredPolygon(gameValues.gameData, function(highlightedCountry) {
       // set the zoom (probably need to fix this at some point)
       gameValues.map.setZoom(highlightedCountry.polygonZoomLevel);
+
+
       // set the map center to the coordinates of the randomly selected polygon
-      gameValues.map.setCenter({
+      gameValues.map.panTo({
         lat: highlightedCountry.polygonCenterCoords[0],
         lng: highlightedCountry.polygonCenterCoords[1]
       });
