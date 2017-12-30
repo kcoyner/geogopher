@@ -159,13 +159,12 @@ class GameTypeSelection extends React.Component {
                     <div className="setting-description">
                       <h3>{this.state.gameTypeDescription}</h3>
                     </div> */}
+                    <Button circular className="go-back-gt-btn" onClick={this.props.onClose} icon='left chevron'/>
+                    <Button circular className="next-gt-btn" onClick={this.props.onContinue} icon='right chevron'/>
 
                 </Modal.Description>
                 </Modal.Content>
-                <Modal.Actions>
-                    <Button circular onClick={this.props.onClose} icon='left chevron'/>
-                    <Button circular onClick={this.props.onContinue} icon='right chevron'/>
-                </Modal.Actions>
+
             </Modal>
         )
     }

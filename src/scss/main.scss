@@ -99,12 +99,30 @@ img.ui.image.geogopher-navbar-logo{
 .ui.modal>.content>.description.game-type-select{
   display: grid;
   grid-template-rows: 2fr 2fr 2fr 10fr 1fr;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: " ..            ..            .. "
-                       " typetitle     typetitle     typetitle"
-                       " ..            ..            .. "
-                       " cdn           rs            geo"
-                       " ..            ..            .. ";
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: " ..  ..            ..            ..        .."
+                       " bgt  typetitle     typetitle     typetitle ngt"
+                       " bgt  ..            ..            ..        ngt"
+                       " bgt  cdn           rs            geo       ngt"
+                       " ..  ..            ..            ..        ..";
+}
+
+button.ui.button.go-back-gt-btn{
+  grid-area: bgt;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
+}
+
+button.ui.button.next-gt-btn{
+  grid-area: ngt;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
 }
 
 .game-type-title{
@@ -133,19 +151,38 @@ img.ui.image.geogopher-navbar-logo{
 .ui.modal>.content>.description.game-difficulty-select{
   display: grid;
   grid-template-rows: repeat(6, 1fr);
-  grid-template-columns:  10fr 1fr 2fr 2fr 2fr 2fr 2fr ;
+  grid-template-columns:  1fr 10fr 1fr 2fr 2fr 2fr 2fr 2fr 1fr;
   grid-gap: 0;
   height: 600px;
 }
 
 .game-difficulty-title{
-  grid-area: 1/1/1/8;
+  grid-area: 1/1/1/10;
   text-align: center;
+}
+
+button.ui.button.go-back-gd-btn{
+  grid-area: 3/1/5/1;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
+}
+
+button.ui.button.next-gd-btn{
+  grid-area: 3/9/5/9;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
 }
 
 .ui.buttons.fixed-time-select{
   // grid-area: fts;
-  grid-area: 5/3/6/8;
+  grid-area: 5/4/6/9;
+  margin: 5%;
 }
 
 .ui.grey.basic.button{
@@ -154,31 +191,31 @@ img.ui.image.geogopher-navbar-logo{
 
 .ui.button.qwk-select{
   // grid-area: qwk;
-  grid-area: 2/1/2/2;
+  grid-area: 2/2/2/3;
   margin:5%;
 }
 
 .ui.button.easy-select{
-  grid-area: 3/1/3/2;
+  grid-area: 3/2/3/3;
   margin:5%;
 }
 
 .ui.button.med-select{
-  grid-area: 4/1/4/2;
+  grid-area: 4/2/4/3;
   margin:5%;
 }
 
 .ui.button.hard-select{
-  grid-area: 5/1/5/2;
+  grid-area: 5/2/5/3;
   margin:5%;
 }
 
 .time-display{
-  border: 1px solid black;
-  grid-area: 2/3/5/8;
+
+  grid-area: 2/4/5/9;
   margin: 5%;
-  font-size: 9em;
-  padding-top: 10%;
+  font-size: 8em;
+  padding-top: 15%;
   text-align: center;
 }
 
