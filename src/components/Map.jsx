@@ -3,9 +3,10 @@
 /*global window.google*/
 import React from 'react';
 import { Button, Checkbox, Icon } from 'semantic-ui-react';
-import GameSettings from './GameSettings';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
+import GameTypeSelection from './GameTypeSelection';
+import GameDifficultySelection from './GameDifficultySelection';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -16,7 +17,8 @@ import {
   mapDetails,
   getRandomUnansweredPolygon,
   buildPolygonResults,
-  formatSecondsToMMSS
+  formatSecondsToMMSS,
+  geoClickGameLogic,
 } from '../utils/index';
 
 import * as actions from '../actions/index.js'
@@ -75,17 +77,23 @@ export default class Map extends React.Component {
       userQuit: false,
       renderMissingCountriesButton: false,
       renderSkipCountryButton: false,
+      renderInputField: true,
       gameSettings: true,
+      gameType: true,
+      gameDifficulty: false,
       gameStart: false,
       gameEnd: false,
       highlightedPolygon: null,
       currentHint: null,
+      geoClickPolygonDisplay: '',
+      playGeoClick: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
     this.handlePlayDifferentGame = this.handlePlayDifferentGame.bind(this);
     this.handleStart = this.handleStart.bind(this);
-    this.handleSettings = this.handleSettings.bind(this);
+    this.handleGameTypeSelection = this.handleGameTypeSelection.bind(this);
+    this.handleGameDifficultySelection = this.handleGameDifficultySelection.bind(this);
     this.handleGameEnd = this.handleGameEnd.bind(this);
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
@@ -129,17 +137,30 @@ export default class Map extends React.Component {
     );
 
   }
-  //stores game settings and opens gameStart
-  handleSettings() {
-    //once settings are submitted, hide modal. this also prompts the gameStart modal to render
-    this.setState({gameSettings: false})
-    //show button that renders missing countries if gameSelected is Countdown
+
+
+  handleGameTypeSelection() {
+
+    this.setState({gameType: false, gameDifficulty: true})
+
+
     this.props.gameTypeSelected === 'Countdown' ?
       this.setState({renderMissingCountriesButton: true}) : null
-    //show button that allows user to skip if gameSelected is name the country
-    this.props.gameTypeSelected === 'Name the Country' ?
+
+    this.props.gameTypeSelected === 'Random Select' ?
       this.setState({renderSkipCountryButton: true}) : null
+
+    this.props.gameTypeSelected === 'GeoClick' ?
+      this.setState({renderInputField: false}) : null
   }
+
+  handleGameDifficultySelection() {
+
+    this.setState({gameDifficulty: false})
+  }
+
+
+
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
 
@@ -238,7 +259,7 @@ export default class Map extends React.Component {
   }
   //keypress checks if key is 'enter'. registers value against answers and clears input
   keyPress(e) {
-    // map.setCenter({lat:24,lng:-76}) this will dynamically change map center
+    // map.panTo({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
       console.log('this.state.gameEnd')
@@ -271,13 +292,13 @@ export default class Map extends React.Component {
 
         countdownGameLogic(gameValues);
 
-      } else if ( gameTypeSelected === 'Name the Country') {
+      } else if ( gameTypeSelected === 'Random Select') {
 
         nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
 
-      } else if ( gameTypeSelected === 'Capital to Country') {
+      } else {
 
-      } else if ( gameTypeSelected === 'Country to Capital') {
+        geoClickGameLogic()
 
       }
 
@@ -304,7 +325,7 @@ export default class Map extends React.Component {
     //declare base sentence
     let hintSentence = 'This country starts with a';
 
-    if (gameTypeSelected === 'Name the Country') {
+    if (gameTypeSelected === 'Random Select') {
       //get first letter of country that was selected
       let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
       //if first letter of country is a vowel, change
@@ -330,7 +351,7 @@ export default class Map extends React.Component {
               hintSentence = hintSentence + 'n';
             }
           })
-                map.setCenter({
+                map.panTo({
                   lat: el.polygonCenterCoords[0],
                   lng: el.polygonCenterCoords[1]
                 });
@@ -399,16 +420,22 @@ export default class Map extends React.Component {
 
         <div className="game-controls">
 
-          <GameSettings
+          <GameTypeSelection
             onClose={ this.handleClose }
-            onContinue={this.handleSettings}
-            open={this.state.gameSettings}
+            onContinue={this.handleGameTypeSelection}
+            open={this.state.gameType}
+          />
+
+          <GameDifficultySelection
+            onClose={ this.handleClose }
+            onContinue={this.handleGameDifficultySelection}
+            open={this.state.gameDifficulty}
           />
 
           <GameStart
             onClose={ this.handleClose }
             onStart={this.handleStart}
-            open={!this.state.gameSettings && !this.state.gameStart}
+            open={!this.state.gameType && !this.state.gameDifficulty && !this.state.gameStart}
           />
 
           <GameOver
@@ -432,9 +459,13 @@ export default class Map extends React.Component {
           }
 
           {
-            true // future state boolean for if game requires input or not (geoclick)
-            // does not require input, but instead the field is replaced
+            this.state.playGeoClick
             ?
+            <div
+              className="geoClick-display">
+              {this.state.geoClickPolygonDisplay}
+            </div>
+            :
             <input
               className="entry-display"
               ref={(input) => { this.nameInput = input; }}
@@ -442,8 +473,6 @@ export default class Map extends React.Component {
               onKeyDown={this.keyPress}
               value={ this.state.inputValue }>
             </input>
-            :
-            null
           }
 
           {

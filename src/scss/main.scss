@@ -94,52 +94,166 @@ img.ui.image.geogopher-navbar-logo{
     }
 }
 
+// game type select Modal
 
-//game settings modal
+.ui.modal>.content>.description.game-type-select{
+  display: grid;
+  grid-template-rows: 2fr 2fr 2fr 10fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: " ..  ..            ..            ..        .."
+                       " bgt  typetitle     typetitle     typetitle ngt"
+                       " bgt  ..            ..            ..        ngt"
+                       " bgt  cdn           rs            geo       ngt"
+                       " ..  ..            ..            ..        ..";
+}
 
-.game-settings{
-  display: grid!important;
-  grid-teamplate-rows: repeat(4, 1fr)!important;
-  grid-template-columns: repeat(2, 1fr)!important;
-  grid-gap: 25px;
+button.ui.button.go-back-gt-btn{
+  grid-area: bgt;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
+}
+
+button.ui.button.next-gt-btn{
+  grid-area: ngt;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
 }
 
 .game-type-title{
-  grid-row-start: 1;
-  grid-column-start: 1;
-  grid-row-end: 1;
-  grid-column-end: 3;
+  grid-area: typetitle;
   text-align: center;
+  font-size: 2.5em;
 }
 
-.game-title-dropdown{
-  grid-row-start: 2;
-  grid-column-start: 1;
-  grid-row-end: 2;
-  grid-column-end: 2;
+.ui.move.reveal.select-countdown{
+  grid-area: cdn;
+  justify-self: center;
 }
 
-.setting-description{
-  grid-row-start: 2;
-  grid-column-start: 2;
-  grid-row-end: 2;
-  grid-column-end: 3;
+.ui.move.reveal.select-random-select{
+  grid-area: rs;
+  justify-self: center;
+}
+
+.ui.move.reveal.select-geoclick{
+  grid-area: geo;
+  justify-self: center;
+}
+
+// game difficulty select modal
+
+.ui.modal>.content>.description.game-difficulty-select{
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns:  1fr 10fr 1fr 2fr 2fr 2fr 2fr 2fr 1fr;
+  grid-gap: 0;
+  height: 600px;
 }
 
 .game-difficulty-title{
-  grid-row-start: 3;
-  grid-column-start: 1;
-  grid-row-end: 3;
-  grid-column-end: 3;
+  grid-area: 1/1/1/10;
   text-align: center;
 }
 
-.game-difficulty-setting{
-  grid-row-start: 4;
-  grid-column-start: 1;
-  grid-row-end: 4;
-  grid-column-end: 3;
+button.ui.button.go-back-gd-btn{
+  grid-area: 3/1/5/1;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
 }
+
+button.ui.button.next-gd-btn{
+  grid-area: 3/9/5/9;
+  background-color: white;
+  font-size: 1.25em;
+  &:hover{
+    color: black;
+  }
+}
+
+.ui.buttons.fixed-time-select{
+  // grid-area: fts;
+  grid-area: 5/4/6/9;
+  margin: 5%;
+}
+
+.ui.grey.basic.button{
+  margin: 5%;
+}
+
+.ui.button.qwk-select{
+  // grid-area: qwk;
+  grid-area: 2/2/2/3;
+  margin:5%;
+}
+
+.ui.button.easy-select{
+  grid-area: 3/2/3/3;
+  margin:5%;
+}
+
+.ui.button.med-select{
+  grid-area: 4/2/4/3;
+  margin:5%;
+}
+
+.ui.button.hard-select{
+  grid-area: 5/2/5/3;
+  margin:5%;
+}
+
+.time-display{
+
+  grid-area: 2/4/5/9;
+  margin: 5%;
+  font-size: 8em;
+  padding-top: 15%;
+  text-align: center;
+}
+
+// game-start select Modal
+
+.ui.modal>.content>.description.start-game-modal{
+  display: grid;
+  grid-template-rows: 10fr 2fr 2fr 2fr 2fr 2fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: " startitle     startitle     startitle"
+                       " ..            ..            .. "
+                       " ..            ..            .. "
+                       " ..            startbtn     .. "
+                       " back          startbtn     .. ";
+}
+
+.get-ready{
+  grid-area: startitle;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+.ui.button.dont-play{
+  grid-area: back;
+  justify-self: center;
+}
+
+.ui.button.play-now{
+  grid-area: 2/2/3/2;
+
+}
+
+.ui.move.reveal.select-geoclick{
+  grid-area: geo;
+  justify-self: center;
+}
+
+//map styling
 
 div.game-container{
   display: grid;
