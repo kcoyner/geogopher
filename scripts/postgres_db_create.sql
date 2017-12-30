@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS scores, users, games, polygons, polygon_types, polygon_regions, game_types, game_difficulties CASCADE;
 
 CREATE TABLE "polygon_types" (

@@ -169,7 +169,8 @@ apiRouter.route('/user')
       'email': req.body.email,
       'count_games_played': 0,
       'last_login': date,
-      'password_hash': req.body.password
+      'password_hash': req.body.password,
+      'username': req.body.username
     };
     db.users.create(user)
     .then(user => {

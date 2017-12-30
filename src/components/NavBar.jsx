@@ -55,7 +55,7 @@ class NavBar extends React.Component {
                     <Menu.Item>
                        {user ? (
 
-                         <Dropdown text={user.first_name || user.username} pointing className='user-account-menu-dropdown'>
+                         <Dropdown text={user.username} pointing className='user-account-menu-dropdown'>
                           <Dropdown.Menu>
                             <Dropdown.Header>Account</Dropdown.Header>
                             <Dropdown.Divider />
