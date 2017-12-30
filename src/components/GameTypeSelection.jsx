@@ -9,7 +9,8 @@ import {
   Modal,
   Dropdown,
   Step,
-  Reveal } from 'semantic-ui-react';
+  Reveal,
+  Popup } from 'semantic-ui-react';
 import {
   setGameTypeID,
   setGameDifficultyID,
@@ -24,6 +25,7 @@ const thmb8 = require('-!file-loader?name=square-image!../assets/square-image.pn
 @connect((state) => {
   return {
     gameTypes: state.GamesListReducer.gameTypes,
+    gameTypeSelected: state.GamesListReducer.gameTypeSelected,
     gameDifficulties: state.GamesListReducer.gameDifficulties,
     gameTimerStart: state.ScoreReducer.gameTimerStart,
     baseTime: state.GameReducer.baseTime
@@ -39,8 +41,7 @@ class GameTypeSelection extends React.Component {
       gameDifficultyChoices: null,
       gameTypeDescription: null,
     };
-    this.getDescription = this.getDescription.bind(this);
-    this.handleDifficultySettings = this.handleDifficultySettings.bind(this);
+    this.setGameType = this.setGameType.bind(this);
   }
 
   componentDidMount() {
@@ -54,7 +55,7 @@ class GameTypeSelection extends React.Component {
     this.setState({gameTypeChoices: gameTypeChoices});
   }
 
-  getDescription(e, {value}) {
+  setGameType(value) {
     this.props.gameTypes.forEach((el) => {
       if (el.game_type_id === value) {
         this.setState({gameTypeDescription: el.game_type_description});
@@ -65,38 +66,19 @@ class GameTypeSelection extends React.Component {
     });
   }
 
-  handleDifficultySettings(value) {
-    //set gameTimerRemaining, gameTimerStart, gameDifficultyID
-    this.props.gameDifficulties.forEach((el) => {
-      if(el.game_difficulty_name === value) {
-        this.props.dispatch(setGameDifficultyID(el.game_difficulty_id))
-        let timeManipulation = JSON.parse(el.game_time_manipulation)
-          this.props.dispatch(
-            setTimer(
-              manipulateTimer(timeManipulation, this.props.baseTime)
-            )
-          )
-        this.props.dispatch(setGameDifficulty(el.game_difficulty_name))
-       }
-    });
-  }
 
     render() {
 
-        // const steps = [
-        //     { key: 'Game Type', active: true, icon: 'puzzle', title: 'Game Name', description: 'Choose a game type' },
-        //     { key: 'Game Difficulty', disabled: true, icon: 'options', title: 'Difficulty', description: 'Choose difficulty settings' },
-        //     { key: 'Game Ready', disabled: true, icon: 'rocket', title: 'Play' },
-        //   ]
 
         return(
+
             <Modal
             open={this.props.open}
             closeOnRootNodeClick={false}>
             <Step.Group ordered attached='top'>
               <Step active>
                 <Step.Content>
-                  <Step.Title>Game Name</Step.Title>
+                  <Step.Title>Game Type</Step.Title>
                   <Step.Description>Choose a game type</Step.Description>
                 </Step.Content>
               </Step>
@@ -122,33 +104,56 @@ class GameTypeSelection extends React.Component {
                       Choose a Game Type
                     </div>
 
+                      <Popup
+                        trigger={
+                          <Reveal className="select-countdown" animated='move' onClick={() => this.setGameType(1)}>
+                            <Reveal.Content visible>
+                              <Image src={thmb8} size='small' />
+                            </Reveal.Content>
+                            <Reveal.Content hidden>
+                              <Image src={thmb9} size='small' />
+                            </Reveal.Content>
+                          </Reveal>
+                        }
+                          header={this.props.gameTypes[0].game_type_name}
+                          content={this.props.gameTypes[0].game_type_description}
+                          position="bottom center"
+                          basic
+                        />
 
-                    <Reveal className="select-countdown" animated='move' >
-                      <Reveal.Content visible>
-                        <Image src={thmb8} size='small' />
-                      </Reveal.Content>
-                      <Reveal.Content hidden>
-                        <Image src={thmb9} size='small' />
-                      </Reveal.Content>
-                    </Reveal>
+                      <Popup
+                        trigger={
+                        <Reveal className="select-random-select" animated='move' onClick={() => this.setGameType(2)}>
+                          <Reveal.Content visible>
+                            <Image src={thmb8} size='small' />
+                          </Reveal.Content>
+                          <Reveal.Content hidden>
+                            <Image src={thmb9} size='small' />
+                          </Reveal.Content>
+                        </Reveal>
+                      }
+                        header={this.props.gameTypes[1].game_type_name}
+                        content={this.props.gameTypes[1].game_type_description}
+                        position="bottom center"
+                        basic
+                      />
 
-                    <Reveal className="select-random-select" animated='move' >
-                      <Reveal.Content visible>
-                        <Image src={thmb8} size='small' />
-                      </Reveal.Content>
-                      <Reveal.Content hidden>
-                        <Image src={thmb9} size='small' />
-                      </Reveal.Content>
-                    </Reveal>
-
-                    <Reveal className="select-geoclick" animated='move' >
-                      <Reveal.Content visible>
-                        <Image src={thmb8} size='small' />
-                      </Reveal.Content>
-                      <Reveal.Content hidden>
-                        <Image src={thmb9} size='small' />
-                      </Reveal.Content>
-                    </Reveal>
+                    <Popup
+                      trigger={
+                      <Reveal className="select-geoclick" animated='move' onClick={() => this.setGameType(3)}>
+                        <Reveal.Content visible>
+                          <Image src={thmb8} size='small' />
+                        </Reveal.Content>
+                        <Reveal.Content hidden>
+                          <Image src={thmb9} size='small' />
+                        </Reveal.Content>
+                      </Reveal>
+                    }
+                      header={this.props.gameTypes[2].game_type_name}
+                      content={this.props.gameTypes[2].game_type_description}
+                      position="bottom center"
+                      basic
+                    />
 
                     {/* <Dropdown className="game-type-dropdown" placeholder='Select Game Type' fluid selection options={this.state.gameTypeChoices} onChange={this.getDescription} />
                     <div className="setting-description">
@@ -158,8 +163,8 @@ class GameTypeSelection extends React.Component {
                 </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button onClick={this.props.onClose} negative>Go Back</Button>
-                    <Button onClick={this.props.onContinue} positive>Continue</Button>
+                    <Button circular onClick={this.props.onClose} icon='left chevron'/>
+                    <Button circular onClick={this.props.onContinue} icon='right chevron'/>
                 </Modal.Actions>
             </Modal>
         )
