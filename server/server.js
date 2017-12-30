@@ -140,6 +140,7 @@ apiRouter.route('/userId')
 apiRouter.route('/user')
   .get((req, res) => {
     let date = moment();
+    let username = req.query.email.slice(0,req.query.email.indexOf('@'));
     db.users
     .findOrCreate({where: {google_id: req.query.googleId}, defaults: {
       'google_id': req.query.googleid,
@@ -147,13 +148,17 @@ apiRouter.route('/user')
       'last_name': req.query.familyName,
       'count_games_played': 0,
       'last_login': date,
-      'email': req.query.email
+      'email': req.query.email,
+      'username': username
     }})
     .spread((user, created) => {
       user.created = created;
       console.log(user);
       res.send(user);
-    });
+    })
+    .catch(error => {
+      console.log(error);
+    })
   })
   .post((req, res) => {
     let date = moment();
