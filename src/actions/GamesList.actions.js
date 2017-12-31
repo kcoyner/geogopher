@@ -10,8 +10,7 @@ export const fetchGamesList = () => {
         return res;
       })
       .catch(err => {
-        console.log('GEOGOPHER error: ', err);
-        throw (err);
+        console.error('GEOGOPHER error: ', err);
       });
   };
 };
@@ -25,8 +24,7 @@ export const fetchGameSettings = () => {
         return res;
       })
       .catch(err => {
-        console.log('GEOGOPHER error: ', err);
-        throw (err);
+        console.error('GEOGOPHER error: ', err);
       })
   }
 }

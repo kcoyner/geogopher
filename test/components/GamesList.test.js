@@ -20,6 +20,16 @@ describe('The games list', () => {
    * the component will not be rendered.  Use TestUtils instead.
    */
 
+  /*  TODO:  Still needs work and testing
+  beforeEach((done) => {
+    db.users.findOrCreate({where: {user_id: 1}})
+    .spread(user => {
+      console.log(user);
+      return done(null, user);
+    })
+  });
+  */
+
   it('renders GamesList component', () => {
     const div = document.createElement('div');
     ReactDOM.render(
