@@ -4,6 +4,7 @@
  */
 
 const Sequelize = require('sequelize');
+const Scores = require('./scores');
 const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
@@ -91,7 +92,6 @@ User.beforeCreate(function(user, options) {
     return;
   }
 });
-
 return User;
 };
 

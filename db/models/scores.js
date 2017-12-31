@@ -10,7 +10,7 @@ const Game_types = require('./game_types');
 const Game_difficulties = require('./game_difficulties');
 
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('scores', {
+  const Scores = sequelize.define('scores', {
     score_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -62,4 +62,5 @@ module.exports = (sequelize, DataTypes) => {
     game_end_timestamp: Sequelize.DATE,
     ip_where_game_played: Sequelize.STRING
   });
+  return Scores;
 };

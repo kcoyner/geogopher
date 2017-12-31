@@ -29,9 +29,9 @@ let map;
   return {
 
     //pre game data
-    userName: 'SenecaTheYounger',
-    userID: 1,
-    countGamesPlayed: 10,
+    userName: state.UserReducer.user.username,
+    userID: state.UserReducer.user.user_id,
+    countGamesPlayed: state.UserReducer.count_games_played,
     token: null,
     lastLogin: null,
 
@@ -103,7 +103,7 @@ export default class Map extends React.Component {
   }
 
   async componentDidMount() {
-
+    if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: this.props.gameZoom,
@@ -238,7 +238,7 @@ export default class Map extends React.Component {
       polygonsAnswered: this.props.polygonsAnswered,
       polygonsUnanswered: this.props.polygonsUnanswered,
       polygonsSkipped: this.props.polygonsSkipped,
-      userID: this.props.userID,
+      userID: this.props.userID
     }
     //need to confirm whether all state must be returned back to init
     this.setState({ open: false });

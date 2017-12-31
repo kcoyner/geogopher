@@ -76,9 +76,8 @@ apiRouter.route('/gameSettings')
 apiRouter.route('/postScore')
   .post((req, res) => {
     console.log('THIS IS THE REQ BODY UP IN THAT POST SCORE 🤘')
-    console.log(req.body)
     let score = {
-      'user_id': 1,
+      'user_id': req.body.userID,
       'count_polygons_entered': req.body.countPolygonsEntered,
       'count_total_submissions': req.body.countTotalSubmissions,
       'count_total_hints': req.body.countTotalHints,
@@ -195,11 +194,24 @@ apiRouter.route('/anonymous')
 
 apiRouter.route('/scores')
   .get((req, res) => {
-    db.scores.findAll( {
-      attributes: ['game_id', 'user_id', 'count_polygons_entered']})
-      .then(scores => {
-        res.send(scores);
-      })
+    console.log(req.query.game_type_id, req.query.game_id)
+    db.scores.findAll({
+      where: {
+        game_id: req.query.game_id,
+        game_type_id: req.query.game_type_id
+      },
+      include: [{model: db.users }]},
+      {
+        attributes: ['game_id', 'game_type_id', 'user_id', 'username', 'count_polygons_entered']})
+        .then(scores => {
+          console.log("+++++", scores)
+          res.send(scores);
+        })
+    // db.scores.findAll( {
+    //   attributes: ['game_id', 'user_id', 'count_polygons_entered']})
+    //   .then(scores => {
+    //     res.send(scores);
+    //   })
   })
 
 app.get('/*', (req, res) => {
