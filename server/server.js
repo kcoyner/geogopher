@@ -7,6 +7,7 @@ const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const generateName = require('sillyname');
+const getIP = require('ipware')().get_ip;
 const moment = require('moment');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;

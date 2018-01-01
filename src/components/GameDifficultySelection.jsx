@@ -67,9 +67,9 @@ class GameDifficultySelection extends React.Component {
     });
   }
 
-   handleDifficultySettings(value) {
+  async handleDifficultySettings(value) {
     //set gameTimerRemaining, gameTimerStart, gameDifficultyID
-    this.props.gameDifficulties.forEach((el) => {
+    await this.props.gameDifficulties.forEach((el) => {
       if(el.game_difficulty_name === value) {
         this.props.dispatch(setGameDifficultyID(el.game_difficulty_id))
         let timeManipulation = JSON.parse(el.game_time_manipulation)
