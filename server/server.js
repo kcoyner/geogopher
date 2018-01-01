@@ -194,24 +194,19 @@ apiRouter.route('/anonymous')
 
 apiRouter.route('/scores')
   .get((req, res) => {
-    console.log(req.query.game_type_id, req.query.game_id)
     db.scores.findAll({
+      include: [{model: db.users }],
       where: {
         game_id: req.query.game_id,
         game_type_id: req.query.game_type_id
       },
-      include: [{model: db.users }]},
-      {
-        attributes: ['game_id', 'game_type_id', 'user_id', 'username', 'count_polygons_entered']})
-        .then(scores => {
-          console.log("+++++", scores)
+      order: [
+        ['count_polygons_entered', 'DESC'],
+        ['count_total_hints', 'ASC'],
+      ]})
+      .then(scores => {
           res.send(scores);
-        })
-    // db.scores.findAll( {
-    //   attributes: ['game_id', 'user_id', 'count_polygons_entered']})
-    //   .then(scores => {
-    //     res.send(scores);
-    //   })
+      })
   })
 
 app.get('/*', (req, res) => {

@@ -46,7 +46,9 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.users.hasMany(db.scores);
-db.scores.belongsTo(db.users);  
+
+db.users.hasMany(db.scores, {foreignKey: 'user_id'});
+db.scores.belongsTo(db.users, {foreignKey: 'user_id'});
+
 
 module.exports = db;
