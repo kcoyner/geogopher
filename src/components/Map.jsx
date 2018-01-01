@@ -86,7 +86,6 @@ export default class Map extends React.Component {
       highlightedPolygon: null,
       currentHint: null,
       geoClickPolygonDisplay: '',
-      playGeoClick: false,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -100,11 +99,11 @@ export default class Map extends React.Component {
     this.showMarkers = this.showMarkers.bind(this);
     this.skipCountry = this.skipCountry.bind(this);
     this.showHint = this.showHint.bind(this);
+    this.handleGeoClick = this.handleGeoClick.bind(this);
   }
 
   async componentDidMount() {
 
-    if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: this.props.gameZoom,
@@ -150,8 +149,11 @@ export default class Map extends React.Component {
     this.props.gameTypeSelected === 'Random Select' ?
       this.setState({renderSkipCountryButton: true}) : null
 
-    this.props.gameTypeSelected === 'GeoClick' ?
-      this.setState({renderInputField: false}) : null
+    if (this.props.gameTypeSelected === 'GeoClick') {
+      this.setState({renderInputField: false})
+      this.setState({renderSkipCountryButton: true})
+    }
+
   }
 
   handleGameDifficultySelection() {
@@ -177,9 +179,10 @@ export default class Map extends React.Component {
       highlightedPolygon: this.state.highlightedPolygon,
 
     }
-
-    //focuses cursor in input-entry when user clicks 'start'
-    this.nameInput.focus();
+    if (this.props.gameTypeSelected !== 'GeoClick') {
+      //focuses cursor in input-entry when user clicks 'start'
+      this.nameInput.focus();
+    }
     //hides gameStart modal
     this.setState({gameStart: true})
     //starts timer
@@ -192,8 +195,10 @@ export default class Map extends React.Component {
       actions.setGameStartTimestamp()
     )
     //initializes random country selector if game is not countdown
-    if (this.props.gameTypeSelected !== 'Countdown') {
-      nameTheCountryGameLogic(gameValues)
+    if (this.props.gameTypeSelected === 'Random Select') {
+      nameTheCountryGameLogic(gameValues);
+    } else if (this.props.gameTypeSelected === 'GeoClick') {
+      geoClickGameLogic(gameValues);
     }
   }
   //on quit, set change game state and clear timer
@@ -297,8 +302,8 @@ export default class Map extends React.Component {
         nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
 
       } else {
-
-        geoClickGameLogic()
+        console.log("⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑ INSIDE KEYSTROKE FCN")
+        geoClickGameLogic(gameValues, this.state.highlightedPolygon);
 
       }
 
@@ -325,7 +330,7 @@ export default class Map extends React.Component {
     //declare base sentence
     let hintSentence = 'This country starts with a';
 
-    if (gameTypeSelected === 'Random Select') {
+    if (gameTypeSelected === 'Random Select' ) {
       //get first letter of country that was selected
       let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
       //if first letter of country is a vowel, change
@@ -383,6 +388,30 @@ export default class Map extends React.Component {
         }
 
       }
+    } else {
+      //add logic for circle to appear in area
+      let polygonId = this.state.highlightedPolygon.id
+      // for (var i = 0; i < 5; i++) {
+      //   map.data.overrideStyle(
+      //     map.data.getFeatureById(polygonId+i),
+      //         {
+      //           fillColor: 'aqua',
+      //           strokeColor: 'fuchsia',
+      //           strokeWeight: '4'
+      //         }
+      //   )
+      //     setTimeout(()=>{
+      //       this.setState({currentHint: null})
+      //       map.data.overrideStyle(
+      //         map.data.getFeatureById(polygonId+1),
+      //         {
+      //           fillColor: 'firebrick',
+      //           fillOpacity: '.6',
+      //           strokeColor: 'orange',
+      //           strokeWeight: '2'
+      //         });
+      //     },2000)
+      // }
     }
 
     //incrementHints
@@ -406,7 +435,43 @@ export default class Map extends React.Component {
 
     }
 
-    nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon, true);
+    if (this.props.gameTypeSelected === 'Random Select') {
+
+      nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon, true);
+
+    } else if (this.props.gameTypeSelected === 'GeoClick') {
+
+      geoClickGameLogic(gameValues, gameValues.highlightedPolygon, true);
+
+      setTimeout( () => {
+        this.handleGeoClick();
+      }, 2000)
+
+    }
+
+  }
+
+  handleGeoClick() {
+    console.log("this is running inside handleGeoClick")
+    let gameValues = {
+
+      map: map,
+      countTotalSubmissions: this.props.countTotalSubmissions,
+      dispatchFcn: this.props.dispatch,
+      gameData: this.props.gameData,
+      reactThis: this,
+      highlightedPolygon: this.state.highlightedPolygon,
+      handleGameEnd: this.handleGameEnd,
+      countPolygonsEntered: this.props.countPolygonsEntered,
+
+    }
+
+    if (this.props.gameTypeSelected === 'GeoClick') {
+
+      if (!google.maps.event.hasListeners(map.data, 'click')) {
+        geoClickGameLogic(gameValues, this.state.highlightedPolygon)
+      }
+    }
   }
 
   render() {
@@ -416,7 +481,12 @@ export default class Map extends React.Component {
         <div className="game-region">{ this.props.gameSelected }</div>
         <div className="game-type">{ this.props.gameTypeSelected}</div>
         <div className="game-difficulty">{ this.props.gameDifficultySelected }</div>
-        <div className="maps" id="map"></div>
+
+        <div
+          className="maps"
+          id="map"
+          onClick={this.handleGeoClick}>
+        </div>
 
         <div className="game-controls">
 
@@ -459,13 +529,8 @@ export default class Map extends React.Component {
           }
 
           {
-            this.state.playGeoClick
+            this.state.renderInputField
             ?
-            <div
-              className="geoClick-display">
-              {this.state.geoClickPolygonDisplay}
-            </div>
-            :
             <input
               className="entry-display"
               ref={(input) => { this.nameInput = input; }}
@@ -473,6 +538,11 @@ export default class Map extends React.Component {
               onKeyDown={this.keyPress}
               value={ this.state.inputValue }>
             </input>
+            :
+            <div
+              className="geoClick-display">
+              {this.state.geoClickPolygonDisplay}
+            </div>
           }
 
           {

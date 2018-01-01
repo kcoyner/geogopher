@@ -403,6 +403,20 @@ input.entry-display, input.entry-display:focus, .entry-display, {
   padding-left: 20px;
 }
 
+div.geoClick-display{
+  grid-area:inputent;
+  font-family: 'helvetica';
+  font-weight: bolder;
+  font-size: 3em;
+  z-index: 4;
+  color: black;
+  background-color: salmon;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  box-shadow: 0px 10px 20px -10px darkslategrey;
+  padding-left: 20px;
+}
+
 button.ui.button.hint-btn{
   grid-area: hint;
   z-index: 4;
