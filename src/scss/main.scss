@@ -100,11 +100,12 @@ img.ui.image.geogopher-navbar-logo{
   display: grid;
   grid-template-rows: 2fr 2fr 2fr 10fr 1fr;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-areas: " ..  ..            ..            ..        .."
-                       " bgt  typetitle     typetitle     typetitle ngt"
-                       " bgt  ..            ..            ..        ngt"
-                       " bgt  cdn           rs            geo       ngt"
-                       " ..  ..            ..            ..        ..";
+  grid-template-areas: " ..  ..            ..            ..          .."
+                       " ..  typetitle     typetitle     typetitle   .."
+                       " ..  ..            ..            ..          .."
+                       " ..  cdn           rs            geo         .."
+                       " ..  ..            ..             bgt        ngt";
+  height: 400px;
 }
 
 button.ui.button.go-back-gt-btn{
@@ -162,7 +163,7 @@ button.ui.button.next-gt-btn{
 }
 
 button.ui.button.go-back-gd-btn{
-  grid-area: 3/1/5/1;
+  grid-area: 6/7/6/7;
   background-color: white;
   font-size: 1.25em;
   &:hover{
@@ -171,7 +172,7 @@ button.ui.button.go-back-gd-btn{
 }
 
 button.ui.button.next-gd-btn{
-  grid-area: 3/9/5/9;
+  grid-area: 6/9/6/9;
   background-color: white;
   font-size: 1.25em;
   &:hover{
@@ -403,12 +404,28 @@ input.entry-display, input.entry-display:focus, .entry-display, {
   padding-left: 20px;
 }
 
+div.geoClick-display{
+  grid-area:inputent;
+  font-family: 'helvetica';
+  font-weight: bolder;
+  font-size: 3em;
+  padding: 20px;
+  text-align: center;
+  z-index: 4;
+  color: black;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  box-shadow: 0px 10px 20px -10px darkslategrey;
+  padding-left: 20px;
+}
+
 button.ui.button.hint-btn{
   grid-area: hint;
   z-index: 4;
   font-size: 1.2em;
   background-color: #8AC84A;
-  padding: 0;
+  padding: 20px 20px 30px 20px;
   letter-spacing: 2px;
   font-weight: lighter;
   color: white;
@@ -428,7 +445,7 @@ button.ui.button.advance-btn{
   z-index: 4;
   font-size: 1.2em;
   background-color: #6A99CC;
-  padding: 0;
+  padding: 20px 20px 30px 20px;
   letter-spacing: 2px;
   font-weight: lighter;
   color: white;
@@ -448,7 +465,7 @@ button.ui.button.quit-game-btn{
   z-index: 4;
   font-size: 1.2em;
   background-color: #ec0524;
-  padding: 0;
+  padding: 20px 20px 30px 20px;
   letter-spacing: 2px;
   font-weight: lighter;
   color: white;
@@ -522,7 +539,7 @@ button.ui.button.quit-game-btn{
         cursor: pointer;
       }
     }
-    a.ui.button.anonymous-btn{
+    button.ui.button.anonymous-btn{
       grid-area: 3/4/3/4;
       margin: 20px 20px 20px 0;
     }

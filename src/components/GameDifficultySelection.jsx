@@ -67,6 +67,7 @@ class GameDifficultySelection extends React.Component {
     });
   }
 
+
   async handleDifficultySettings(value) {
     //set gameTimerRemaining, gameTimerStart, gameDifficultyID
     await this.props.gameDifficulties.forEach((el) => {
@@ -81,10 +82,10 @@ class GameDifficultySelection extends React.Component {
          this.props.dispatch(setGameDifficulty(el.game_difficulty_name))
        }
     });
+    let displayTime;
+    displayTime = await formatSecondsToMMSS(this.props.gameTimerStart)
 
-    let displayTime = formatSecondsToMMSS(this.props.gameTimerStart)
-    console.log(displayTime)
-    this.setState({calculatedTime: displayTime})
+    await this.setState({calculatedTime: displayTime})
   }
 
     render() {
@@ -171,8 +172,8 @@ class GameDifficultySelection extends React.Component {
 
                       </Button.Group>
 
-                      <Button circular className="go-back-gd-btn" onClick={this.props.onClose} icon='left chevron'/>
-                      <Button circular className="next-gd-btn" onClick={this.props.onContinue} icon='right chevron'/>
+                      <Button  className="go-back-gd-btn" onClick={this.props.onClose} icon='left chevron'/>
+                      <Button  className="next-gd-btn" onClick={this.props.onContinue} icon='right chevron'/>
 
                 </Modal.Description>
                 </Modal.Content>

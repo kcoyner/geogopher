@@ -155,12 +155,11 @@ class GameTypeSelection extends React.Component {
                       basic
                     />
 
-                    {/* <Dropdown className="game-type-dropdown" placeholder='Select Game Type' fluid selection options={this.state.gameTypeChoices} onChange={this.getDescription} />
-                    <div className="setting-description">
-                      <h3>{this.state.gameTypeDescription}</h3>
-                    </div> */}
-                    <Button circular className="go-back-gt-btn" onClick={this.props.onClose} icon='left chevron'/>
-                    <Button circular className="next-gt-btn" onClick={this.props.onContinue} icon='right chevron'/>
+
+                    <Button  className="go-back-gt-btn" onClick={this.props.onClose} icon='left chevron'/>
+
+                    <Button  className="next-gt-btn" onClick={this.props.onContinue} icon='right chevron'/>
+
 
                 </Modal.Description>
                 </Modal.Content>

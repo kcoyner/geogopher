@@ -40,7 +40,7 @@ class GameStart extends React.Component {
                 </Step.Content>
               </Step>
 
-              <Step Active>
+              <Step active>
                 <Step.Content>
                   <Step.Title>Play</Step.Title>
                   <Step.Description>Start to play</Step.Description>
