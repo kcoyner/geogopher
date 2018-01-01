@@ -389,29 +389,37 @@ export default class Map extends React.Component {
 
       }
     } else {
-      //add logic for circle to appear in area
-      let polygonId = this.state.highlightedPolygon.id
-      // for (var i = 0; i < 5; i++) {
-      //   map.data.overrideStyle(
-      //     map.data.getFeatureById(polygonId+i),
-      //         {
-      //           fillColor: 'aqua',
-      //           strokeColor: 'fuchsia',
-      //           strokeWeight: '4'
-      //         }
-      //   )
-      //     setTimeout(()=>{
-      //       this.setState({currentHint: null})
-      //       map.data.overrideStyle(
-      //         map.data.getFeatureById(polygonId+1),
-      //         {
-      //           fillColor: 'firebrick',
-      //           fillOpacity: '.6',
-      //           strokeColor: 'orange',
-      //           strokeWeight: '2'
-      //         });
-      //     },2000)
-      // }
+      //hint logic for geoClick
+      let polygonId = this.state.highlightedPolygon.id;
+      let hintsArr;
+
+      polygonId + 5 > this.props.maxCountPolygons ?
+      hintsArr = Array.from([0, 1, 2, 3, 4], x => (polygonId - 5) + x) :
+      hintsArr = Array.from([0, 1, 2, 3, 4], x => polygonId + x)
+      console.log(hintsArr)
+      this.setState({currentHint: "Its one of these"})
+      hintsArr.forEach((el) => {
+        map.data.overrideStyle(
+          map.data.getFeatureById(el),
+              {
+                fillColor: 'aqua',
+                strokeColor: 'fuchsia',
+                strokeWeight: '2'
+              }
+        )
+
+      setTimeout(()=>{
+        this.setState({currentHint: null})
+        map.data.overrideStyle(
+          map.data.getFeatureById(el),
+          {
+            fillColor: 'firebrick',
+            fillOpacity: '.6',
+            strokeColor: 'orange',
+            strokeWeight: '2'
+          });
+      },2000)
+      });
     }
 
     //incrementHints
@@ -452,7 +460,7 @@ export default class Map extends React.Component {
   }
 
   handleGeoClick() {
-    console.log("this is running inside handleGeoClick")
+
     let gameValues = {
 
       map: map,
