@@ -158,7 +158,7 @@ class GameTypeSelection extends React.Component {
 
                     <Button  className="go-back-gt-btn" onClick={this.props.onClose} icon='left chevron'/>
 
-                    <Button  className="next-gt-btn" onClick={this.props.onContinue} content='Next' labelPosition='right' icon='right chevron'/>
+                    <Button  className="next-gt-btn" onClick={this.props.onContinue} icon='right chevron'/>
 
 
                 </Modal.Description>

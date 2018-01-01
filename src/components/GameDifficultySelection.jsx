@@ -173,7 +173,7 @@ class GameDifficultySelection extends React.Component {
                       </Button.Group>
 
                       <Button  className="go-back-gd-btn" onClick={this.props.onClose} icon='left chevron'/>
-                      <Button  className="next-gd-btn" onClick={this.props.onContinue} content='Next' icon='right chevron'/>
+                      <Button  className="next-gd-btn" onClick={this.props.onContinue} icon='right chevron'/>
 
                 </Modal.Description>
                 </Modal.Content>
