@@ -51,7 +51,7 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
       //create click listener
       gameValues.map.data.addListener('click',  (event) => {
 
-        if (gameValues.gameSelected.indexOf("countries") > -1) {
+        if (gameValues.gameSelected.indexOf("Countries") > -1) {
           featureName = event.feature.f.primaryCountryName
         } else {
           featureName = event.feature.f.countryCapitalName
