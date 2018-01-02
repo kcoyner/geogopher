@@ -171,12 +171,19 @@ apiRouter.route('/user')
       'password_hash': req.body.password,
       'username': req.body.username
     };
-    db.users.create(user)
-    .then(user => {
-      res.send(user);
-    })
-    .catch(error => {
-      console.log(error);
+    db.users.findOne({where: { email: req.body.email }})
+    .then(data => {
+      if(data !== null) {
+        res.status(409).send({ error: 'User already exists'})
+      } else {
+        db.users.create(user)
+        .then(user => {
+          res.send(user);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+      }
     })
   });
 
