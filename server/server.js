@@ -76,9 +76,8 @@ apiRouter.route('/gameSettings')
 apiRouter.route('/postScore')
   .post((req, res) => {
     console.log('THIS IS THE REQ BODY UP IN THAT POST SCORE 🤘')
-    console.log(req.body)
     let score = {
-      'user_id': 1,
+      'user_id': req.body.userID,
       'count_polygons_entered': req.body.countPolygonsEntered,
       'count_total_submissions': req.body.countTotalSubmissions,
       'count_total_hints': req.body.countTotalHints,
@@ -140,6 +139,7 @@ apiRouter.route('/userId')
 apiRouter.route('/user')
   .get((req, res) => {
     let date = moment();
+    let username = req.query.email.slice(0,req.query.email.indexOf('@'));
     db.users
     .findOrCreate({where: {google_id: req.query.googleId}, defaults: {
       'google_id': req.query.googleid,
@@ -147,13 +147,17 @@ apiRouter.route('/user')
       'last_name': req.query.familyName,
       'count_games_played': 0,
       'last_login': date,
-      'email': req.query.email
+      'email': req.query.email,
+      'username': username
     }})
     .spread((user, created) => {
       user.created = created;
       console.log(user);
       res.send(user);
-    });
+    })
+    .catch(error => {
+      console.log(error);
+    })
   })
   .post((req, res) => {
     let date = moment();
@@ -164,7 +168,8 @@ apiRouter.route('/user')
       'email': req.body.email,
       'count_games_played': 0,
       'last_login': date,
-      'password_hash': req.body.password
+      'password_hash': req.body.password,
+      'username': req.body.username
     };
     db.users.create(user)
     .then(user => {
@@ -189,10 +194,18 @@ apiRouter.route('/anonymous')
 
 apiRouter.route('/scores')
   .get((req, res) => {
-    db.scores.findAll( {
-      attributes: ['game_id', 'user_id', 'count_polygons_entered']})
+    db.scores.findAll({
+      include: [{model: db.users }],
+      where: {
+        game_id: req.query.game_id,
+        game_type_id: req.query.game_type_id
+      },
+      order: [
+        ['count_polygons_entered', 'DESC'],
+        ['count_total_hints', 'ASC'],
+      ]})
       .then(scores => {
-        res.send(scores);
+          res.send(scores);
       })
   })
 

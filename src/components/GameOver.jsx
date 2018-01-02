@@ -42,7 +42,6 @@ import { formatSecondsToMMSS } from '../utils/index';
 })
 
 class GameOver extends React.Component {
-
     render() {
         return(
             <Modal
@@ -93,6 +92,7 @@ class GameOver extends React.Component {
                 </Modal.Content>
                 <Modal.Actions>
                     <Button onClick={this.props.onDifferentGame} positive>Play Different Game</Button>
+                    <Button onClick={this.props.onSeeHighScores}>See High Scores</Button>
                 </Modal.Actions>
             </Modal>
         )

@@ -6,6 +6,8 @@ const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv').config();
+const users = require('./models/users');
+const scores = require('./models/scores');
 
 const DBPASSWD = process.env.DBPASSWD;
 
@@ -44,5 +46,9 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.users.hasMany(db.scores, {foreignKey: 'user_id'});
+db.scores.belongsTo(db.users, {foreignKey: 'user_id'});
+
 
 module.exports = db;

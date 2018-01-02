@@ -29,9 +29,9 @@ let map;
   return {
 
     //pre game data
-    userName: 'SenecaTheYounger',
-    userID: 1,
-    countGamesPlayed: 10,
+    userName: state.UserReducer.user.username,
+    userID: state.UserReducer.user.user_id,
+    countGamesPlayed: state.UserReducer.count_games_played,
     token: null,
     lastLogin: null,
 
@@ -90,6 +90,7 @@ export default class Map extends React.Component {
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
     this.handlePlayDifferentGame = this.handlePlayDifferentGame.bind(this);
+    this.seeHighScores = this.seeHighScores.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleGameTypeSelection = this.handleGameTypeSelection.bind(this);
     this.handleGameDifficultySelection = this.handleGameDifficultySelection.bind(this);
@@ -101,9 +102,8 @@ export default class Map extends React.Component {
     this.showHint = this.showHint.bind(this);
     this.handleGeoClick = this.handleGeoClick.bind(this);
   }
-
   async componentDidMount() {
-
+    if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: this.props.gameZoom,
@@ -168,7 +168,6 @@ export default class Map extends React.Component {
 
     //pack gameValues for game init
     let gameValues = {
-
       map: map,
       countPolygonsEntered: this.props.countPolygonsEntered,
       countTotalSubmissions: this.props.countTotalSubmissions,
@@ -238,7 +237,7 @@ export default class Map extends React.Component {
       polygonsAnswered: this.props.polygonsAnswered,
       polygonsUnanswered: this.props.polygonsUnanswered,
       polygonsSkipped: this.props.polygonsSkipped,
-      userID: this.props.userID,
+      userID: this.props.userID
     }
     //need to confirm whether all state must be returned back to init
     this.setState({ open: false });
@@ -249,6 +248,35 @@ export default class Map extends React.Component {
     this.props.dispatch(actions.resetGame())
 
     this.props.dispatch(actions.resetScore())
+  }
+  async seeHighScores() {
+    // This should probably get factored out of this and the above function
+    let currentScore = {
+      countPolygonsEntered: this.props.countPolygonsEntered,
+      countTotalSubmissions: this.props.countTotalSubmissions,
+      countTotalHints: this.props.countTotalHints,
+      gameDifficultyID: this.props.gameDifficultyID,
+      gameEndTimestamp: this.props.gameEndTimestamp,
+      gameID: this.props.gameID,
+      gameStartTimestamp: this.props.gameStartTimestamp,
+      gameTimerRemaining: this.props.gameTimerRemaining,
+      gameTimerStart: this.props.gameTimerStart,
+      gameTypeID: this.props.gameTypeID,
+      incorrectEntries: this.props.incorrectEntries,
+      ipWhereGamePlayed: this.props.ipWhereGamePlayed,
+      polygonsAnswered: this.props.polygonsAnswered,
+      polygonsUnanswered: this.props.polygonsUnanswered,
+      polygonsSkipped: this.props.polygonsSkipped,
+      userID: this.props.userID
+    }
+    this.setState({ open: false });
+    this.props.history.push('/high-scores');
+    this.props.dispatch(await actions.postScore(currentScore))
+    
+    this.props.dispatch(actions.resetGame())
+    
+    this.props.dispatch(actions.resetScore())
+
   }
 
   //registers inputs entered into input field
@@ -278,7 +306,6 @@ export default class Map extends React.Component {
 
       // build game values object to pass into game logic
       let gameValues = {
-
         submissionSanitized: submissionSanitized,
         map: map,
         countPolygonsEntered: this.props.countPolygonsEntered,
@@ -289,7 +316,6 @@ export default class Map extends React.Component {
         reactThis: this,
         highlightedPolygon: this.state.highlightedPolygon,
         handleGameEnd: this.handleGameEnd,
-
       }
 
       //check answer for countdown game
@@ -306,7 +332,9 @@ export default class Map extends React.Component {
         geoClickGameLogic(gameValues, this.state.highlightedPolygon);
 
       }
+      if(gameValues.incorrectEntries.indexOf(submission) < 0) {
 
+      }
     //end keystroke if statement
     }
   //end keypress function
@@ -485,7 +513,6 @@ export default class Map extends React.Component {
   render() {
     return (
       <div className="game-container">
-
         <div className="game-region">{ this.props.gameSelected }</div>
         <div className="game-type">{ this.props.gameTypeSelected}</div>
         <div className="game-difficulty">{ this.props.gameDifficultySelected }</div>
@@ -518,6 +545,7 @@ export default class Map extends React.Component {
 
           <GameOver
             onDifferentGame={ this.handlePlayDifferentGame }
+            onSeeHighScores={ this.seeHighScores }
             onStart={this.handleStart}
             open={this.state.gameEnd}
           />

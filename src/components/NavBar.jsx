@@ -50,12 +50,12 @@ class NavBar extends React.Component {
                      <NavLink to="/"> EXPLORE </NavLink>
                     </Menu.Item>
                     <Menu.Item>
-                     <NavLink to="/"> SCORES </NavLink>
+                     <NavLink to="/high-scores"> SCORES </NavLink>
                     </Menu.Item>
                     <Menu.Item>
                        {user ? (
 
-                         <Dropdown text={user.first_name || user.username} pointing className='user-account-menu-dropdown'>
+                         <Dropdown text={user.username} pointing className='user-account-menu-dropdown'>
                           <Dropdown.Menu>
                             <Dropdown.Header>Account</Dropdown.Header>
                             <Dropdown.Divider />
@@ -68,7 +68,7 @@ class NavBar extends React.Component {
                         </Dropdown>
 
                        ) : (
-                        <NavLink to="/login"> login </NavLink>
+                        <NavLink to="/login"> LOGIN </NavLink>
                        )}
                     </Menu.Item>
                   </Menu.Menu>
