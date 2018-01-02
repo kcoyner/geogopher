@@ -15,7 +15,7 @@ class HighScores extends React.Component {
         first: null,
         selectedGameType: 1,
         selectedGame: 1,
-        games: 
+        games:
             [
                 {text: 'World Countries', value: 1},
                 {text: 'Middle East & North Africa', value: 2},
@@ -73,7 +73,7 @@ class HighScores extends React.Component {
           <Dropdown value={this.selectedGameType} onChange={this.onChangeGameType} defaultValue={this.state.selectedGameType} fluid selection options={this.state.gameTypes} />
           <Dropdown value={this.selectedGame} onChange={this.onChangeGame} defaultValue={this.state.selectedGame} fluid selection options={this.state.games} />
           { this.state.first ? (
-          
+
           <Table celled>
             <Table.Header>
             <Table.Row>

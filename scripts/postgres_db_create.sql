@@ -47,6 +47,8 @@ CREATE TABLE "games" (
 	"max_count_polygons" integer NOT NULL,
 	-- base_time before difficulty settings are applied
 	"base_time" integer NOT NULL,
+	-- link to image thumbnail
+	"img_asset" varchar NOT NULL,
 	CONSTRAINT games_pk PRIMARY KEY ("game_id")
 ) WITH (
   OIDS=FALSE

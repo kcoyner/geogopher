@@ -22,7 +22,9 @@ img.ui.image.geogopher-navbar-logo{
   grid-template-areas: ".. gap             .."
                        ".. splash         .."
                        ".. countriestitle .."
-                       ".. countries      ..";
+                       ".. countries      .."
+                       ".. capitalstitle  .."
+                       ".. capitals       ..";
 }
 
 .gap{
@@ -45,6 +47,23 @@ img.ui.image.geogopher-navbar-logo{
 
 .countries-list{
   grid-area: countries;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  .ui.card:first-child{
+    margin-top: 1em;
+  }
+}
+
+.capitals-title{
+  grid-area: capitalstitle;
+  h3{
+    margin: 0!important;
+  }
+}
+
+.capitals-list{
+  grid-area: capitals;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
