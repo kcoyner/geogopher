@@ -9,7 +9,7 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
   //declare logic variables
   let allowNextCountry = false;
   let moreCountriesLeft = false;
-
+  let featureName;
       if (skipCountry) {
           //get the polygon inside the map by using the id
           let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
@@ -50,8 +50,14 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
       gameValues.reactThis.setState({highlightedPolygon: highlightedCountry})
       //create click listener
       gameValues.map.data.addListener('click',  (event) => {
+
+        if (gameValues.gameSelected.indexOf("countries") > -1) {
+          featureName = event.feature.f.primaryCountryName
+        } else {
+          featureName = event.feature.f.countryCapitalName
+        }
         //if name of polygon clicked is same as highlighted country
-        if (event.feature.f.primaryCountryName === highlightedCountry.acceptedAnswers[0]) {
+        if (featureName === highlightedCountry.acceptedAnswers[0]) {
           //change polygon colors
           gameValues.map.data.overrideStyle(event.feature,
             {
@@ -62,8 +68,7 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
             //set allowNextCountry to true
             allowNextCountry = true;
             //submit correct entry
-            console.log("INSIDE CALLBACK")
-            console.log(gameValues.countPolygonsEntered)
+
             gameValues.dispatchFcn(
               submitCorrectEntry(
                 gameValues.countPolygonsEntered,

@@ -131,9 +131,20 @@ export default class Map extends React.Component {
       strokeWeight: '2'
     });
     //build gameData in redux and stores as this.props.gameData
-    await this.props.dispatch(
-      actions.initializeNewGame(this.props.gameJSON)
-    );
+    if (this.props.gameSelected.indexOf('Capitals') > -1) {
+      console.log('executing just outside initialize new game for capitals')
+      await this.props.dispatch(
+        actions.initializeNewGame(this.props.gameJSON, 'Capitals')
+      );
+
+    } else {
+
+      await this.props.dispatch(
+        actions.initializeNewGame(this.props.gameJSON, 'Countries')
+      );
+
+    }
+
 
   }
 
@@ -176,6 +187,7 @@ export default class Map extends React.Component {
       gameData: this.props.gameData,
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
+      gameSelected: this.props.gameSelected,
 
     }
     if (this.props.gameTypeSelected !== 'GeoClick') {
@@ -295,8 +307,8 @@ export default class Map extends React.Component {
     // map.panTo({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
-      console.log('this.state.gameEnd')
-      console.log(this.state.gameEnd)
+
+
       let submission = e.target.value;
       //clear text input after user hits enter
       this.setState({inputValue: ''});
@@ -328,7 +340,7 @@ export default class Map extends React.Component {
         nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
 
       } else {
-        console.log("⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑ INSIDE KEYSTROKE FCN")
+
         geoClickGameLogic(gameValues, this.state.highlightedPolygon);
 
       }
@@ -356,7 +368,7 @@ export default class Map extends React.Component {
 
     let gameTypeSelected = this.props.gameTypeSelected;
     //declare base sentence
-    let hintSentence = 'This country starts with a';
+    let hintSentence = 'The answer starts with a';
 
     if (gameTypeSelected === 'Random Select' ) {
       //get first letter of country that was selected
@@ -425,7 +437,7 @@ export default class Map extends React.Component {
       hintsArr = Array.from([0, 1, 2, 3, 4], x => (polygonId - 5) + x) :
       hintsArr = Array.from([0, 1, 2, 3, 4], x => polygonId + x)
       console.log(hintsArr)
-      this.setState({currentHint: "Its one of these"})
+      this.setState({currentHint: "It's one of these"})
       hintsArr.forEach((el) => {
         map.data.overrideStyle(
           map.data.getFeatureById(el),
@@ -468,6 +480,7 @@ export default class Map extends React.Component {
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
       handleGameEnd: this.handleGameEnd,
+      gameSelected: this.props.gameSelected,
 
     }
 
@@ -499,6 +512,7 @@ export default class Map extends React.Component {
       highlightedPolygon: this.state.highlightedPolygon,
       handleGameEnd: this.handleGameEnd,
       countPolygonsEntered: this.props.countPolygonsEntered,
+      gameSelected: this.props.gameSelected,
 
     }
 
