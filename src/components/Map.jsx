@@ -95,13 +95,24 @@ export default class Map extends React.Component {
     this.handleGameTypeSelection = this.handleGameTypeSelection.bind(this);
     this.handleGameDifficultySelection = this.handleGameDifficultySelection.bind(this);
     this.handleGameEnd = this.handleGameEnd.bind(this);
-    this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.showMarkers = this.showMarkers.bind(this);
     this.skipCountry = this.skipCountry.bind(this);
     this.showHint = this.showHint.bind(this);
     this.handleGeoClick = this.handleGeoClick.bind(this);
   }
+
+  componentDidUpdate() {
+    if (this.props.gameTimerRemaining === 1) {
+      setTimeout(()=> {
+        this.props.dispatch(
+          actions.decrementTime(this.props.gameTimerRemaining + 1)
+        );
+        this.handleGameEnd();
+      } , 1000)
+    }
+  }
+
   async componentDidMount() {
     if (this.props.gameSelected === 'Countdown'){}
     //initialize new google map and place it on '#map'
@@ -132,7 +143,6 @@ export default class Map extends React.Component {
     });
     //build gameData in redux and stores as this.props.gameData
     if (this.props.gameSelected.indexOf('Capitals') > -1) {
-      console.log('executing just outside initialize new game for capitals')
       await this.props.dispatch(
         actions.initializeNewGame(this.props.gameJSON, 'Capitals')
       );
@@ -145,14 +155,10 @@ export default class Map extends React.Component {
 
     }
 
-
   }
 
-
   handleGameTypeSelection() {
-
     this.setState({gameType: false, gameDifficulty: true})
-
 
     this.props.gameTypeSelected === 'Countdown' ?
       this.setState({renderMissingCountriesButton: true}) : null
@@ -171,7 +177,6 @@ export default class Map extends React.Component {
 
     this.setState({gameDifficulty: false})
   }
-
 
 
   //on start focus client cursor to answerInput field and start timer?
@@ -196,11 +201,13 @@ export default class Map extends React.Component {
     }
     //hides gameStart modal
     this.setState({gameStart: true})
+
     //starts timer
     this.incrementer = setInterval( () =>
       this.props.dispatch(
         actions.decrementTime(this.props.gameTimerRemaining)
       ), 1000);
+
     //dispatches gamestart gameStartTimestamp
     this.props.dispatch(
       actions.setGameStartTimestamp()
@@ -284,9 +291,9 @@ export default class Map extends React.Component {
     this.setState({ open: false });
     this.props.history.push('/high-scores');
     this.props.dispatch(await actions.postScore(currentScore))
-    
+
     this.props.dispatch(actions.resetGame())
-    
+
     this.props.dispatch(actions.resetScore())
 
   }
@@ -295,20 +302,12 @@ export default class Map extends React.Component {
   onInputChange(e) {
     this.setState({ inputValue: e.target.value })
   }
-  //i dont think this is used at all...
-  isEnd() {
-    if(this.state.gameTimerRemaining === 0) {
-      clearInterval(this.incrementer);
-      return <GameOver onClose={ this.handleClose } open={this.state.gameOver}/>
-    }
-  }
+
   //keypress checks if key is 'enter'. registers value against answers and clears input
   keyPress(e) {
     // map.panTo({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
-
-
       let submission = e.target.value;
       //clear text input after user hits enter
       this.setState({inputValue: ''});
@@ -567,7 +566,19 @@ export default class Map extends React.Component {
           <div className="time-remaining-title"> Time Remaining: </div>
           <div className="polygon-score-title"> Countries Answered: </div>
 
-          <div className="time-remaining"> {formatSecondsToMMSS(this.props.gameTimerRemaining)} </div>
+
+          { /* time remaining */
+            (this.props.gameTimerRemaining <= 0) && (this.props.gameTimerRemaining !== null)
+            ?
+          <div className="time-remaining">
+            Game Over
+          </div>
+            :
+          <div className="time-remaining">
+            {formatSecondsToMMSS(this.props.gameTimerRemaining)}
+          </div>
+          }
+
           <div className="polygon-score"> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons} </div>
 
           {
