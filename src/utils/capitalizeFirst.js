@@ -25,7 +25,7 @@ const capFirstLetter = (word) => {
 };
 
 export const capitalizeWords = (words) => {
-    let result = '';
+    let result = words;
     let wordsArr = words.split(' ');
     try {
       result = wordsArr.map(word => capFirstLetter(word) ).join(' ');
