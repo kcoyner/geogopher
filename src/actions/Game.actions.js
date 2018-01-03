@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { buildGameData, buildUnansweredPolygons } from '../utils/index';
 //called in map componentDidMount
-export const initializeNewGame = (apiUrl) => {
+export const initializeNewGame = (apiUrl, gameType) => {
   return (dispatch) => {
     axios.get(apiUrl)
       .then(response => {
-        return buildGameData(response.data)
+        return buildGameData(response.data, gameType)
       })
       .then(response => {
         dispatch({ type: 'GAME_DATA_BUILT', payload: response })

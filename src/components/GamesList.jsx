@@ -10,20 +10,6 @@ import { Card, Image } from 'semantic-ui-react';
 import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer, setBaseTime } from '../actions/index'
 import { Motion, spring } from 'react-motion';
 
-
-//temporarily pull in thumbs. need to display these from S3 and pull in get request later on
-const thmb0 = require('-!file-loader?name=world-thumb!../assets/world-thumb.png');
-const thmb1 = require('-!file-loader?name=north-africa-and-middle-east-thumb!../assets/north-africa-and-middle-east-thumb.png');
-const thmb2 = require('-!file-loader?name=europe-thumb!../assets/europe-thumb.png');
-const thmb3 = require('-!file-loader?name=sub-saharan-africa-thumb!../assets/sub-saharan-africa-thumb.png');
-const thmb4 = require('-!file-loader?name=carribean-thumb!../assets/carribean-thumb.png');
-const thmb5 = require('-!file-loader?name=south-america-thumb!../assets/south-america-thumb.png');
-const thmb6 = require('-!file-loader?name=russia-and-central-asia-thumb!../assets/russia-and-central-asia-thumb.png');
-const thmb7 = require('-!file-loader?name=south-pacific-thumb!../assets/south-pacific-thumb.png');
-const thmb8 = require('-!file-loader?name=east-asia-thumb!../assets/east-asia-thumb.png');
-const thmb9 = require('-!file-loader?name=north-america-thumb!../assets/north-america-thumb.png');
-const thmbArr = [thmb0, thmb1, thmb2, thmb3, thmb4, thmb5, thmb6, thmb7, thmb8, thmb9];
-
 @connect((state, ownProps) => {
   return {
     //take out of redux
@@ -81,8 +67,7 @@ class GamesList extends React.Component {
         <div className="gap"></div>
 
         <div className="splash">
-          <h1>KNOW YOUR GLOBE</h1>
-          <h4> It's important stuff..This is the future space for our splash component</h4>
+          <h1>PLAY</h1>
         </div>
 
 
@@ -100,13 +85,15 @@ class GamesList extends React.Component {
 
                 (game, index) => (
 
+                  game.game_name.indexOf("Countries") > -1 ?
+
                   <Card key={index} >
                     {/* on hover, this div covers the thumb */}
                     <div className="select-this-game"
                       onClick={() => this.onGameSelect(index)}>
                       <h1>PLAY</h1>
                     </div>
-                    <Image src={thmbArr[index]}
+                    <Image src={game.img_asset}
                           onClick={() => this.onGameSelect(index)}
                         />
                     <Card.Content
@@ -122,13 +109,60 @@ class GamesList extends React.Component {
 
                   </Card>
 
-                )
-            ) }
+                  :
+                  null
 
-
-
+              )
+            )
+          }
 
       </div>
+
+        <div className="capitals-title">
+          <h1>Capitals</h1>
+          <h3>Choose a region to begin</h3>
+        </div>
+
+        <div className="capitals-list">
+
+
+            {
+              games.map(
+
+                (game, index) => (
+
+                  game.game_name.indexOf("Capitals") > -1 ?
+
+                  <Card key={index} >
+                    {/* on hover, this div covers the thumb */}
+                    <div className="select-this-game"
+                      onClick={() => this.onGameSelect(index)}>
+                      <h1>PLAY</h1>
+                    </div>
+                    <Image src={game.img_asset}
+                          onClick={() => this.onGameSelect(index)}
+                        />
+                    <Card.Content
+                      onClick={() => this.onGameSelect(index)}
+                      >
+                      <Card.Header>
+                        {game.game_name}
+                      </Card.Header>
+                      <Card.Description>
+                        {game.game_description}
+                      </Card.Description>
+                    </Card.Content>
+
+                  </Card>
+                  :
+                null
+              )
+            )
+          }
+
+      </div>
+
+
 
     </div>
       );

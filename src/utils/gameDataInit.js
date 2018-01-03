@@ -1,5 +1,10 @@
-export const buildGameData = (inputData) => {
+export const buildGameData = (inputData, gameType) => {
+
+
   let gameDataInput = inputData.features;
+
+  if (gameType === 'Countries') {
+
   //map over inputCountryData and store as 'game data'
   let gameData = gameDataInput.map((el, idx) => {
     //set countryData to the properties of original data (this contains country names and country center)
@@ -17,23 +22,50 @@ export const buildGameData = (inputData) => {
       polygonCapitalName: el.properties.countryCapitalName,
       polygonCapitalCoords: el.properties.countryCapitalCenter,
     }
-    //loop through all country names
-    for (let key in countryData) {
-      //excluding irrelevant keys
-      if (key !== 'countryCapitalCenter' && key !== 'countryCapitalName' && key !== 'countryCenter' && key !== 'countryZoomLevel') {
-        if (Array.isArray(countryData[key]) && countryData[key].length > 0) {
-          outputCountryData.acceptedAnswers = outputCountryData.acceptedAnswers.concat(countryData[key]);
-        }
-        if (Object.prototype.toString.call(countryData[key]) === '[object String]') {
-          outputCountryData.acceptedAnswers.push(countryData[key]);
-        }
-      }
-    }
-    //store new country object in country data
-    return outputCountryData;
-  })
+
+          //loop through all country names
+          for (let key in countryData) {
+            //excluding irrelevant keys
+
+            if (key !== 'countryCapitalCenter' && key !== 'countryCapitalName' && key !== 'countryCenter' && key !== 'countryZoomLevel') {
+              if (Array.isArray(countryData[key]) && countryData[key].length > 0) {
+                outputCountryData.acceptedAnswers = outputCountryData.acceptedAnswers.concat(countryData[key]);
+              }
+              if (Object.prototype.toString.call(countryData[key]) === '[object String]') {
+                outputCountryData.acceptedAnswers.push(countryData[key]);
+              }
+            }
+          }
+
+      //store new country object in country data
+      return outputCountryData;
+    })
 
   return gameData;
+
+
+  } else {
+    //map over inputCountryData and store as 'game data'
+    let gameData = gameDataInput.map((el, idx) => {
+
+      //declare new countryObject
+      let outputCapitalData = {
+        id: el.id,
+        polygonAnswered: false,
+        polygonUnanswered: true,
+        polygonSkipped: false,
+        acceptedAnswers: [el.properties.countryCapitalName],
+        polygonZoomLevel: el.properties.countryZoomLevel,
+        polygonCenterCoords: el.properties.countryCapitalCenter,
+        polygonCountryName: el.properties.primaryCountryName,
+      }
+
+        //store new country object in country data
+        return outputCapitalData;
+      })
+      console.log(gameData)
+    return gameData;
+  }
 }
 
 //INPUT

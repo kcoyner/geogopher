@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
     base_time: {
       type: Sequelize.INTEGER,
       allowNull: false
+    },
+    img_asset: {
+      type: Sequelize.STRING,
+      allowNull: false
     }
   });
 };
