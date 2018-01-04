@@ -113,6 +113,49 @@ img.ui.image.geogopher-navbar-logo{
     }
 }
 
+//game type and difficulty selection steps at top of Modal
+
+.ui.steps{
+
+  line-height: inherit;
+  border: none;
+
+  .step.active {
+
+    background-color: white;
+
+    .title{
+      color: black;
+    }
+
+  }
+
+  .active.step:after{
+
+    background-color: white;
+  }
+
+  .completed.step{
+    border: none;
+    line-height: none;
+  }
+
+  .completed.step:after{
+
+    background-color: white;
+  }
+
+}
+
+.ui.ordered.steps .step.active:before, .ui.steps .active.step .icon, .ui.ordered.steps .step.completed:before, .ui.steps .step.completed>.icon:before {
+  color: #EC0524;
+}
+
+.ui.attached.steps{
+  width: calc(100% - 2px)!important;
+  margin: 0;
+}
+
 // game type select Modal
 
 .ui.modal>.content>.description.game-type-select{
@@ -136,11 +179,18 @@ button.ui.animated.button.go-back-gt-btn{
   background-color: white;
   font-size: 1.25em;
   justify-self: left;
-  border: 6px solid #EC0524;
   color: black;
+  border-radius: 0;
+  font-family: "Ubuntu Mono";
+  transition: background-color .5s ease-in-out;
 
   .visible.content{
     margin-top: -0.5em;
+  }
+
+  &:hover{
+    background-color: whitesmoke;
+    border-radius: 20px;
   }
 
 }
@@ -179,76 +229,114 @@ button.ui.animated.button.go-back-gt-btn{
 
 .ui.modal>.content>.description.game-difficulty-select{
   display: grid;
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   grid-template-columns:  1fr 10fr 1fr 2fr 2fr 2fr 2fr 2fr 1fr;
-  grid-gap: 0;
-  height: 600px;
+  grid-gap: 20px;
+  max-height: 500px;
+
 }
 
 .game-difficulty-title{
-  grid-area: 1/1/1/10;
+  grid-area: 2/1/2/10;
   text-align: center;
+  font-size: 4em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
 }
 
 button.ui.animated.button.go-back-gd-btn{
-  grid-area: 6/7/6/7;
+  grid-area: 10/1/10/3;
   background-color: white;
   font-size: 1.25em;
   justify-self: left;
-  border: 6px solid #EC0524;
   color: black;
+  border-radius: 0;
+  font-family: "Ubuntu Mono";
+  transition: background-color .5s ease-in-out;
 
   .visible.content{
     margin-top: -0.5em;
   }
-}
 
-
-
-
-button.ui.button.next-gd-btn{
-  grid-area: 6/9/6/9;
-  background-color: white;
-  font-size: 1.25em;
   &:hover{
-    color: black;
+    background-color: whitesmoke;
+    border-radius: 20px;
   }
-}
 
-.ui.buttons.fixed-time-select{
-  // grid-area: fts;
-  grid-area: 5/4/6/9;
-  margin: 5%;
-}
-
-.ui.grey.basic.button{
-  margin: 5%;
 }
 
 .ui.button.qwk-select{
   // grid-area: qwk;
-  grid-area: 2/2/2/3;
-  margin:5%;
+  grid-area: 4/2/4/3;
+  background-color: white;
+  color: #6699cc;
+  border: 1px solid #6699cc;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: padding .2s;
+  &:hover{
+    background-color: #6699cc;
+    color: white;
+    border: 4px solid #6699cc;
+    padding-bottom: 7%;
+  }
+  // margin:1%;
 }
 
 .ui.button.easy-select{
-  grid-area: 3/2/3/3;
-  margin:5%;
+  grid-area: 5/2/5/3;
+  background-color: white;
+  color: #008000;
+  border: 1px solid #008000;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: padding .2s;
+  &:hover{
+    background-color: #008000;
+    color: white;
+    border: 4px solid #008000;
+    padding-bottom: 7%;
+  }
+  // margin:1%;
 }
 
 .ui.button.med-select{
-  grid-area: 4/2/4/3;
-  margin:5%;
+  grid-area: 6/2/6/3;
+  background-color: white;
+  color: #c57b26;
+  border: 1px solid #c57b26;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: padding .2s;
+  &:hover{
+    background-color: #c57b26;
+    color: white;
+    border: 4px solid #c57b26;
+    padding-bottom: 7%;
+  }
+  // margin:1%;
 }
 
 .ui.button.hard-select{
-  grid-area: 5/2/5/3;
-  margin:5%;
+  grid-area: 7/2/7/3;
+  background-color: white;
+  color: #EC0524;
+  border: 1px solid #EC0524;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: padding .2s;
+  &:hover{
+    background-color: #EC0524;
+    color: white;
+    border: 4px solid #EC0524;
+    padding-bottom: 7%;
+  }
+  // margin:1%;
 }
 
 .time-display{
 
-  grid-area: 2/4/5/9;
+  grid-area: 3/4/7/9;
   margin: 5%;
   font-size: 8em;
   padding-top: 15%;
@@ -259,29 +347,58 @@ button.ui.button.next-gd-btn{
 
 .ui.modal>.content>.description.start-game-modal{
   display: grid;
-  grid-template-rows: 10fr 2fr 2fr 2fr 2fr 2fr;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: " startitle     startitle     startitle"
-                       " ..            ..            .. "
-                       " ..            ..            .. "
-                       " ..            startbtn     .. "
-                       " back          startbtn     .. ";
+  grid-template-rows: 2fr 2fr 2fr 10fr 2fr 2fr 2fr;
+  grid-template-columns: 1fr 4fr 4fr 4fr 1fr;
+  max-height: 500px;
 }
 
 .get-ready{
-  grid-area: startitle;
+  grid-area: 1/1/1/6;
   text-align: center;
-  font-size: 2.5em;
+  font-size: 4em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
 }
 
 .ui.button.dont-play{
-  grid-area: back;
-  justify-self: center;
+  grid-area: 6/1/6/2;
+  background-color: white;
+  font-size: 1.25em;
+  justify-self: left;
+  color: black;
+  border-radius: 0;
+  font-family: "Ubuntu Mono";
+  transition: background-color .5s ease-in-out;
+
+  .visible.content{
+    margin-top: -0.5em;
+  }
+
+  &:hover{
+    background-color: whitesmoke;
+    border-radius: 20px;
+  }
+
 }
 
-.ui.button.play-now{
-  grid-area: 2/2/3/2;
+div.play-now{
+  grid-area: 4/2/4/5;
+  text-align: center;
+  height: 100%;
+  z-index: 10;
+  img:hover{
+    cursor: pointer;
+  }
+}
 
+div.play-now-bg{
+  grid-area: 4/2/4/5;
+  text-align: center;
+  height: 100%;
+  z-index: 5;
+  img:hover{
+    cursor: pointer;
+  }
 }
 
 .ui.move.reveal.select-geoclick{

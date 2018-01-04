@@ -21,10 +21,10 @@ import { setGameType, setGameDifficulty } from '../actions/Game.actions'
 import { manipulateTimer } from '../utils/manipulateTimer'
 
 const countdownGif = require('-!file-loader?name=countdown!../assets/countdown.gif');
-const randomSelectGif = require('-!file-loader?name=random-select!../assets/random-select.gif');
+const randomselectGif = require('-!file-loader?name=random-select!../assets/random-select.gif');
 const geoclickGif = require('-!file-loader?name=geoclick!../assets/geoclick.gif');
 const countdownThumb = require('-!file-loader?name=countdown-thumb!../assets/countdown-thumb.png');
-const randomSelectThumb = require('-!file-loader?name=random-select-thumb!../assets/random-select-thumb.png');
+const randomselectThumb = require('-!file-loader?name=random-select-thumb!../assets/random-select-thumb.png');
 const geoclickThumb = require('-!file-loader?name=geoclick-thumb!../assets/geoclick-thumb.png');
 
 @connect((state) => {
@@ -60,8 +60,8 @@ class GameTypeSelection extends React.Component {
     this.setState({gameTypeChoices: gameTypeChoices});
   }
 
-  setGameType(value) {
-    this.props.gameTypes.forEach((el) => {
+  async setGameType(value) {
+    await this.props.gameTypes.forEach((el) => {
       if (el.game_type_id === value) {
         this.setState({gameTypeDescription: el.game_type_description});
         //dispatch gameTypeID to scores
@@ -124,6 +124,8 @@ class GameTypeSelection extends React.Component {
                           header={this.props.gameTypes[0].game_type_name}
                           content={this.props.gameTypes[0].game_type_description}
                           position="bottom center"
+                          size="huge"
+                          wide="very"
                           basic
                         />
 
@@ -131,16 +133,18 @@ class GameTypeSelection extends React.Component {
                         trigger={
                         <Reveal className="select-random-select" animated='small fade' onClick={() => this.setGameType(2)}>
                           <Reveal.Content visible>
-                            <Image src={randomSelectThumb} size='large' />
+                            <Image src={randomselectThumb} size='large' />
                           </Reveal.Content>
                           <Reveal.Content hidden>
-                            <Image src={randomSelectGif} size='large' />
+                            <Image src={randomselectGif} size='large' />
                           </Reveal.Content>
                         </Reveal>
                       }
                         header={this.props.gameTypes[1].game_type_name}
                         content={this.props.gameTypes[1].game_type_description}
                         position="bottom center"
+                        size="huge"
+                        wide="very"
                         basic
                       />
 
@@ -158,6 +162,8 @@ class GameTypeSelection extends React.Component {
                       header={this.props.gameTypes[2].game_type_name}
                       content={this.props.gameTypes[2].game_type_description}
                       position="bottom center"
+                      size="huge"
+                      wide="very"
                       basic
                     />
 
