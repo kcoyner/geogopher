@@ -1,8 +1,8 @@
 
 # geogopher
 
-Production:  geogopherProdLB-1581956911.us-east-1.elb.amazonaws.com
+Production:  https://prod.geogopher.org
 
-Testing:  geogopherTestingLB-1492383864.us-east-1.elb.amazonaws.com 
+Testing:  https://testing.geogopher.org
 
 
