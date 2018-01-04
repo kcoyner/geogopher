@@ -47,7 +47,20 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
 
     getRandomUnansweredPolygon(gameValues.gameData,  (highlightedCountry) => {
 
-      //add hover listener here
+      //add hover listeners to help user know they are hoving over a polygon selection
+      gameValues.map.data.addListener('mouseover', (event) => {
+          gameValues.map.data.overrideStyle(event.feature,
+            {
+              strokeWeight: '4'
+            })
+      })
+
+      gameValues.map.data.addListener('mouseout', (event) => {
+          gameValues.map.data.overrideStyle(event.feature,
+            {
+              strokeWeight: '2'
+            })
+      })
 
       //set polygon name to render
       gameValues.reactThis.setState({geoClickPolygonDisplay: highlightedCountry.acceptedAnswers[0]})
@@ -81,6 +94,7 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
               )
             )
 
+            //remove all listeners on correct entry. new listeners will be created for the next polygon
             google.maps.event.clearInstanceListeners(gameValues.map.data);
 
         }

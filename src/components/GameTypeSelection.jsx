@@ -7,6 +7,7 @@ import {
   Image,
   Checkbox,
   Modal,
+  Icon,
   Dropdown,
   Step,
   Reveal,
@@ -19,8 +20,12 @@ import {
 import { setGameType, setGameDifficulty } from '../actions/Game.actions'
 import { manipulateTimer } from '../utils/manipulateTimer'
 
-const thmb9 = require('-!file-loader?name=chris!../assets/chris.jpg');
-const thmb8 = require('-!file-loader?name=square-image!../assets/square-image.png');
+const countdownGif = require('-!file-loader?name=countdown!../assets/countdown.gif');
+const randomSelectGif = require('-!file-loader?name=random-select!../assets/random-select.gif');
+const geoclickGif = require('-!file-loader?name=geoclick!../assets/geoclick.gif');
+const countdownThumb = require('-!file-loader?name=countdown-thumb!../assets/countdown-thumb.png');
+const randomSelectThumb = require('-!file-loader?name=random-select-thumb!../assets/random-select-thumb.png');
+const geoclickThumb = require('-!file-loader?name=geoclick-thumb!../assets/geoclick-thumb.png');
 
 @connect((state) => {
   return {
@@ -64,6 +69,7 @@ class GameTypeSelection extends React.Component {
         this.props.dispatch(setGameType(el.game_type_name))
       }
     });
+    this.props.onContinue();
   }
 
 
@@ -101,17 +107,17 @@ class GameTypeSelection extends React.Component {
                 <Modal.Content>
                 <Modal.Description className="game-type-select">
                     <div className="game-type-title">
-                      Choose a Game Type
+                      CHOOSE A GAME TYPE
                     </div>
 
                       <Popup
                         trigger={
-                          <Reveal className="select-countdown" animated='move' onClick={() => this.setGameType(1)}>
+                          <Reveal className="select-countdown" animated='small fade' onClick={() => this.setGameType(1)}>
                             <Reveal.Content visible>
-                              <Image src={thmb8} size='small' />
+                              <Image src={countdownThumb} size='large' />
                             </Reveal.Content>
                             <Reveal.Content hidden>
-                              <Image src={thmb9} size='small' />
+                              <Image src={countdownGif} size='large' />
                             </Reveal.Content>
                           </Reveal>
                         }
@@ -123,12 +129,12 @@ class GameTypeSelection extends React.Component {
 
                       <Popup
                         trigger={
-                        <Reveal className="select-random-select" animated='move' onClick={() => this.setGameType(2)}>
+                        <Reveal className="select-random-select" animated='small fade' onClick={() => this.setGameType(2)}>
                           <Reveal.Content visible>
-                            <Image src={thmb8} size='small' />
+                            <Image src={randomSelectThumb} size='large' />
                           </Reveal.Content>
                           <Reveal.Content hidden>
-                            <Image src={thmb9} size='small' />
+                            <Image src={randomSelectGif} size='large' />
                           </Reveal.Content>
                         </Reveal>
                       }
@@ -140,12 +146,12 @@ class GameTypeSelection extends React.Component {
 
                     <Popup
                       trigger={
-                      <Reveal className="select-geoclick" animated='move' onClick={() => this.setGameType(3)}>
+                      <Reveal className="select-geoclick" animated='small fade' onClick={() => this.setGameType(3)}>
                         <Reveal.Content visible>
-                          <Image src={thmb8} size='small' />
+                          <Image src={geoclickThumb} size='large' />
                         </Reveal.Content>
                         <Reveal.Content hidden>
-                          <Image src={thmb9} size='small' />
+                          <Image src={geoclickGif} size='large' />
                         </Reveal.Content>
                       </Reveal>
                     }
@@ -156,9 +162,19 @@ class GameTypeSelection extends React.Component {
                     />
 
 
-                    <Button  className="go-back-gt-btn" onClick={this.props.onClose} icon='left chevron'/>
+                    <Button
+                      animated
+                      className="go-back-gt-btn"
+                      onClick={this.props.onClose}>
+                        <Button.Content hidden>
+                          BACK
+                        </Button.Content>
+                        <Button.Content visible>
+                          <Icon name="arrow left" color="red"/>
+                        </Button.Content>
+                    </Button>
 
-                    <Button  className="next-gt-btn" onClick={this.props.onContinue} icon='right chevron'/>
+
 
 
                 </Modal.Description>
