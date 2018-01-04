@@ -19,6 +19,7 @@ import {
   buildPolygonResults,
   formatSecondsToMMSS,
   geoClickGameLogic,
+  capitalizeWords,
 } from '../utils/index';
 
 import * as actions from '../actions/index.js'
@@ -602,7 +603,7 @@ export default class Map extends React.Component {
             :
             <div
               className="geoClick-display">
-              {this.state.geoClickPolygonDisplay}
+              {capitalizeWords(this.state.geoClickPolygonDisplay)}
             </div>
           }
 
