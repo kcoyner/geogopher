@@ -6,36 +6,33 @@
  * @returns { string } first letter is capitalized
  */
 
-const EXCLUDED_WORDS = ['a', 'the', 'of', 'the'];
+export const capitalizeWords = (words) => {
 
-const capFirstLetter = (word) => {
+  const EXCLUDED_WORDS = ['a', 'the', 'of', 'the'];
+
+  const capFirstLetter = (word) => {
     let capitalizedWord = '';
     if (!EXCLUDED_WORDS.includes(word)) {
-        for(idx in word) {
-            if (parseInt(idx) === 0) {
-                capitalizedWord = word[idx].toUpperCase();
-            } else {
-                capitalizedWord += word[idx];
-            }
+      for (let idx in word) {
+        if (parseInt(idx) === 0) {
+          capitalizedWord = word[idx].toUpperCase();
+        } else {
+          capitalizedWord += word[idx];
         }
+      }
       return capitalizedWord;
     } else {
       return word;
     }
+  };
+
+  let result = words;
+  let wordsArr = words.split(' ');
+  try {
+    result = wordsArr.map(word => capFirstLetter(word)).join(' ');
+  } catch (err) {
+    console.error('ERROR in utils/capitalizeFirst: ', err);
+  }
+  return result;
 };
-
-export const capitalizeWords = (words) => {
-    let result = words;
-    let wordsArr = words.split(' ');
-    try {
-      result = wordsArr.map(word => capFirstLetter(word) ).join(' ');
-    }
-    catch(err) {
-      console.error('ERROR in utils/capitalizeFirst: ', err)
-    }
-    finally {
-      return result;
-    }
-}
-
 
