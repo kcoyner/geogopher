@@ -79,7 +79,6 @@ export default class Map extends React.Component {
       renderMissingCountriesButton: false,
       renderSkipCountryButton: false,
       renderInputField: true,
-      gameSettings: true,
       gameType: true,
       gameDifficulty: false,
       gameStart: false,
@@ -87,6 +86,11 @@ export default class Map extends React.Component {
       highlightedPolygon: null,
       currentHint: null,
       geoClickPolygonDisplay: '',
+      previousState: {
+        gameType: true,
+        gameDifficulty: false,
+        gameStart: false,
+      }
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -101,6 +105,7 @@ export default class Map extends React.Component {
     this.skipCountry = this.skipCountry.bind(this);
     this.showHint = this.showHint.bind(this);
     this.handleGeoClick = this.handleGeoClick.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   componentDidUpdate() {
@@ -158,7 +163,41 @@ export default class Map extends React.Component {
 
   }
 
+  handleGoBack() {
+
+    if (
+      this.state.gameType &&
+      !this.state.gameDifficulty &&
+      !this.state.gameStart &&
+      this.state.previousState.gameType &&
+      !this.state.previousState.gameDifficulty &&
+      !this.state.previousState.gameStart
+    ) {
+      this.props.history.push('/');
+    } else {
+      this.setState(
+        {
+          gameType: this.state.previousState.gameType,
+          gameDifficulty: this.state.previousState.gameDifficulty,
+          gameStart: this.state.previousState.gameStart,
+        }
+      )
+    }
+
+  }
+
+
   handleGameTypeSelection() {
+    this.setState(
+      {
+        previousState:
+          {
+            gameType: this.state.gameType,
+            gameDifficulty: this.state.gameDifficulty,
+            gameStart: this.state.gameStart,
+          }
+      })
+
     this.setState({gameType: false, gameDifficulty: true})
 
     this.props.gameTypeSelected === 'Countdown' ?
@@ -175,6 +214,15 @@ export default class Map extends React.Component {
   }
 
   handleGameDifficultySelection() {
+    this.setState(
+      {
+        previousState:
+          {
+            gameType: this.state.gameType,
+            gameDifficulty: this.state.gameDifficulty,
+            gameStart: this.state.gameStart,
+          }
+      })
 
     this.setState({gameDifficulty: false})
   }
@@ -540,19 +588,19 @@ export default class Map extends React.Component {
         <div className="game-controls">
 
           <GameTypeSelection
-            onClose={ this.handleClose }
+            onGoBack={ this.handleGoBack }
             onContinue={this.handleGameTypeSelection}
             open={this.state.gameType}
           />
 
           <GameDifficultySelection
-            onClose={ this.handleClose }
+            onGoBack={ this.handleGoBack }
             onContinue={this.handleGameDifficultySelection}
             open={this.state.gameDifficulty}
           />
 
           <GameStart
-            onClose={ this.handleClose }
+            onGoBack={ this.handleGoBack }
             onStart={this.handleStart}
             open={!this.state.gameType && !this.state.gameDifficulty && !this.state.gameStart}
           />

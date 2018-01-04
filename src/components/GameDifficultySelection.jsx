@@ -7,6 +7,7 @@ import {
   Image,
   Checkbox,
   Modal,
+  Icon,
   Dropdown,
   Step,
   Segment,
@@ -172,8 +173,20 @@ class GameDifficultySelection extends React.Component {
 
                       </Button.Group>
 
-                      <Button  className="go-back-gd-btn" onClick={this.props.onClose} icon='left chevron'/>
+
                       <Button  className="next-gd-btn" onClick={this.props.onContinue} icon='right chevron'/>
+
+                      <Button
+                        animated
+                        className="go-back-gd-btn"
+                        onClick={this.props.onGoBack}>
+                          <Button.Content hidden>
+                            <Icon name="arrow left"/>
+                          </Button.Content>
+                          <Button.Content visible>
+                            BACK
+                          </Button.Content>
+                      </Button>
 
                 </Modal.Description>
                 </Modal.Content>

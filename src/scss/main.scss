@@ -136,7 +136,8 @@ button.ui.animated.button.go-back-gt-btn{
   background-color: white;
   font-size: 1.25em;
   justify-self: left;
-  color: #EC0524;
+  border: 6px solid #EC0524;
+  color: black;
 
   .visible.content{
     margin-top: -0.5em;
@@ -189,14 +190,21 @@ button.ui.animated.button.go-back-gt-btn{
   text-align: center;
 }
 
-button.ui.button.go-back-gd-btn{
+button.ui.animated.button.go-back-gd-btn{
   grid-area: 6/7/6/7;
   background-color: white;
   font-size: 1.25em;
-  &:hover{
-    color: black;
+  justify-self: left;
+  border: 6px solid #EC0524;
+  color: black;
+
+  .visible.content{
+    margin-top: -0.5em;
   }
 }
+
+
+
 
 button.ui.button.next-gd-btn{
   grid-area: 6/9/6/9;

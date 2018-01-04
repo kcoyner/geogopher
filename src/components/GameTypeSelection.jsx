@@ -165,12 +165,12 @@ class GameTypeSelection extends React.Component {
                     <Button
                       animated
                       className="go-back-gt-btn"
-                      onClick={this.props.onClose}>
+                      onClick={this.props.onGoBack}>
                         <Button.Content hidden>
-                          BACK
+                          <Icon name="arrow left"/>
                         </Button.Content>
                         <Button.Content visible>
-                          <Icon name="arrow left" color="red"/>
+                          BACK
                         </Button.Content>
                     </Button>
 
