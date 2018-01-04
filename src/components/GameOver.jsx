@@ -3,7 +3,7 @@ import { Button, Header, Image, Modal } from 'semantic-ui-react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import  * as actions from '../actions/index.js';
-import { formatSecondsToMMSS } from '../utils/index';
+import { formatSecondsToMMSS, capitalizeWords } from '../utils/index';
 
 @connect((state) => {
   return {
@@ -61,7 +61,7 @@ class GameOver extends React.Component {
                       <h1>Countries Answered</h1>
                       <ul> {
                         this.props.polygonsAnswered.map((polygon) => (
-                          <li key={polygon.id}>{polygon.name}</li>
+                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
                         )
                       )} </ul>
                     </div>
@@ -69,7 +69,7 @@ class GameOver extends React.Component {
                       <h1>Countries Unanswered</h1>
                       <ul> {
                         this.props.polygonsUnanswered.map((polygon) => (
-                          <li key={polygon.id}>{polygon.name}</li>
+                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
                         )
                       )} </ul>
                     </div>
@@ -80,7 +80,7 @@ class GameOver extends React.Component {
                       <h1>Countries Skipped</h1>
                       <ul> {
                         this.props.polygonsSkipped.map((polygon) => (
-                          <li key={polygon.id}>{polygon.name}</li>
+                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
                         )
                       )} </ul>
                     </div>
