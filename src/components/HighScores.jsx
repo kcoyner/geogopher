@@ -38,6 +38,7 @@ class HighScores extends React.Component {
   getGameAttributes() {
       axios.get('/api/gameslist')
       .then(response => {
+          console.log(response.data);
           let games = [];
           response.data.forEach(element => {
               let game = Object.assign({}, { value: element.game_id, text: element.game_name });
@@ -49,7 +50,6 @@ class HighScores extends React.Component {
       .then(response => {
           let difficulties = [];
           let types = [];
-          console.log(response.data);
           response.data.game_difficulties.forEach(element => {
                 let difficulty = Object.assign({}, { value: element.game_difficulty_id, text: element.game_difficulty_name });
                 difficulties.push(difficulty);
@@ -66,14 +66,14 @@ class HighScores extends React.Component {
   }
 
   getScores() {
-      console.log(this.state.selectedDifficulty);
     axios.get('/api/scores', { params: {
         game_type_id: this.state.selectedGameType,
         game_id: this.state.selectedGame,
         game_difficulty_id: this.state.selectedDifficulty
     }})
     .then(response => {
-        const arr = response.data;
+        // const arr = response.data;
+        const arr = response.data.filter(score => score.count_polygons_entered > 0);
         const firstScore = arr.shift();
         this.setState({
             scores: arr,
@@ -118,7 +118,6 @@ class HighScores extends React.Component {
         </Table>) :
         (<div>no scores yet</div>)
           }
-          {/* <ScoresTable firstScore={this.state.first} scores={this.state.scores}></ScoresTable> */}
       </div>
     );
   }
