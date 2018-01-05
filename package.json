@@ -37,6 +37,7 @@
     "history": "^4.7.2",
     "ipware": "1.0.0",
     "moment": "^2.19.3",
+    "moment-duration-format": "^2.1.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",

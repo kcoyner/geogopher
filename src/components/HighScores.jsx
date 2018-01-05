@@ -10,12 +10,14 @@ import { Icon, Label, Menu, Table, Dropdown } from 'semantic-ui-react';
 class HighScores extends React.Component {
   constructor(props) {
     super(props);
+    let query = new URLSearchParams(location.search)
+    console.log("++++",props.match.params);
     this.state = {
         scores: null,
         first: null,
-        selectedGameType: 1,
-        selectedGame: 1,
-        selectedDifficulty: 1,
+        selectedGameType: Number(props.match.params.gameTypeId) || 1,
+        selectedGame: Number(props.match.params.gameId) || 1,
+        selectedDifficulty: Number(props.match.params.gameDiffId) || 1,
         games: null,
         gameTypes: null,
         gameDifficulties: null
@@ -98,6 +100,7 @@ class HighScores extends React.Component {
                 <Table.HeaderCell>Username</Table.HeaderCell>
                 <Table.HeaderCell>Time</Table.HeaderCell>
                 <Table.HeaderCell>Score</Table.HeaderCell>
+                <Table.HeaderCell>Hints Used</Table.HeaderCell>
             </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -105,20 +108,23 @@ class HighScores extends React.Component {
                     <Table.Cell><Label ribbon>First</Label></Table.Cell>
                     <Table.Cell>{this.state.first.user.username }</Table.Cell>
                     <Table.Cell>{this.state.first.game_timer_start - this.state.first.game_timer_remaining }</Table.Cell>
-                    <Table.Cell>{this.state.first.count_polygons_entered + "/" }</Table.Cell>
+                    <Table.Cell>{this.state.first.count_polygons_entered + "/" + this.state.first.count_polygons_entered + JSON.parse(this.state.first.polygons_unanswered).length }</Table.Cell>
+                    <Table.Cell>{this.state.first.count_total_hints }</Table.Cell>
                 </Table.Row>
             {
                 this.state.scores.map((score, index) => (
+                    
                 <Table.Row key={index}>
                     <Table.Cell>{index + 2}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
                     <Table.Cell>{score.game_timer_start - score.game_timer_remaining }</Table.Cell>
                     <Table.Cell>{score.count_polygons_entered + "/"}</Table.Cell>
+                    <Table.Cell>{score.count_total_hints }</Table.Cell>
                 </Table.Row>
                 ))
             }
             </Table.Body>
-        </Table>) :
+        </Table> ) :
         (<div>no scores yet</div>)
           }
       </div>
