@@ -7,6 +7,7 @@ import {
   Image,
   Checkbox,
   Modal,
+  Icon,
   Dropdown,
   Step,
   Segment,
@@ -44,6 +45,7 @@ class GameDifficultySelection extends React.Component {
     };
     this.getDescription = this.getDescription.bind(this);
     this.handleDifficultySettings = this.handleDifficultySettings.bind(this);
+    this.showTimeResult = this.showTimeResult.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +69,23 @@ class GameDifficultySelection extends React.Component {
     });
   }
 
+  async showTimeResult(value){
+        //set gameTimerRemaining, gameTimerStart, gameDifficultyID
+        let timeManipulation;
+        let newTime;
+        let displayTime;
+
+        await this.props.gameDifficulties.forEach((el) => {
+          if(el.game_difficulty_name === value) {
+            timeManipulation = JSON.parse(el.game_time_manipulation)
+            newTime = manipulateTimer(timeManipulation, this.props.baseTime)
+          }
+        });
+        displayTime = await formatSecondsToMMSS(newTime)
+
+        await this.setState({calculatedTime: displayTime})
+  }
+
 
   async handleDifficultySettings(value) {
     //set gameTimerRemaining, gameTimerStart, gameDifficultyID
@@ -86,6 +105,9 @@ class GameDifficultySelection extends React.Component {
     displayTime = await formatSecondsToMMSS(this.props.gameTimerStart)
 
     await this.setState({calculatedTime: displayTime})
+
+    this.props.onContinue()
+
   }
 
     render() {
@@ -119,61 +141,44 @@ class GameDifficultySelection extends React.Component {
                 <Modal.Description className="game-difficulty-select">
 
                     <div className="game-difficulty-title">
-                      <h2>Select a difficulty or play on a fixed time limit</h2>
+                      SELECT A DIFFICULTY
                     </div>
 
                       <Button
                         className="qwk-select"
-                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[3].game_difficulty_name)}>
-                        quick game</Button>
+                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[3].game_difficulty_name)}
+                        onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[3].game_difficulty_name)}>
+                        QUICK</Button>
                       <Button
                         className="easy-select"
-                        color="green"
-                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[0].game_difficulty_name)}>
-                        easy game</Button>
+                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[0].game_difficulty_name)}
+                        onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[0].game_difficulty_name)}>
+                        EASY</Button>
                       <Button
                         className="med-select"
-                        color="green"
-                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[1].game_difficulty_name)}>
-                        medium game</Button>
+                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[1].game_difficulty_name)}
+                        onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[1].game_difficulty_name)}>
+                        MEDIUM</Button>
                       <Button
                         className="hard-select"
-                        color="green"
-                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[2].game_difficulty_name)}>
-                        hard game</Button>
+                        onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[2].game_difficulty_name)}
+                        onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[2].game_difficulty_name)}>
+                        HARD</Button>
 
                       <div className="time-display">{this.state.calculatedTime}</div>
 
-                      <Button.Group className="fixed-time-select">
-                        <Button
-                          basic
-                          color="blue"
-                          className="min-1"
-                          onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[3].game_difficulty_name)}>
-                          01</Button>
-                        <Button
-                          basic
-                          color="blue"
-                          className="min-3"
-                          onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[4].game_difficulty_name)}>
-                          03</Button>
-                        <Button
-                          basic
-                          color="blue"
-                          className="min-5"
-                          onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[5].game_difficulty_name)}>
-                          05</Button>
-                        <Button
-                          basic
-                          color="blue"
-                          className="min-10"
-                          onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[6].game_difficulty_name)}>
-                          10</Button>
 
-                      </Button.Group>
-
-                      <Button  className="go-back-gd-btn" onClick={this.props.onClose} icon='left chevron'/>
-                      <Button  className="next-gd-btn" onClick={this.props.onContinue} icon='right chevron'/>
+                      <Button
+                        animated
+                        className="go-back-gd-btn"
+                        onClick={this.props.onGoBack}>
+                          <Button.Content hidden>
+                            <Icon name="arrow left"/>
+                          </Button.Content>
+                          <Button.Content visible>
+                            BACK
+                          </Button.Content>
+                      </Button>
 
                 </Modal.Description>
                 </Modal.Content>

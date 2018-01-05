@@ -19,6 +19,7 @@ import {
   buildPolygonResults,
   formatSecondsToMMSS,
   geoClickGameLogic,
+  capitalizeWords,
 } from '../utils/index';
 
 import * as actions from '../actions/index.js'
@@ -78,7 +79,6 @@ export default class Map extends React.Component {
       renderMissingCountriesButton: false,
       renderSkipCountryButton: false,
       renderInputField: true,
-      gameSettings: true,
       gameType: true,
       gameDifficulty: false,
       gameStart: false,
@@ -86,6 +86,16 @@ export default class Map extends React.Component {
       highlightedPolygon: null,
       currentHint: null,
       geoClickPolygonDisplay: '',
+      oneStepBack: {
+        gameType: true,
+        gameDifficulty: false,
+        gameStart: false,
+      },
+      twoStepsBack: {
+        gameType: true,
+        gameDifficulty: false,
+        gameStart: false,
+      },
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
@@ -100,6 +110,7 @@ export default class Map extends React.Component {
     this.skipCountry = this.skipCountry.bind(this);
     this.showHint = this.showHint.bind(this);
     this.handleGeoClick = this.handleGeoClick.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   componentDidUpdate() {
@@ -114,7 +125,7 @@ export default class Map extends React.Component {
   }
 
   async componentDidMount() {
-    if (this.props.gameSelected === 'Countdown'){}
+
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
       zoom: this.props.gameZoom,
@@ -157,16 +168,67 @@ export default class Map extends React.Component {
 
   }
 
+  handleGoBack() {
+
+    if (
+      this.state.gameType &&
+      !this.state.gameDifficulty &&
+      !this.state.gameStart &&
+      this.state.oneStepBack.gameType &&
+      !this.state.oneStepBack.gameDifficulty &&
+      !this.state.oneStepBack.gameStart
+    ) {
+      this.props.history.push('/');
+    } else {
+      this.setState(
+        {
+          gameType: this.state.oneStepBack.gameType,
+          gameDifficulty: this.state.oneStepBack.gameDifficulty,
+          gameStart: this.state.oneStepBack.gameStart,
+        }
+      )
+
+      this.setState(
+        {
+          oneStepBack:
+            {
+              gameType: this.state.twoStepsBack.gameType,
+              gameDifficulty: this.state.twoStepsBack.gameDifficulty,
+              gameStart: this.state.twoStepsBack.gameStart,
+            }
+        }
+      )
+    }
+
+  }
+
+
   handleGameTypeSelection() {
+    this.setState(
+      {
+        oneStepBack:
+          {
+            gameType: this.state.gameType,
+            gameDifficulty: this.state.gameDifficulty,
+            gameStart: this.state.gameStart,
+          },
+        twoStepsBack:
+          {
+            gameType: this.state.oneStepBack.gameType,
+            gameDifficulty: this.state.oneStepBack.gameDifficulty,
+            gameStart: this.state.oneStepBack.gameStart,
+          },
+      })
+
     this.setState({gameType: false, gameDifficulty: true})
 
-    this.props.gameTypeSelected === 'Countdown' ?
+    this.props.gameTypeSelected === 'COUNTDOWN' ?
       this.setState({renderMissingCountriesButton: true}) : null
 
-    this.props.gameTypeSelected === 'Random Select' ?
+    this.props.gameTypeSelected === 'RANDOM SELECT' ?
       this.setState({renderSkipCountryButton: true}) : null
 
-    if (this.props.gameTypeSelected === 'GeoClick') {
+    if (this.props.gameTypeSelected === 'GEOCLICK') {
       this.setState({renderInputField: false})
       this.setState({renderSkipCountryButton: true})
     }
@@ -174,6 +236,22 @@ export default class Map extends React.Component {
   }
 
   handleGameDifficultySelection() {
+    this.setState(
+      {
+        oneStepBack:
+          {
+            gameType: this.state.gameType,
+            gameDifficulty: this.state.gameDifficulty,
+            gameStart: this.state.gameStart,
+          },
+        twoStepsBack:
+          {
+            gameType: this.state.oneStepBack.gameType,
+            gameDifficulty: this.state.oneStepBack.gameDifficulty,
+            gameStart: this.state.oneStepBack.gameStart,
+          },
+      })
+
 
     this.setState({gameDifficulty: false})
   }
@@ -195,7 +273,7 @@ export default class Map extends React.Component {
       gameSelected: this.props.gameSelected,
 
     }
-    if (this.props.gameTypeSelected !== 'GeoClick') {
+    if (this.props.gameTypeSelected !== 'GEOCLICK') {
       //focuses cursor in input-entry when user clicks 'start'
       this.nameInput.focus();
     }
@@ -213,9 +291,9 @@ export default class Map extends React.Component {
       actions.setGameStartTimestamp()
     )
     //initializes random country selector if game is not countdown
-    if (this.props.gameTypeSelected === 'Random Select') {
+    if (this.props.gameTypeSelected === 'RANDOM SELECT') {
       nameTheCountryGameLogic(gameValues);
-    } else if (this.props.gameTypeSelected === 'GeoClick') {
+    } else if (this.props.gameTypeSelected === 'GEOCLICK') {
       geoClickGameLogic(gameValues);
     }
   }
@@ -330,11 +408,11 @@ export default class Map extends React.Component {
       }
 
       //check answer for countdown game
-      if (gameTypeSelected === 'Countdown') {
+      if (gameTypeSelected === 'COUNTDOWN') {
 
         countdownGameLogic(gameValues);
 
-      } else if ( gameTypeSelected === 'Random Select') {
+      } else if ( gameTypeSelected === 'RANDOM SELECT') {
 
         nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
 
@@ -369,7 +447,7 @@ export default class Map extends React.Component {
     //declare base sentence
     let hintSentence = 'The answer starts with a';
 
-    if (gameTypeSelected === 'Random Select' ) {
+    if (gameTypeSelected === 'RANDOM SELECT' ) {
       //get first letter of country that was selected
       let hint = this.state.highlightedPolygon.acceptedAnswers[0][0];
       //if first letter of country is a vowel, change
@@ -384,7 +462,7 @@ export default class Map extends React.Component {
       //set state back to null
       setTimeout(()=>this.setState({currentHint: null}),2000)
 
-    } else if (gameTypeSelected === 'Countdown') {
+    } else if (gameTypeSelected === 'COUNTDOWN') {
 
       for (let i = 0; i < this.props.gameData.length; i++){
         let el = this.props.gameData[i]
@@ -483,11 +561,11 @@ export default class Map extends React.Component {
 
     }
 
-    if (this.props.gameTypeSelected === 'Random Select') {
+    if (this.props.gameTypeSelected === 'RANDOM SELECT') {
 
       nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon, true);
 
-    } else if (this.props.gameTypeSelected === 'GeoClick') {
+    } else if (this.props.gameTypeSelected === 'GEOCLICK') {
 
       geoClickGameLogic(gameValues, gameValues.highlightedPolygon, true);
 
@@ -515,7 +593,7 @@ export default class Map extends React.Component {
 
     }
 
-    if (this.props.gameTypeSelected === 'GeoClick') {
+    if (this.props.gameTypeSelected === 'GEOCLICK') {
 
       if (!google.maps.event.hasListeners(map.data, 'click')) {
         geoClickGameLogic(gameValues, this.state.highlightedPolygon)
@@ -539,19 +617,19 @@ export default class Map extends React.Component {
         <div className="game-controls">
 
           <GameTypeSelection
-            onClose={ this.handleClose }
+            onGoBack={ this.handleGoBack }
             onContinue={this.handleGameTypeSelection}
             open={this.state.gameType}
           />
 
           <GameDifficultySelection
-            onClose={ this.handleClose }
+            onGoBack={ this.handleGoBack }
             onContinue={this.handleGameDifficultySelection}
             open={this.state.gameDifficulty}
           />
 
           <GameStart
-            onClose={ this.handleClose }
+            onGoBack={ this.handleGoBack }
             onStart={this.handleStart}
             open={!this.state.gameType && !this.state.gameDifficulty && !this.state.gameStart}
           />
@@ -602,7 +680,7 @@ export default class Map extends React.Component {
             :
             <div
               className="geoClick-display">
-              {this.state.geoClickPolygonDisplay}
+              {capitalizeWords(this.state.geoClickPolygonDisplay)}
             </div>
           }
 

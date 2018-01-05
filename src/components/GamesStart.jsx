@@ -6,7 +6,14 @@ import {
   Header,
   Image,
   Step,
+  Icon,
   Modal } from 'semantic-ui-react';
+
+const countdownGif = require('-!file-loader?name=countdown!../assets/countdown.gif');
+const randomselectGif = require('-!file-loader?name=random-select!../assets/random-select.gif');
+const geoclickGif = require('-!file-loader?name=geoclick!../assets/geoclick.gif');
+const playImgIdle = require('-!file-loader?name=start-thumb-1!../assets/start-thumb-1.png');
+const playImgHover = require('-!file-loader?name=start-thumb-2!../assets/start-thumb-2.png');
 
   @connect((state) => {
     return {
@@ -19,8 +26,46 @@ import {
   })
 
 class GameStart extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        hoverPlay: false,
+        backgroundGif: null,
+      }
+
+
+      this.changePlayImg = this.changePlayImg.bind(this);
+    }
+
+    componentWillReceiveProps(){
+      if (!this.props.gameTypeSelected) {
+        console.log('trying to run but gameTypeSelectedAINT DEFINED')
+      } else {
+
+        if (this.props.gameTypeSelected.toLowerCase() === 'countdown') {
+          console.log('ran inside countdown')
+          this.setState({backgroundGif: countdownGif})
+        } else if (this.props.gameTypeSelected.toLowerCase() === 'random select') {
+          console.log('ran inside random select')
+          this.setState({backgroundGif: randomselectGif})
+        } else {
+          console.log('ran inside geoclick')
+          this.setState({backgroundGif: geoclickGif})
+        }
+
+      }
+    }
+
+
+    changePlayImg(bool) {
+      this.setState({hoverPlay: bool})
+    }
+
 
     render() {
+
+        
+
         return(
             <Modal
             open={this.props.open}
@@ -50,9 +95,34 @@ class GameStart extends React.Component {
 
                 <Modal.Content>
                 <Modal.Description className="start-game-modal">
-                    <div className="get-ready">Are you Ready?</div>
-                    <Button circular className="dont-play" onClick={this.props.onClose} negative>Go Back</Button>
-                    <Button circular className="play-now" onClick={this.props.onStart} positive>Let's Go!</Button>
+                    <div className="get-ready">ARE YOU READY?</div>
+
+                    <div className="play-now"
+                         onMouseOver={()=>this.changePlayImg(true)}
+                         onMouseOut={()=>this.changePlayImg(false)}
+                         onClick={this.props.onStart}>
+                          <img src={
+                            this.state.hoverPlay ? playImgHover : playImgIdle
+                          }/>
+                    </div>
+
+                    <div className="play-now-bg">
+                        <img src={
+                            this.state.backgroundGif
+                        }/>
+                    </div>
+
+                    <Button
+                      animated
+                      className="dont-play"
+                      onClick={this.props.onGoBack}>
+                        <Button.Content hidden>
+                          <Icon name="arrow left"/>
+                        </Button.Content>
+                        <Button.Content visible>
+                          BACK
+                        </Button.Content>
+                    </Button>
                 </Modal.Description>
                 </Modal.Content>
             </Modal>

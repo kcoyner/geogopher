@@ -1,5 +1,6 @@
 
-import { getRandomUnansweredPolygon } from './getRandomUnansweredPolygon'
+import { getRandomUnansweredPolygon } from './getRandomUnansweredPolygon';
+import { capitalizeWords } from './capitalizeFirst';
 import { submitCorrectEntry, submitIncorrectEntry, incrementTotalSubmissions, submitSkippedEntry } from '../actions/Score.actions';
 
 const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-marker.png');
@@ -30,7 +31,7 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
           // instantiate an info window to contain the name of the country being skipped
          let infoWindow = new google.maps.InfoWindow();
             //build content inside the info window and open
-            infoWindow.setContent("<div class='polygon-info-window'>" + highlightedCountry.acceptedAnswers[0] + "</div>");
+            infoWindow.setContent(`<div class='polygon-info-window'> ${capitalizeWords(highlightedCountry.acceptedAnswers[0])} </div>`);
             infoWindow.open(gameValues.map, marker);
           // close the marker after it displays in setInterval for like 2 seconds
           await closeMarker(infoWindow, marker)
@@ -45,6 +46,22 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
         } else {
 
     getRandomUnansweredPolygon(gameValues.gameData,  (highlightedCountry) => {
+
+      //add hover listeners to help user know they are hoving over a polygon selection
+      gameValues.map.data.addListener('mouseover', (event) => {
+          gameValues.map.data.overrideStyle(event.feature,
+            {
+              strokeWeight: '4'
+            })
+      })
+
+      gameValues.map.data.addListener('mouseout', (event) => {
+          gameValues.map.data.overrideStyle(event.feature,
+            {
+              strokeWeight: '2'
+            })
+      })
+
       //set polygon name to render
       gameValues.reactThis.setState({geoClickPolygonDisplay: highlightedCountry.acceptedAnswers[0]})
       gameValues.reactThis.setState({highlightedPolygon: highlightedCountry})
@@ -77,6 +94,7 @@ export const geoClickGameLogic = async (gameValues, highlightedCountry, skipCoun
               )
             )
 
+            //remove all listeners on correct entry. new listeners will be created for the next polygon
             google.maps.event.clearInstanceListeners(gameValues.map.data);
 
         }
