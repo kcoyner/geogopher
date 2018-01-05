@@ -189,14 +189,21 @@ apiRouter.route('/user')
 
 apiRouter.route('/anonymous')
   .post((req, res) => {
-    let date = moment();
+    const date = moment();
+    const randomName = generateName();
     let user = {
       'count_games_played': 0,
       'last_login': date,
-      'username': generateName()
+      'username': randomName,
+      'anonymous_user': true
     };
-    const anonymousUser = db.users.build(user);
-    res.send(anonymousUser);
+    db.users.create(user)
+    .then(user => {
+      res.send(user);
+    })
+    .catch(error => {
+      console.log(error);
+    })
   })
 
 apiRouter.route('/scores')

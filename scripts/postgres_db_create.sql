@@ -126,6 +126,7 @@ CREATE TABLE "users" (
 	"email" varchar,
 	"user_ip" varchar,
 	"token" varchar,
+	"anonymous_user" varchar,
 	CONSTRAINT users_pk PRIMARY KEY ("user_id")
 ) WITH (
   OIDS=FALSE
