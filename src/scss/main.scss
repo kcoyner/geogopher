@@ -706,44 +706,103 @@ button.ui.button.quit-game-btn{
 
 .game-over-score{
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-temmplate-rows: 1fr 3fr;
+  grid-template-columns: 1fr 4fr 4fr 4fr 1fr;
   grid-gap: 20px;
   grid-template-areas:
-    '.. score     ..         time    ..'
-    '.. answered  unanswered skipped ..';
+    '.. ..             ..              ..           ..'
+    '.. gotitle        gotitle         gotitle      ..'
+    '.. ..             ..              ..           ..'
+    '.. pa             smc             hs           ..'
+    '.. ..             ..              ..           ..'
+    '.. score          hints           time         ..'
+    '.. ..             ..              ..           ..'
+    '.. utitle         utitle          utitle       ..'
+    '.. unanswered     unanswered      unanswered   ..'
+    '.. ..             ..              ..           ..'
+    '.. atitle         atitle          atitle       ..'
+    '.. answered       answered        answered     ..'
+    '.. ..             ..              ..           ..'
+    '.. stitle         stitle          stitle       ..'
+    '.. skipped        skipped         skipped      ..'
+    '.. ..             ..              ..           ..';
 }
 
-.game-over-polygons-score{
+.go-title{
+  grid-area: gotitle;
+}
+
+.play-again{
+  grid-area: pa;
+  background-color: tomato;
+  height: 20px;
+}
+
+.study-missed-countries{
+  grid-area: smc;
+  background-color: indianred;
+  height: 20px;
+}
+
+.see-high-scores{
+  grid-area: hs;
+  background-color: salmon;
+  height: 20px;
+}
+
+.go-polygons-score{
   grid-area: score;
 }
 
-.game-over-time-score{
+.go-hints-used{
+  grid-area: hints;
+}
+
+.go-time-score{
   grid-area: time;
 }
 
-.game-over-polygons-answered{
+.go-polygons-unanswered-title{
+  grid-area: utitle;
+}
+
+.go-polygons-unanswered{
+  grid-area: unanswered;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  li{
+    color: firebrick;
+    font-size: 1.5em;
+  }
+}
+
+.go-polygons-answered-title{
+  grid-area: atitle;
+}
+
+.go-polygons-answered{
   grid-area: answered;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   li{
     color: forestgreen;
     font-size: 1.5em;
   }
 }
 
-.game-over-polygons-unanswered{
-  grid-area: unanswered;
-    li{
-      color: firebrick;
-      font-size: 1.5em;
-    }
-}
 
-.game-over-polygons-skipped{
+.go-polygons-skipped{
   grid-area: skipped;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: ".. stitle stitle .."
     li{
       color: darkblue;
       font-size: 1.5em;
     }
+}
+
+.go-polygons-skipped-title{
+  grid-area: stitle;
 }
 
 .polygon-info-window {

@@ -28,6 +28,7 @@ import { formatSecondsToMMSS, capitalizeWords } from '../utils/index';
     //score data
     countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
     countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    countTotalHints: state.ScoreReducer.countTotalHints,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
     polygonsSkipped: state.ScoreReducer.polygonsSkipped,
@@ -47,46 +48,81 @@ class GameOver extends React.Component {
             <Modal
             open={this.props.open}
             closeOnRootNodeClick={false}>
-                <Modal.Header>Game Over</Modal.Header>
                 <Modal.Content>
                 <Modal.Description>
                   <div className="game-over-score">
-                    <div className="game-over-polygons-score">
-                      <h1>Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}</h1>
+
+                    <div className="go-title">GAME OVER</div>
+
+                    <div className="play-again"></div>
+                    <div className="study-missed-countries"></div>
+                    <div className="see-high-scores"></div>
+
+                    <div className="go-polygons-score">
+                      Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}
                     </div>
-                    <div className="game-over-time-score">
-                      <h1>Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}</h1>
+
+                    <div className="go-hints-used">
+                      Hints Used: {this.props.countTotalHints}
                     </div>
-                    <div className="game-over-polygons-answered">
-                      <h1>Countries Answered</h1>
-                      <ul> {
-                        this.props.polygonsAnswered.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
-                        )
-                      )} </ul>
+
+                    <div className="go-time-score">
+                      Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}
                     </div>
-                    <div className="game-over-polygons-unanswered">
-                      <h1>Countries Unanswered</h1>
+
+                    <div className="go-polygons-unanswered-title">
+                      Entries Unanswered
+                    </div>
+
+                    <div className="go-polygons-unanswered">
                       <ul> {
                         this.props.polygonsUnanswered.map((polygon) => (
                           <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
                         )
                       )} </ul>
                     </div>
+
+                    <div className="go-polygons-answered-title">
+                      Entries Answered
+                    </div>
+
+                    <div className="go-polygons-answered">
+
+                      <ul> {
+                        this.props.polygonsAnswered.map((polygon) => (
+                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
+                        )
+                      )} </ul>
+                    </div>
+
                     {
-                    this.props.gameTypeSelected !== 'Countdown'
+                      this.props.gameTypeSelected !== 'COUNTDOWN'
+                      ?
+                      <div className="go-polygons-skipped-title">
+                        Entries Skipped
+                      </div>
+                      :
+                      null
+                    }
+
+                    {
+                    this.props.gameTypeSelected !== 'COUNTDOWN'
                     ?
-                    <div className="game-over-polygons-skipped">
-                      <h1>Countries Skipped</h1>
+
+
+                    <div className="go-polygons-skipped">
+
                       <ul> {
                         this.props.polygonsSkipped.map((polygon) => (
                           <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
                         )
                       )} </ul>
                     </div>
+
                     :
                     null
                     }
+
                   </div>
                 </Modal.Description>
                 </Modal.Content>
