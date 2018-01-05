@@ -54,9 +54,30 @@ class GameOver extends React.Component {
 
                     <div className="go-title">GAME OVER</div>
 
-                    <div className="play-again"></div>
-                    <div className="study-missed-countries"></div>
-                    <div className="see-high-scores"></div>
+
+                    <div className="go-next-actions">
+
+                      <button
+                        className="play-again"
+                        onClick={this.props.onDifferentGame}>
+                        PLAY AGAIN</button>
+
+                      <button
+                        className="play-different-game"
+                        onClick={this.props.onDifferentGame}>
+                        PLAY DIFFERENT GAME</button>
+
+                      <button
+                        className="study-current-game"
+                        onClick={this.props.onDifferentGame}>
+                        STUDY CURRENT GAME</button>
+
+                      <button
+                        className="see-high-scores"
+                        onClick={this.props.onSeeHighScores}>
+                        SEE HIGH SCORES</button>
+
+                    </div>
 
                     <div className="go-polygons-score">
                       Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}
@@ -127,10 +148,7 @@ class GameOver extends React.Component {
                   </div>
                 </Modal.Description>
                 </Modal.Content>
-                <Modal.Actions>
-                    <Button onClick={this.props.onDifferentGame} positive>Play Different Game</Button>
-                    <Button onClick={this.props.onSeeHighScores}>See High Scores</Button>
-                </Modal.Actions>
+                
             </Modal>
         )
     }

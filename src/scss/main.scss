@@ -712,7 +712,7 @@ button.ui.button.quit-game-btn{
     '.. ..             ..              ..           ..'
     '.. gotitle        gotitle         gotitle      ..'
     '.. ..             ..              ..           ..'
-    '.. pa             smc             hs           ..'
+    '.. btns           btns            btns         ..'
     '.. ..             ..              ..           ..'
     '.. score          hints           time         ..'
     '.. ..             ..              ..           ..'
@@ -729,22 +729,35 @@ button.ui.button.quit-game-btn{
 
 .go-title{
   grid-area: gotitle;
+  text-align: center;
 }
 
-.play-again{
+.go-next-actions{
+  grid-area: btns;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "pa pdg scg shs";
+}
+
+.ui.button.play-different-game{
+  grid-area: pdg;
+}
+
+.ui.button.play-again{
   grid-area: pa;
   background-color: tomato;
   height: 20px;
 }
 
-.study-missed-countries{
-  grid-area: smc;
+.ui.button.study-current-game{
+  grid-area: scg;
   background-color: indianred;
   height: 20px;
 }
 
-.see-high-scores{
-  grid-area: hs;
+.ui.button.see-high-scores{
+  grid-area: shs;
   background-color: salmon;
   height: 20px;
 }
