@@ -67,6 +67,11 @@ module.exports = (sequelize, DataTypes) => {
       type: Sequelize.STRING,
       allowNull: true
     },
+    anonymous_user: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+      default: false
+    }
   } 
 )
 

@@ -13,8 +13,12 @@ function register(user) {
         return userService.register(user)
             .then(
                 user => {
-                    console.log('User created: ', user);
-                    dispatch(success(user));
+                    if(user){
+                        console.log('User created: ', user);
+                        dispatch(success(user));
+                    } else {
+                        console.log('User already exsists');
+                    }
                 },
                 error => {
                     console.log('Error registering user: ', error);

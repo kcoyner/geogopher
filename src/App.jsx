@@ -17,7 +17,7 @@ export default class App extends React.Component {
         <Route path="/map" component={ Map } />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ RegisterPage } />
-        <Route exact path="/high-scores" component={ HighScores } />
+        <Route exact path="/high-scores/:gameId?/:gameTypeId?/:gameDiffId?/" component={ HighScores } />
       </div>
     )
   }

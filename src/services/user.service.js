@@ -23,7 +23,7 @@ function register(user) {
             return response.data;
         })
         .catch(function (error) {
-         return error;
+         return;
         });
     }
 }

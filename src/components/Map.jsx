@@ -338,9 +338,11 @@ export default class Map extends React.Component {
     }
     //need to confirm whether all state must be returned back to init
     this.setState({ open: false });
-    this.props.history.push('/');
+    
     //clear game and score reducers
     this.props.dispatch(await actions.postScore(currentScore))
+
+    this.props.history.push('/');
 
     this.props.dispatch(actions.resetGame())
 
@@ -367,8 +369,14 @@ export default class Map extends React.Component {
       userID: this.props.userID
     }
     this.setState({ open: false });
-    this.props.history.push('/high-scores');
+    
     this.props.dispatch(await actions.postScore(currentScore))
+
+  
+    let path = "/high-scores/" + this.props.gameID + "/" + this.props.gameTypeID + "/" + this.props.gameDifficultyID;
+    this.props.history.push({
+      pathname: path,
+    })
 
     this.props.dispatch(actions.resetGame())
 

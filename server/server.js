@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 const generateName = require('sillyname');
 const getIP = require('ipware')().get_ip;
@@ -171,6 +173,32 @@ apiRouter.route('/user')
       'password_hash': req.body.password,
       'username': req.body.username
     };
+    db.users.findOne({where: { email: req.body.email }})
+    .then(data => {
+      if(data !== null) {
+        res.status(409).send({ error: 'User already exists'})
+      } else {
+        db.users.create(user)
+        .then(user => {
+          res.send(user);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+      }
+    })
+  });
+
+apiRouter.route('/anonymous')
+  .post((req, res) => {
+    const date = moment();
+    const randomName = generateName();
+    let user = {
+      'count_games_played': 0,
+      'last_login': date,
+      'username': randomName,
+      'anonymous_user': true
+    };
     db.users.create(user)
     .then(user => {
       res.send(user);
@@ -178,32 +206,33 @@ apiRouter.route('/user')
     .catch(error => {
       console.log(error);
     })
-  });
-
-apiRouter.route('/anonymous')
-  .post((req, res) => {
-    let date = moment();
-    let user = {
-      'count_games_played': 0,
-      'last_login': date,
-      'username': generateName()
-    };
-    const anonymousUser = db.users.build(user);
-    res.send(anonymousUser);
   })
 
 apiRouter.route('/scores')
   .get((req, res) => {
     db.scores.findAll({
-      include: [{model: db.users }],
+      include: [ {
+        model: db.users,
+        where: {
+          anonymous_user: {
+            [Op.eq]: null
+          }
+        }
+      }],
       where: {
         game_id: req.query.game_id,
-        game_type_id: req.query.game_type_id
+        game_type_id: req.query.game_type_id,
+        game_difficulty_id: req.query.game_difficulty_id,
+        count_polygons_entered: {
+          [Op.gt]: 0
+        },
       },
       order: [
         ['count_polygons_entered', 'DESC'],
         ['count_total_hints', 'ASC'],
-      ]})
+      ],
+      limit: 50
+      })
       .then(scores => {
           res.send(scores);
       })
