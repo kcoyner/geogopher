@@ -212,7 +212,8 @@ apiRouter.route('/scores')
       include: [{model: db.users }],
       where: {
         game_id: req.query.game_id,
-        game_type_id: req.query.game_type_id
+        game_type_id: req.query.game_type_id,
+        game_difficulty_id: req.query.game_difficulty_id
       },
       order: [
         ['count_polygons_entered', 'DESC'],

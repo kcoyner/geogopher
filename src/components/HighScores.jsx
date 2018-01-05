@@ -15,47 +15,62 @@ class HighScores extends React.Component {
         first: null,
         selectedGameType: 1,
         selectedGame: 1,
-        games:
-            [
-                {text: 'World Countries', value: 1},
-                {text: 'Middle East & North Africa', value: 2},
-                {text: 'Europe', value: 3},
-                {text: 'Sub-Saharan Africa', value: 4},
-                {text: 'Carribean', value: 5},
-                {text: 'South America', value: 6},
-                {text: 'Russia & Central Asia', value: 7},
-                {text: 'South Pacific', value: 8},
-                {text: 'East Asia', value: 9},
-                {text: 'North America', value: 10},
-            ]
-        ,
-        gameTypes: [
-            {text:'Countdown', value: 1},
-            {text: 'Random Select', value: 2},
-            { text: 'GeoClick', value: 3}
-        ]
+        selectedDifficulty: 1,
+        games: null,
+        gameTypes: null,
+        gameDifficulties: null
     }
-    this.getScores = this.getScores.bind(this);
-    this.onChangeGameType = this.onChangeGameType.bind(this);
-    this.onChangeGame = this.onChangeGame.bind(this);
+    this.getScores = this.getScores.bind(this);;
+    this.getGameAttributes = this.getGameAttributes.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  componentDidMount() {
+    componentDidMount() {
+      this.getGameAttributes();
       this.getScores();
   }
 
-  onChangeGameType(e, data) {
-      this.setState({ selectedGameType: data.value }, this.getScores);
+  onChange(e, data) {
+      const obj = {}
+      obj[data.name] = data.value;
+      this.setState(obj, this.getScores)
   }
-
-  onChangeGame(e, data) {
-      this.setState({selectedGame: data.value}, this.getScores);
+  getGameAttributes() {
+      axios.get('/api/gameslist')
+      .then(response => {
+          let games = [];
+          response.data.forEach(element => {
+              let game = Object.assign({}, { value: element.game_id, text: element.game_name });
+              games.push(game);
+          })
+          this.setState({ games: games });
+      })
+      axios.get('/api/gameSettings')
+      .then(response => {
+          let difficulties = [];
+          let types = [];
+          console.log(response.data);
+          response.data.game_difficulties.forEach(element => {
+                let difficulty = Object.assign({}, { value: element.game_difficulty_id, text: element.game_difficulty_name });
+                difficulties.push(difficulty);
+          });
+          response.data.game_types.forEach(element => {
+            let type = Object.assign({}, { value: element.game_type_id, text: element.game_type_name });
+            types.push(type);
+          })
+          this.setState({
+              gameDifficulties: difficulties,
+              gameTypes: types
+          })
+      })
   }
 
   getScores() {
+      console.log(this.state.selectedDifficulty);
     axios.get('/api/scores', { params: {
         game_type_id: this.state.selectedGameType,
-        game_id: this.state.selectedGame
+        game_id: this.state.selectedGame,
+        game_difficulty_id: this.state.selectedDifficulty
     }})
     .then(response => {
         const arr = response.data;
@@ -70,8 +85,10 @@ class HighScores extends React.Component {
   render() {
     return (
       <div>
-          <Dropdown value={this.selectedGameType} onChange={this.onChangeGameType} defaultValue={this.state.selectedGameType} fluid selection options={this.state.gameTypes} />
-          <Dropdown value={this.selectedGame} onChange={this.onChangeGame} defaultValue={this.state.selectedGame} fluid selection options={this.state.games} />
+          <Dropdown name="selectedGameType" value={this.selectedGameType} onChange={this.onChange} defaultValue={this.state.selectedGameType} fluid selection options={this.state.gameTypes} />
+          <Dropdown name="selectedGame" value={this.selectedGame} onChange={this.onChange} defaultValue={this.state.selectedGame} fluid selection options={this.state.games} />
+          <Dropdown name="selectedDifficulty" value={this.selectedDifficulty} onChange={this.onChange} defaultValue={this.state.selectedDifficulty} fluid selection options={this.state.gameDifficulties} />
+
           { this.state.first ? (
 
           <Table celled>
