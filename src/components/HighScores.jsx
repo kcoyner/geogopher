@@ -79,6 +79,7 @@ class HighScores extends React.Component {
             first: firstScore,
         });
     })
+    
   }
 
   render() {
@@ -103,16 +104,16 @@ class HighScores extends React.Component {
                 <Table.Row>
                     <Table.Cell><Label ribbon>First</Label></Table.Cell>
                     <Table.Cell>{this.state.first.user.username }</Table.Cell>
-                    <Table.Cell>{this.state.first.user.username }</Table.Cell>
-                    <Table.Cell>{this.state.first.count_polygons_entered}</Table.Cell>
+                    <Table.Cell>{this.state.first.game_timer_start - this.state.first.game_timer_remaining }</Table.Cell>
+                    <Table.Cell>{this.state.first.count_polygons_entered + "/" }</Table.Cell>
                 </Table.Row>
             {
                 this.state.scores.map((score, index) => (
                 <Table.Row key={index}>
                     <Table.Cell>{index + 2}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
-                    <Table.Cell>{score.user.username}</Table.Cell>
-                    <Table.Cell>{score.count_polygons_entered}</Table.Cell>
+                    <Table.Cell>{score.game_timer_start - score.game_timer_remaining }</Table.Cell>
+                    <Table.Cell>{score.count_polygons_entered + "/"}</Table.Cell>
                 </Table.Row>
                 ))
             }
