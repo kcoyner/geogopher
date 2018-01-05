@@ -712,9 +712,11 @@ button.ui.button.quit-game-btn{
     '.. ..             ..              ..           ..'
     '.. gotitle        gotitle         gotitle      ..'
     '.. ..             ..              ..           ..'
-    '.. btns           btns            btns         ..'
+    '.. stats          stats           stats           ..'
     '.. ..             ..              ..           ..'
-    '.. score          hints           time         ..'
+    '.. btns           btns            btns         ..'
+    // '.. ..             ..              ..           ..'
+    // '.. score          hints           time         ..'
     '.. ..             ..              ..           ..'
     '.. utitle         utitle          utitle       ..'
     '.. unanswered     unanswered      unanswered   ..'
@@ -730,92 +732,213 @@ button.ui.button.quit-game-btn{
 .go-title{
   grid-area: gotitle;
   text-align: center;
+  font-size: 4em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+}
+
+.go-stats{
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 10fr 1fr 10fr;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas: "goimg .. game      "
+                       "goimg .. type      "
+                       "goimg .. difficulty"
+                       "goimg .. score     "
+                       "goimg .. hints     "
+                       "goimg .. time      ";
+  max-height: 400px;
+}
+
+.go-img{
+  grid-area: goimg;
+}
+
+.go-game-selected{
+  grid-area: game;
+  text-align: center;
+  font-family: "Ubuntu Mono";
+  font-size: 2em;
+
+}
+
+.go-game-type{
+  grid-area: type;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+.go-game-difficulty{
+  grid-area: difficulty;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+
+.go-polygons-score{
+  grid-area: score;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+.go-hints-used{
+  grid-area: hints;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+.go-time-score{
+  grid-area: time;
+  font-size: 1.5em;
+  padding-top: 5%;
 }
 
 .go-next-actions{
   grid-area: btns;
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas: "pa pdg scg shs";
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "pa  pdg"
+                       "scg shs";
+  grid-gap: 15px;
 }
 
-.ui.button.play-different-game{
+button.play-different-game{
   grid-area: pdg;
+  background-color: white;
+  color: #6699cc;
+  border: 1px solid #6699cc;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #6699cc;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
 }
 
-.ui.button.play-again{
+button.play-again{
   grid-area: pa;
-  background-color: tomato;
-  height: 20px;
+  background-color: white;
+  color: #008000;
+  border: 1px solid #008000;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #008000;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
 }
 
-.ui.button.study-current-game{
+button.study-current-game{
   grid-area: scg;
-  background-color: indianred;
-  height: 20px;
+  background-color: white;
+  color: #c57b26;
+  border: 1px solid #c57b26;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #c57b26;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
 }
 
-.ui.button.see-high-scores{
+button.see-high-scores{
   grid-area: shs;
-  background-color: salmon;
-  height: 20px;
+  background-color: white;
+  color: #EC0524;
+  border: 1px solid #EC0524;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #EC0524;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
 }
 
-.go-polygons-score{
-  grid-area: score;
-}
-
-.go-hints-used{
-  grid-area: hints;
-}
-
-.go-time-score{
-  grid-area: time;
-}
 
 .go-polygons-unanswered-title{
   grid-area: utitle;
+  font-size: 2.5em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  border-bottom: 5px solid #EC0524;
 }
 
 .go-polygons-unanswered{
   grid-area: unanswered;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  li{
-    color: firebrick;
-    font-size: 1.5em;
-  }
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+    div{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      font-size: 1.4em;
+    }
 }
 
 .go-polygons-answered-title{
   grid-area: atitle;
+  font-size: 2.5em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  border-bottom: 5px solid #008000;
 }
 
 .go-polygons-answered{
   grid-area: answered;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  li{
-    color: forestgreen;
-    font-size: 1.5em;
-  }
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+    div{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      font-size: 1.4em;
+    }
 }
 
 
 .go-polygons-skipped{
   grid-area: skipped;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas: ".. stitle stitle .."
-    li{
-      color: darkblue;
-      font-size: 1.5em;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+    div{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      font-size: 1.4em;
     }
 }
 
 .go-polygons-skipped-title{
   grid-area: stitle;
+  font-size: 2.5em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  border-bottom: 5px solid #6699cc;
 }
 
 .polygon-info-window {

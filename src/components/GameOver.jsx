@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import  * as actions from '../actions/index.js';
 import { formatSecondsToMMSS, capitalizeWords } from '../utils/index';
 
+const gameOverThumb = require('-!file-loader?name=game-over-thumb!../assets/game-over-thumb.png');
+
 @connect((state) => {
   return {
 
@@ -54,6 +56,39 @@ class GameOver extends React.Component {
 
                     <div className="go-title">GAME OVER</div>
 
+                    <div className="go-stats">
+                      <div className="go-img">
+                          <img src={gameOverThumb}/>
+                      </div>
+
+                      <div className="go-game-selected">
+                         {this.props.gameSelected}
+                      </div>
+
+                      <div className="go-game-type">
+                        {
+                          this.props.gameTypeSelected !== null ?
+                          `Game Type: ${capitalizeWords(this.props.gameTypeSelected)}` :
+                          null
+                        }
+                      </div>
+
+                      <div className="go-game-difficulty">
+                        Game Difficulty: {this.props.gameDifficultySelected}
+                      </div>
+
+                      <div className="go-polygons-score">
+                        Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}
+                      </div>
+
+                      <div className="go-hints-used">
+                        Hints Used: {this.props.countTotalHints}
+                      </div>
+
+                      <div className="go-time-score">
+                        Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}
+                      </div>
+                    </div>
 
                     <div className="go-next-actions">
 
@@ -79,17 +114,6 @@ class GameOver extends React.Component {
 
                     </div>
 
-                    <div className="go-polygons-score">
-                      Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}
-                    </div>
-
-                    <div className="go-hints-used">
-                      Hints Used: {this.props.countTotalHints}
-                    </div>
-
-                    <div className="go-time-score">
-                      Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}
-                    </div>
 
                     <div className="go-polygons-unanswered-title">
                       Entries Unanswered
@@ -98,7 +122,7 @@ class GameOver extends React.Component {
                     <div className="go-polygons-unanswered">
                       {
                         this.props.polygonsUnanswered.map((polygon) => (
-                          <div>{capitalizeWords(polygon.name)}</div>
+                          <div key={polygon.id}>{capitalizeWords(polygon.name)}</div>
                         )
                       )}
                     </div>
@@ -111,7 +135,7 @@ class GameOver extends React.Component {
 
                        {
                         this.props.polygonsAnswered.map((polygon) => (
-                          <div>{capitalizeWords(polygon.name)}</div>
+                          <div key={polygon.id}>{capitalizeWords(polygon.name)}</div>
                         )
                       )}
 
@@ -136,7 +160,7 @@ class GameOver extends React.Component {
 
                       {
                         this.props.polygonsSkipped.map((polygon) => (
-                          <div>{capitalizeWords(polygon.name)}</div>
+                          <div key={polygon.id}>{capitalizeWords(polygon.name)}</div>
                         )
                       )}
                     </div>
@@ -148,7 +172,7 @@ class GameOver extends React.Component {
                   </div>
                 </Modal.Description>
                 </Modal.Content>
-                
+
             </Modal>
         )
     }

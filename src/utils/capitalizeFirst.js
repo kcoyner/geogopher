@@ -17,7 +17,7 @@ export const capitalizeWords = (words) => {
         if (parseInt(idx) === 0) {
           capitalizedWord = word[idx].toUpperCase();
         } else {
-          capitalizedWord += word[idx];
+          capitalizedWord += word[idx].toLowerCase();
         }
       }
       return capitalizedWord;
@@ -35,4 +35,3 @@ export const capitalizeWords = (words) => {
   }
   return result;
 };
-
