@@ -38,7 +38,6 @@ class HighScores extends React.Component {
   getGameAttributes() {
       axios.get('/api/gameslist')
       .then(response => {
-          console.log(response.data);
           let games = [];
           response.data.forEach(element => {
               let game = Object.assign({}, { value: element.game_id, text: element.game_name });
@@ -72,8 +71,9 @@ class HighScores extends React.Component {
         game_difficulty_id: this.state.selectedDifficulty
     }})
     .then(response => {
-        // const arr = response.data;
-        const arr = response.data.filter(score => score.count_polygons_entered > 0);
+        console.log(response.data);
+        const arr = response.data.filter(score => score.count_polygons_entered > 0).filter(score => score.user.anonymous_user !== true);
+        console.log(arr);
         const firstScore = arr.shift();
         this.setState({
             scores: arr,
@@ -96,19 +96,22 @@ class HighScores extends React.Component {
             <Table.Row>
                 <Table.HeaderCell>Place</Table.HeaderCell>
                 <Table.HeaderCell>Username</Table.HeaderCell>
+                <Table.HeaderCell>Time</Table.HeaderCell>
                 <Table.HeaderCell>Score</Table.HeaderCell>
             </Table.Row>
             </Table.Header>
             <Table.Body>
                 <Table.Row>
                     <Table.Cell><Label ribbon>First</Label></Table.Cell>
-                    <Table.Cell>{this.state.first.user.username || null}</Table.Cell>
+                    <Table.Cell>{this.state.first.user.username }</Table.Cell>
+                    <Table.Cell>{this.state.first.user.username }</Table.Cell>
                     <Table.Cell>{this.state.first.count_polygons_entered}</Table.Cell>
                 </Table.Row>
             {
                 this.state.scores.map((score, index) => (
                 <Table.Row key={index}>
                     <Table.Cell>{index + 2}</Table.Cell>
+                    <Table.Cell>{score.user.username}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
                     <Table.Cell>{score.count_polygons_entered}</Table.Cell>
                 </Table.Row>
