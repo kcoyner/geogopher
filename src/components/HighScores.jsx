@@ -72,8 +72,7 @@ class HighScores extends React.Component {
     }})
     .then(response => {
         console.log(response.data);
-        const arr = response.data.filter(score => score.count_polygons_entered > 0).filter(score => score.user.anonymous_user !== true);
-        console.log(arr);
+        const arr = response.data;
         const firstScore = arr.shift();
         this.setState({
             scores: arr,

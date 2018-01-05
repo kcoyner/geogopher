@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 const generateName = require('sillyname');
 const getIP = require('ipware')().get_ip;
@@ -209,16 +211,28 @@ apiRouter.route('/anonymous')
 apiRouter.route('/scores')
   .get((req, res) => {
     db.scores.findAll({
-      include: [{model: db.users }],
+      include: [ {
+        model: db.users,
+        where: {
+          anonymous_user: {
+            [Op.eq]: null
+          }
+        }
+      }],
       where: {
         game_id: req.query.game_id,
         game_type_id: req.query.game_type_id,
-        game_difficulty_id: req.query.game_difficulty_id
+        game_difficulty_id: req.query.game_difficulty_id,
+        count_polygons_entered: {
+          [Op.gt]: 0
+        },
       },
       order: [
         ['count_polygons_entered', 'DESC'],
         ['count_total_hints', 'ASC'],
-      ]})
+      ],
+      limit: 50
+      })
       .then(scores => {
           res.send(scores);
       })
