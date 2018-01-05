@@ -75,11 +75,11 @@ class GameOver extends React.Component {
                     </div>
 
                     <div className="go-polygons-unanswered">
-                      <ul> {
+                      {
                         this.props.polygonsUnanswered.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
+                          <div>{capitalizeWords(polygon.name)}</div>
                         )
-                      )} </ul>
+                      )}
                     </div>
 
                     <div className="go-polygons-answered-title">
@@ -88,11 +88,12 @@ class GameOver extends React.Component {
 
                     <div className="go-polygons-answered">
 
-                      <ul> {
+                       {
                         this.props.polygonsAnswered.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
+                          <div>{capitalizeWords(polygon.name)}</div>
                         )
-                      )} </ul>
+                      )}
+
                     </div>
 
                     {
@@ -112,11 +113,11 @@ class GameOver extends React.Component {
 
                     <div className="go-polygons-skipped">
 
-                      <ul> {
+                      {
                         this.props.polygonsSkipped.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
+                          <div>{capitalizeWords(polygon.name)}</div>
                         )
-                      )} </ul>
+                      )}
                     </div>
 
                     :
