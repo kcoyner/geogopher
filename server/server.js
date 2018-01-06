@@ -226,10 +226,13 @@ apiRouter.route('/scores')
         count_polygons_entered: {
           [Op.gt]: 0
         },
+        count_total_hints: {
+          [Op.eq]: 0
+        },
       },
       order: [
         ['count_polygons_entered', 'DESC'],
-        ['count_total_hints', 'ASC'],
+        ['game_timer_remaining', 'DESC'],
       ],
       limit: 50
       })
