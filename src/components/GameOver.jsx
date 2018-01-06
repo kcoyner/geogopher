@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import  * as actions from '../actions/index.js';
 import { formatSecondsToMMSS, capitalizeWords } from '../utils/index';
 
+const gameOverThumb = require('-!file-loader?name=game-over-thumb!../assets/game-over-thumb.png');
+
 @connect((state) => {
   return {
 
@@ -28,6 +30,7 @@ import { formatSecondsToMMSS, capitalizeWords } from '../utils/index';
     //score data
     countPolygonsEntered: state.ScoreReducer.countPolygonsEntered,
     countTotalSubmissions: state.ScoreReducer.countTotalSubmissions,
+    countTotalHints: state.ScoreReducer.countTotalHints,
     polygonsAnswered: state.ScoreReducer.polygonsAnswered,
     polygonsUnanswered: state.ScoreReducer.polygonsUnanswered,
     polygonsSkipped: state.ScoreReducer.polygonsSkipped,
@@ -47,53 +50,129 @@ class GameOver extends React.Component {
             <Modal
             open={this.props.open}
             closeOnRootNodeClick={false}>
-                <Modal.Header>Game Over</Modal.Header>
                 <Modal.Content>
                 <Modal.Description>
                   <div className="game-over-score">
-                    <div className="game-over-polygons-score">
-                      <h1>Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}</h1>
+
+                    <div className="go-title">GAME OVER</div>
+
+                    <div className="go-stats">
+                      <div className="go-img">
+                          <img src={gameOverThumb}/>
+                      </div>
+
+                      <div className="go-game-selected">
+                         {this.props.gameSelected}
+                      </div>
+
+                      <div className="go-game-type">
+                        {
+                          this.props.gameTypeSelected !== null ?
+                          `Game Type: ${capitalizeWords(this.props.gameTypeSelected)}` :
+                          null
+                        }
+                      </div>
+
+                      <div className="go-game-difficulty">
+                        Game Difficulty: {this.props.gameDifficultySelected}
+                      </div>
+
+                      <div className="go-polygons-score">
+                        Your Score: {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}
+                      </div>
+
+                      <div className="go-hints-used">
+                        Hints Used: {this.props.countTotalHints}
+                      </div>
+
+                      <div className="go-time-score">
+                        Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}
+                      </div>
                     </div>
-                    <div className="game-over-time-score">
-                      <h1>Time Remaining: {formatSecondsToMMSS(this.props.gameTimerRemaining)}</h1>
+
+                    <div className="go-next-actions">
+
+                      <button
+                        className="play-again"
+                        onClick={this.props.onDifferentGame}>
+                        PLAY AGAIN</button>
+
+                      <button
+                        className="play-different-game"
+                        onClick={this.props.onDifferentGame}>
+                        PLAY DIFFERENT GAME</button>
+
+                      <button
+                        className="study-current-game"
+                        onClick={this.props.onDifferentGame}>
+                        STUDY CURRENT GAME</button>
+
+                      <button
+                        className="see-high-scores"
+                        onClick={this.props.onSeeHighScores}>
+                        SEE HIGH SCORES</button>
+
                     </div>
-                    <div className="game-over-polygons-answered">
-                      <h1>Countries Answered</h1>
-                      <ul> {
-                        this.props.polygonsAnswered.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
-                        )
-                      )} </ul>
+
+
+                    <div className="go-polygons-unanswered-title">
+                      Entries Unanswered
                     </div>
-                    <div className="game-over-polygons-unanswered">
-                      <h1>Countries Unanswered</h1>
-                      <ul> {
+
+                    <div className="go-polygons-unanswered">
+                      {
                         this.props.polygonsUnanswered.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
+                          <div key={polygon.id}>{capitalizeWords(polygon.name)}</div>
                         )
-                      )} </ul>
+                      )}
                     </div>
+
+                    <div className="go-polygons-answered-title">
+                      Entries Answered
+                    </div>
+
+                    <div className="go-polygons-answered">
+
+                       {
+                        this.props.polygonsAnswered.map((polygon) => (
+                          <div key={polygon.id}>{capitalizeWords(polygon.name)}</div>
+                        )
+                      )}
+
+                    </div>
+
                     {
-                    this.props.gameTypeSelected !== 'Countdown'
+                      this.props.gameTypeSelected !== 'COUNTDOWN'
+                      ?
+                      <div className="go-polygons-skipped-title">
+                        Entries Skipped
+                      </div>
+                      :
+                      null
+                    }
+
+                    {
+                    this.props.gameTypeSelected !== 'COUNTDOWN'
                     ?
-                    <div className="game-over-polygons-skipped">
-                      <h1>Countries Skipped</h1>
-                      <ul> {
+
+
+                    <div className="go-polygons-skipped">
+
+                      {
                         this.props.polygonsSkipped.map((polygon) => (
-                          <li key={polygon.id}>{capitalizeWords(polygon.name)}</li>
+                          <div key={polygon.id}>{capitalizeWords(polygon.name)}</div>
                         )
-                      )} </ul>
+                      )}
                     </div>
+
                     :
                     null
                     }
+
                   </div>
                 </Modal.Description>
                 </Modal.Content>
-                <Modal.Actions>
-                    <Button onClick={this.props.onDifferentGame} positive>Play Different Game</Button>
-                    <Button onClick={this.props.onSeeHighScores}>See High Scores</Button>
-                </Modal.Actions>
+
             </Modal>
         )
     }

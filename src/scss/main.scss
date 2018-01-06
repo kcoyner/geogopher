@@ -25,6 +25,9 @@ img.ui.image.geogopher-navbar-logo{
                        ".. countries      .."
                        ".. capitalstitle  .."
                        ".. capitals       ..";
+  max-width: 1300px;
+  margin: auto;
+
 }
 
 .gap{
@@ -40,7 +43,16 @@ img.ui.image.geogopher-navbar-logo{
 
 .countries-title{
   grid-area: countriestitle;
+  padding: 20px;
+  border-bottom: 5px solid #EC0524;
+  margin-bottom: 20px;
+  h1{
+    font-family: "Ubuntu Mono";
+    font-size: 3em;
+  }
   h3{
+    font-family: "Lato";
+    font-weight: lighter;
     margin: 0!important;
   }
 }
@@ -57,7 +69,16 @@ img.ui.image.geogopher-navbar-logo{
 
 .capitals-title{
   grid-area: capitalstitle;
+  padding: 20px;
+  border-bottom: 5px solid #EC0524;
+  margin-bottom: 20px;
+  h1{
+    font-family: "Ubuntu Mono";
+    font-size: 3em;
+  }
   h3{
+    font-family: "Lato";
+    font-weight: lighter;
     margin: 0!important;
   }
 }
@@ -72,46 +93,47 @@ img.ui.image.geogopher-navbar-logo{
   }
 }
 
-.select-this-game{
-  opacity: 0;
-  position: absolute;
-  z-index: 4;
-  height: 100%;
+//new styling
+.game-thumb {
+  max-width: 400px;
+  max-height: 400px;
   width: 100%;
-  transition: opacity .5s;
-  h1{
-    position:absolute;
-    border: 13px #ec0524 solid;
-    background-color: white;
-    font-size: 3em;
-    right: 25%;
-    left: 25%;
-    top: 30%;
-    padding: 1%;
-    font-family: 'Ubuntu Mono', 'Helvetica';
-    font-weight: bolder;
-    text-align: center;
-  }
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 20px;
+  border: 1px solid whitesmoke;
+  // border-radius: 5px;
+  transition: box-shadow .2s ease-in-out, border .2s ease-in-out;
   &:hover{
-    opacity: 1;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    // border: none;
+    cursor: pointer;
   }
+
 }
 
-.ui.card, .ui.cards > .card{
-    align-self: center;
-    justify-self:center;
-    opacity: 1;
-    transition: background-color .5s opacity .5s;
-    width: 100%;
-    max-width: 400px;
-    border: none;
-    box-shadow: 5px 10px 20px -10px darkslategrey;
-    &:hover{
-      cursor: pointer;
-      opacity: .8;
-      background-color: white;
+.game-thumb > header {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 80% 0% 2% 2%;
+  color: white;
+  background:
+      linear-gradient(
+      to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%,  rgba(50, 50, 50, .6)
+      );
+    h1 {
+      font-family: "Lato";
+      text-shadow: 0 1px 0 black;
     }
+
 }
+
+.game-thumb > div {
+  height: 100%;
+}
+
 
 //game type and difficulty selection steps at top of Modal
 
@@ -706,44 +728,245 @@ button.ui.button.quit-game-btn{
 
 .game-over-score{
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-temmplate-rows: 1fr 3fr;
+  grid-template-columns: 1fr 4fr 4fr 4fr 1fr;
   grid-gap: 20px;
   grid-template-areas:
-    '.. score     ..         time    ..'
-    '.. answered  unanswered skipped ..';
+    '.. ..             ..              ..           ..'
+    '.. gotitle        gotitle         gotitle      ..'
+    '.. ..             ..              ..           ..'
+    '.. stats          stats           stats           ..'
+    '.. ..             ..              ..           ..'
+    '.. btns           btns            btns         ..'
+    // '.. ..             ..              ..           ..'
+    // '.. score          hints           time         ..'
+    '.. ..             ..              ..           ..'
+    '.. utitle         utitle          utitle       ..'
+    '.. unanswered     unanswered      unanswered   ..'
+    '.. ..             ..              ..           ..'
+    '.. atitle         atitle          atitle       ..'
+    '.. answered       answered        answered     ..'
+    '.. ..             ..              ..           ..'
+    '.. stitle         stitle          stitle       ..'
+    '.. skipped        skipped         skipped      ..'
+    '.. ..             ..              ..           ..';
 }
 
-.game-over-polygons-score{
+.go-title{
+  grid-area: gotitle;
+  text-align: center;
+  font-size: 4em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+}
+
+.go-stats{
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 10fr 1fr 10fr;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas: "goimg .. game      "
+                       "goimg .. type      "
+                       "goimg .. difficulty"
+                       "goimg .. score     "
+                       "goimg .. hints     "
+                       "goimg .. time      ";
+  max-height: 400px;
+}
+
+.go-img{
+  grid-area: goimg;
+}
+
+.go-game-selected{
+  grid-area: game;
+  text-align: center;
+  font-family: "Ubuntu Mono";
+  font-size: 2em;
+
+}
+
+.go-game-type{
+  grid-area: type;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+.go-game-difficulty{
+  grid-area: difficulty;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+
+.go-polygons-score{
   grid-area: score;
+  font-size: 1.5em;
+  padding-top: 5%;
 }
 
-.game-over-time-score{
+.go-hints-used{
+  grid-area: hints;
+  font-size: 1.5em;
+  padding-top: 5%;
+}
+
+.go-time-score{
   grid-area: time;
+  font-size: 1.5em;
+  padding-top: 5%;
 }
 
-.game-over-polygons-answered{
-  grid-area: answered;
-  li{
-    color: forestgreen;
-    font-size: 1.5em;
+.go-next-actions{
+  grid-area: btns;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "pa  pdg"
+                       "scg shs";
+  grid-gap: 15px;
+}
+
+button.play-different-game{
+  grid-area: pdg;
+  background-color: white;
+  color: #6699cc;
+  border: 1px solid #6699cc;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #6699cc;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
-.game-over-polygons-unanswered{
+button.play-again{
+  grid-area: pa;
+  background-color: white;
+  color: #008000;
+  border: 1px solid #008000;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #008000;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
+}
+
+button.study-current-game{
+  grid-area: scg;
+  background-color: white;
+  color: #c57b26;
+  border: 1px solid #c57b26;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #c57b26;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
+}
+
+button.see-high-scores{
+  grid-area: shs;
+  background-color: white;
+  color: #EC0524;
+  border: 1px solid #EC0524;
+  font-size: 1.25em;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: none;
+  &:hover{
+    background-color: #EC0524;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
+}
+
+
+.go-polygons-unanswered-title{
+  grid-area: utitle;
+  font-size: 2.5em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  border-bottom: 5px solid #EC0524;
+}
+
+.go-polygons-unanswered{
   grid-area: unanswered;
-    li{
-      color: firebrick;
-      font-size: 1.5em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+    div{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      font-size: 1.4em;
+      padding-left: 1.5em;
+      text-indent: -1.5em;
     }
 }
 
-.game-over-polygons-skipped{
-  grid-area: skipped;
-    li{
-      color: darkblue;
-      font-size: 1.5em;
+.go-polygons-answered-title{
+  grid-area: atitle;
+  font-size: 2.5em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  border-bottom: 5px solid #008000;
+}
+
+.go-polygons-answered{
+  grid-area: answered;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+    div{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      font-size: 1.4em;
+      padding-left: 1.5em;
+      text-indent: -1.5em;
     }
+}
+
+
+.go-polygons-skipped{
+  grid-area: skipped;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+    div{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      font-size: 1.4em;
+      padding-left: 1.5em;
+      text-indent: -1.5em;
+    }
+}
+
+.go-polygons-skipped-title{
+  grid-area: stitle;
+  font-size: 2.5em;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  border-bottom: 5px solid #6699cc;
 }
 
 .polygon-info-window {

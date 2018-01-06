@@ -72,7 +72,7 @@ class GamesList extends React.Component {
 
 
         <div className="countries-title">
-          <h1>Countries</h1>
+          <h1>COUNTRIES</h1>
           <h3>Choose a region to begin</h3>
         </div>
 
@@ -87,27 +87,18 @@ class GamesList extends React.Component {
 
                   game.game_name.indexOf("Countries") > -1 ?
 
-                  <Card key={index} >
-                    {/* on hover, this div covers the thumb */}
-                    <div className="select-this-game"
-                      onClick={() => this.onGameSelect(index)}>
-                      <h1>PLAY</h1>
-                    </div>
-                    <Image src={game.img_asset}
-                          onClick={() => this.onGameSelect(index)}
-                        />
-                    <Card.Content
-                      onClick={() => this.onGameSelect(index)}
-                      >
-                      <Card.Header>
+                    <div key={index}
+                         className="game-thumb">
+                      <img src={game.img_asset}
+                           onClick={() => this.onGameSelect(index)}>
+                      </img>
+                    <header onClick={() => this.onGameSelect(index)}>
+                      <h1>
                         {game.game_name}
-                      </Card.Header>
-                      <Card.Description>
-                        {game.game_description}
-                      </Card.Description>
-                    </Card.Content>
-
-                  </Card>
+                      </h1>
+                      <h3>{game.game_description}</h3>
+                    </header>
+                  </div>
 
                   :
                   null
@@ -119,7 +110,7 @@ class GamesList extends React.Component {
       </div>
 
         <div className="capitals-title">
-          <h1>Capitals</h1>
+          <h1>CAPITALS</h1>
           <h3>Choose a region to begin</h3>
         </div>
 
@@ -133,27 +124,19 @@ class GamesList extends React.Component {
 
                   game.game_name.indexOf("Capitals") > -1 ?
 
-                  <Card key={index} >
-                    {/* on hover, this div covers the thumb */}
-                    <div className="select-this-game"
-                      onClick={() => this.onGameSelect(index)}>
-                      <h1>PLAY</h1>
-                    </div>
-                    <Image src={game.img_asset}
-                          onClick={() => this.onGameSelect(index)}
-                        />
-                    <Card.Content
-                      onClick={() => this.onGameSelect(index)}
-                      >
-                      <Card.Header>
-                        {game.game_name}
-                      </Card.Header>
-                      <Card.Description>
-                        {game.game_description}
-                      </Card.Description>
-                    </Card.Content>
+                  <div key={index}
+                       className="game-thumb">
+                    <img src={game.img_asset}
+                         onClick={() => this.onGameSelect(index)}>
+                    </img>
+                  <header onClick={() => this.onGameSelect(index)}>
+                    <h1>
+                      {game.game_name}
+                    </h1>
+                    <h3>{game.game_description}</h3>
+                  </header>
+                </div>
 
-                  </Card>
                   :
                 null
               )
