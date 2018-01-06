@@ -338,7 +338,7 @@ export default class Map extends React.Component {
     }
     //need to confirm whether all state must be returned back to init
     this.setState({ open: false });
-    
+
     //clear game and score reducers
     this.props.dispatch(await actions.postScore(currentScore))
 
@@ -369,10 +369,10 @@ export default class Map extends React.Component {
       userID: this.props.userID
     }
     this.setState({ open: false });
-    
+
     this.props.dispatch(await actions.postScore(currentScore))
 
-  
+
     let path = "/high-scores/" + this.props.gameID + "/" + this.props.gameTypeID + "/" + this.props.gameDifficultyID;
     this.props.history.push({
       pathname: path,
@@ -394,6 +394,7 @@ export default class Map extends React.Component {
     // map.panTo({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
+      // this.refs.entry_correct.play();
       let submission = e.target.value;
       //clear text input after user hits enter
       this.setState({inputValue: ''});
@@ -413,6 +414,7 @@ export default class Map extends React.Component {
         reactThis: this,
         highlightedPolygon: this.state.highlightedPolygon,
         handleGameEnd: this.handleGameEnd,
+        refs: this.refs,
       }
 
       //check answer for countdown game
@@ -715,6 +717,16 @@ export default class Map extends React.Component {
           }
 
           <Button className="quit-game-btn" onClick={this.handleGameEnd}>QUIT</Button>
+
+          <audio ref='entry_correct'>
+            <source src='https://s3.amazonaws.com/geogopher-assets/sounds/correct.m4a' type='audio/mpeg'></source>
+          </audio>
+          <audio ref='entry_incorrect'>
+            <source src='https://s3.amazonaws.com/geogopher-assets/sounds/incorrect.m4a' type='audio/mpeg'></source>
+          </audio>
+          <audio ref='entry_correct_resubmit'>
+            <source src='https://s3.amazonaws.com/geogopher-assets/sounds/correct_resubmit.m4a' type='audio/mpeg'></source>
+          </audio>
 
           {/* end game controls */}
         </div>
