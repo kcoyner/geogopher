@@ -49,10 +49,7 @@ INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VAL
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'Easy', '{"multiplier": "1.5"}');
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (2, 'Normal', '{"multiplier": "1.0"}');
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (3, 'Hard', '{"multiplier": "0.5"}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (4, '1 min', '{"override": "60"}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (5, '3 min', '{"override": "180"}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (6, '5 min', '{"override": "300"}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (7, '10 min', '{"override": "600"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (4, 'Quick', '{"override": "60"}');
 
 -- sample user data
 INSERT INTO users (user_id, google_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token, anonymous_user) VALUES (default, 'null', 'countrygal500', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 0, '2017-11-11 10:23:54+02', TRUE, 'Hannah', 'Arendt', 'iknowthings@manythings.com', '1.127.23.34', '4bDac45deUys', default);
