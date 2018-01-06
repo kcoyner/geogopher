@@ -724,6 +724,9 @@ export default class Map extends React.Component {
           <audio ref='entry_incorrect'>
             <source src='https://s3.amazonaws.com/geogopher-assets/sounds/incorrect.m4a' type='audio/mpeg'></source>
           </audio>
+          <audio ref='entry_correct_resubmit'>
+            <source src='https://s3.amazonaws.com/geogopher-assets/sounds/correct_resubmit.m4a' type='audio/mpeg'></source>
+          </audio>
 
           {/* end game controls */}
         </div>

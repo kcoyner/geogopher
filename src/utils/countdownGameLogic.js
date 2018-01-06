@@ -61,6 +61,7 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
   let countTotalSubmissions = gameValues.countTotalSubmissions;
   let entryCorrect = gameValues.refs.entry_correct;
   let entryIncorrect = gameValues.refs.entry_incorrect;
+  let entryCorrectResubmit = gameValues.refs.entry_correct_resubmit;
   let polygon = map.data.getFeatureById(polygonID);
 
   if (answerStatus === 'answered') {
@@ -84,7 +85,7 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
       }
     ), 1000);
   //trigger for already-answered sound
-  //*trigger goes here*
+    entryCorrectResubmit.play();
   } else if (answerStatus === 'unanswered') {
     //modify map to reflect answered  polygon
     map.data.overrideStyle(
