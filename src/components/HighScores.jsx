@@ -83,7 +83,7 @@ class HighScores extends React.Component {
   }
 
   split(arr, n) {
-    const res = [];
+    let res = [];
     while (arr.length) {
       res.push(arr.splice(0, n));
     }
@@ -98,8 +98,8 @@ class HighScores extends React.Component {
     }})
     .then(response => {
         const arr = response.data;
-        const arr1 = this.split(arr, 10);
-        console.log(arr1);
+        // const arr1 = this.split(arr, 10);
+        // console.log(arr1);
         const firstScore = arr.shift();
         this.setState({
             scores: arr,
