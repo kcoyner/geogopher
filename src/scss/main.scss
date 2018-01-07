@@ -11,8 +11,25 @@ div.ui.menu{
 
 img.ui.image.geogopher-navbar-logo{
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 55px;
+  left: 55px;
+}
+
+.ui.menu .item:before{
+  background: rgba(0,0,0,0);
+}
+
+.ui.menu a{
+    color: black;
+    font-size: 1.5em;
+    font-family: "Ubuntu Mono";
+    border: 6px solid white;
+    padding: 3px 5px 3px 5px;
+    &:hover{
+      border: 5px solid #EC0524;
+      padding: 3px 6px 3px 6px;
+
+    }
 }
 
 //games list AKA home page component styling
@@ -427,6 +444,25 @@ div.play-now-bg{
   grid-area: geo;
   justify-self: center;
 }
+//explore map styling
+
+div.explore-container{
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-areas: ".. ..      .."
+                       ".. ..      .."
+                       ".. ..      ..";
+  width: 99vw;
+  height: 95vh;
+
+  .explore-map#explore-map{
+    grid-area: 1/1/4/4;
+    z-index: 0;
+  }
+}
+
+
 
 //map styling
 
@@ -972,4 +1008,15 @@ button.see-high-scores{
 .polygon-info-window {
   color: black;
   font-size: 30px;
+}
+
+.polygon-explore-window {
+  font-size: 2em;
+  padding: 5px;
+  line-height: 2;
+  strong {
+    font-family: "Ubuntu Mono";
+    border-bottom: 2px solid #EC0524;
+  }
+
 }

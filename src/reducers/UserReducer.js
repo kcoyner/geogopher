@@ -1,7 +1,9 @@
 export default function reducer(state = {
   user: null,
-  gameSelected: null,
-  registeredUser: null,
+  userID: null,
+  countGamesPlayed: null,
+  token: null,
+  lastLogin: null,
   registering: null,
 }, action) {
   switch (action.type) {
