@@ -88,8 +88,6 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
           gameValues.gameData
         )
       )
-      // play incorrect sound
-      entryIncorrect.play();
       //set answer status to correct
       allowNextCountry = true;
     } else {
