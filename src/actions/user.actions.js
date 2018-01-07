@@ -13,6 +13,7 @@ function register(user) {
         return userService.register(user)
             .then(
                 user => {
+                    console.log(user);
                     if(user){
                         console.log('User created: ', user);
                         dispatch(success(user));
