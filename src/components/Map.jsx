@@ -31,7 +31,7 @@ let map;
 
     //pre game data
     user: state.UserReducer.user.user,
-    userID: state.UserReducer.user.userID,
+    userID: state.UserReducer.user.user_id,
     countGamesPlayed: state.UserReducer.countGamesPlayed,
     token: null,
     lastLogin: null,
@@ -342,7 +342,7 @@ export default class Map extends React.Component {
     }
     //need to confirm whether all state must be returned back to init
     this.setState({ open: false });
-
+    console.log("++++++++++", currentScore.userID);
     //clear game and score reducers
     this.props.dispatch(await actions.postScore(currentScore))
 
@@ -381,7 +381,7 @@ export default class Map extends React.Component {
       userID: this.props.userID
     }
     this.setState({ open: false });
-
+console.log("++++++++++", currentScore.userID);
     this.props.dispatch(await actions.postScore(currentScore))
 
 
