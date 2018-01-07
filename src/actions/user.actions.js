@@ -48,8 +48,12 @@ function login(user, google) {
             return userService.login(user)
                 .then(
                     user => {
-                        dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-                        return user;
+                        if(user) {
+                            dispatch({ type: 'LOGIN_SUCCESS', payload: user })
+                            return user;
+                        } else {
+                            return;
+                        }
                     },
                     error => {
                         return error;
