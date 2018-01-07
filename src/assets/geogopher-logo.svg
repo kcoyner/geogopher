@@ -480,7 +480,7 @@
 </g>
 <g>
 	<g>
-		
+
 			<image overflow="visible" width="481" height="487" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAegAAAHsCAYAAAAZwT4aAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA
 GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAIrFJREFUeNrs3YlSI8e2QNHUBPRg
 //+PPjcNGl5zQ2Unh5NZJUCoBGtFVIge3PaldWvrZE2rAgDMzsq3AAAEGgAQaAAQaABAoAFAoAEA
@@ -701,9 +701,9 @@ BgAEGgAEGgAQaAAQaABAoAFAoAGAGfl/AQYAjgei4vpSOCoAAAAASUVORK5CYII=" transform="mat
 	<g>
 		<g>
 			<rect x="2.52" y="89.376" fill="none" width="138.96" height="19.082"/>
-			
-				<text transform="matrix(1 0 0 1 13.1685 107.5215)" fill="#16161E" stroke="#16161E" stroke-miterlimit="10" font-family="'UbuntuMono-Bold'" font-size="26.1475">GEOGOPHER</text>
-			
+
+				<text transform="matrix(1 0 0 1 13.1685 107.5215)" fill="#16161E" stroke="#16161E" stroke-miterlimit="10" font-family="Ubuntu Mono" font-size="26.1475">GEOGOPHER</text>
+
 				<rect x="8.844" y="83.479" fill="none" stroke="#ED1C24" stroke-width="4" stroke-miterlimit="10" width="126.312" height="30.88"/>
 		</g>
 	</g>
@@ -717,7 +717,7 @@ BgAEGgAEGgAQaAAQaABAoAFAoAGAGfl/AQYAjgei4vpSOCoAAAAASUVORK5CYII=" transform="mat
 <g>
 	<g>
 		<g>
-			
+
 				<image overflow="visible" width="334" height="340" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVIAAAFaCAYAAABMhtWCAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA
 GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAColJREFUeNrs3QlvWksSBtDG4C3z
 3vz/HzoTr1wmHt1OiqL6gqMXG5JzpBZeseKgz9V7awAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -776,7 +776,7 @@ H9AvOFR53AAAAABJRU5ErkJggg==" transform="matrix(0.24 0 0 0.24 17.1958 40.8076)">
 	</g>
 	<g>
 		<g>
-			
+
 				<image overflow="visible" width="397" height="382" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZQAAAF/CAYAAABuRj/hAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA
 GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAFiJJREFUeNrs3QlXW8eygNHSADj3
 /v9/+hKbQdK7JDpJU6ru08Lg2LD3WlrCeGBYiT7qDN3bAIA3sPUtAEBQABAUAAQFAAQFAEEBQFAA
