@@ -271,7 +271,7 @@ export default class Map extends React.Component {
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
       gameSelected: this.props.gameSelected,
-
+      refs: this.refs
     }
     if (this.props.gameTypeSelected !== 'GEOCLICK') {
       //focuses cursor in input-entry when user clicks 'start'
@@ -394,7 +394,6 @@ export default class Map extends React.Component {
     // map.panTo({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
-      // this.refs.entry_correct.play();
       let submission = e.target.value;
       //clear text input after user hits enter
       this.setState({inputValue: ''});
@@ -568,7 +567,7 @@ export default class Map extends React.Component {
       highlightedPolygon: this.state.highlightedPolygon,
       handleGameEnd: this.handleGameEnd,
       gameSelected: this.props.gameSelected,
-
+      refs: this.refs
     }
 
     if (this.props.gameTypeSelected === 'RANDOM SELECT') {
@@ -590,7 +589,6 @@ export default class Map extends React.Component {
   handleGeoClick() {
 
     let gameValues = {
-
       map: map,
       countTotalSubmissions: this.props.countTotalSubmissions,
       dispatchFcn: this.props.dispatch,
@@ -600,7 +598,7 @@ export default class Map extends React.Component {
       handleGameEnd: this.handleGameEnd,
       countPolygonsEntered: this.props.countPolygonsEntered,
       gameSelected: this.props.gameSelected,
-
+      refs: this.refs
     }
 
     if (this.props.gameTypeSelected === 'GEOCLICK') {
