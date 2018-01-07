@@ -83,6 +83,7 @@ export default class Map extends React.Component {
       gameDifficulty: false,
       gameStart: false,
       gameEnd: false,
+      geoJsonLoaded: false,
       highlightedPolygon: null,
       currentHint: null,
       geoClickPolygonDisplay: '',
@@ -145,7 +146,9 @@ export default class Map extends React.Component {
       styles: mapDetails
     });
     //load in coordinate data with country name information
-    map.data.loadGeoJson(this.props.gameJSON);
+    map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
+      this.setState({geoJsonLoaded: true})
+    });
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
       fillColor: 'firebrick',
@@ -648,6 +651,7 @@ export default class Map extends React.Component {
           <GameStart
             onGoBack={ this.handleGoBack }
             onStart={this.handleStart}
+            mapLoaded={this.state.geoJsonLoaded}
             open={!this.state.gameType && !this.state.gameDifficulty && !this.state.gameStart}
           />
 

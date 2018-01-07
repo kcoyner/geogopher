@@ -7,7 +7,8 @@ import {
   Image,
   Step,
   Icon,
-  Modal } from 'semantic-ui-react';
+  Modal,
+  Loader } from 'semantic-ui-react';
 
 const countdownGif = require('-!file-loader?name=countdown!../assets/countdown.gif');
 const randomselectGif = require('-!file-loader?name=random-select!../assets/random-select.gif');
@@ -39,17 +40,14 @@ class GameStart extends React.Component {
 
     componentWillReceiveProps(){
       if (!this.props.gameTypeSelected) {
-        console.log('trying to run but gameTypeSelectedAINT DEFINED')
+
       } else {
 
         if (this.props.gameTypeSelected.toLowerCase() === 'countdown') {
-          console.log('ran inside countdown')
           this.setState({backgroundGif: countdownGif})
         } else if (this.props.gameTypeSelected.toLowerCase() === 'random select') {
-          console.log('ran inside random select')
           this.setState({backgroundGif: randomselectGif})
         } else {
-          console.log('ran inside geoclick')
           this.setState({backgroundGif: geoclickGif})
         }
 
@@ -64,11 +62,16 @@ class GameStart extends React.Component {
 
     render() {
 
-        
+      const loaderStyle = {
+        height: '400px',
+        maxHeight:'400px'
+      }
+
 
         return(
             <Modal
             open={this.props.open}
+            dimmer={this.props.mapLoaded}
             closeOnRootNodeClick={false}>
             <Step.Group ordered attached='top'>
               <Step completed>
@@ -93,7 +96,13 @@ class GameStart extends React.Component {
               </Step>
             </Step.Group>
 
-                <Modal.Content>
+
+            <Modal.Content>
+
+                  {
+
+                  this.props.mapLoaded ?
+
                 <Modal.Description className="start-game-modal">
                     <div className="get-ready">ARE YOU READY?</div>
 
@@ -124,6 +133,13 @@ class GameStart extends React.Component {
                         </Button.Content>
                     </Button>
                 </Modal.Description>
+
+                :
+
+                <Modal.Description style={ loaderStyle }>
+                  <Loader active />
+                </Modal.Description>
+              }
                 </Modal.Content>
             </Modal>
         )

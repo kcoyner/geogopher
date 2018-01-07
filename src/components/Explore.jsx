@@ -4,6 +4,7 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import { Loader } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import {
   sanitizeInput,
@@ -70,7 +71,7 @@ class Explore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      someState: 'EXPLORE',
+      
     }
 
   }
@@ -80,9 +81,6 @@ class Explore extends React.Component {
 
     if (this.props.gameCenterCoords) {
 
-
-
-    //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('explore-map'), {
       zoom: this.props.gameZoom,
       center: {
@@ -99,14 +97,7 @@ class Explore extends React.Component {
       //turn off all country names and labels
       styles: mapDetails
     });
-    //load in coordinate data with country name information
 
-    // Somewhere else in your code:
-    let polygonEntries = {
-      polygonsAnswered: this.props.polygonsAnswered,
-      polygonsUnanswered: this.props.polygonsUnanswered,
-      polygonsSkipped: this.props.polygonsSkipped,
-    }
 
     map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
         this.props.polygonsAnswered.forEach((el)=>{
@@ -131,7 +122,9 @@ class Explore extends React.Component {
             strokeWeight: '2'
           })
         })
+
     });
+
 
 
 
@@ -160,6 +153,7 @@ class Explore extends React.Component {
 
 
 
+
   }
 
   }
@@ -168,10 +162,12 @@ class Explore extends React.Component {
   render() {
     return (
       <div className="explore-container">
+
         <div
           className="explore-map"
           id="explore-map">
         </div>
+
       </div>
 
     );
