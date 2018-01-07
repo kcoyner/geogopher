@@ -47,7 +47,6 @@ class RegisterPage extends React.Component {
         dispatch(await userActions.register(user))
           .then(data => {
             if(data){
-              console.log(data);
               this.setState({
                 error: true,
                 errorMessage: data
