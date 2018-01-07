@@ -18,7 +18,7 @@ class HighScores extends React.Component {
         scores: null,
         first: null,
         selectedGameType: Number(props.match.params.gameTypeId) || 1,
-        selectedGame: Number(props.match.params.gameId) || 1,
+        selectedGame: Number(props.match.params.gameId) || null,
         selectedDifficulty: Number(props.match.params.gameDiffId) || 1,
         games: null,
         gameTypes: null,
@@ -29,9 +29,9 @@ class HighScores extends React.Component {
     this.getScores = this.getScores.bind(this);;
     this.getGameAttributes = this.getGameAttributes.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.split = this.split.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
     this.onPageClick = this.onPageClick.bind(this);
+    this.getGameTotal = this.getGameTotal.bind(this);
   }
 
     componentDidMount() {
@@ -41,11 +41,19 @@ class HighScores extends React.Component {
   }
 
   onChange(e, data) {
-      const obj = {}
-      obj[data.name] = data.value;
-      this.setState(obj, this.getScores);
-      console.log(data);
-
+      if(data.name === "selectedGame") {
+          const gameTotal = this.getGameTotal(this.state.games, data.value);
+          this.setState({
+              selectedGame: data.value,
+              total: gameTotal,
+              activeItem: 0
+          }, this.getScores)
+      } else {
+        const obj = {}
+        obj[data.name] = data.value;
+        obj['activeItem'] = 0;
+        this.setState(obj, this.getScores);
+      }
   }
 
   onChangePage(e, { name }) {
@@ -63,6 +71,14 @@ class HighScores extends React.Component {
     this.setState({ activeItem: value })
   }
 
+  getGameTotal(gameArr, gameId) {
+    for(let i in gameArr) {
+        if(gameArr[i].value === gameId) {
+            return gameArr[i].total;
+        }
+    }
+  }
+
   getGameAttributes() {
       axios.get('/api/gameslist')
       .then(response => {
@@ -74,10 +90,19 @@ class HighScores extends React.Component {
               let game = Object.assign({}, { value: element.game_id, text: element.game_name, total: element.max_count_polygons });
               games.push(game);
           })
-
-          this.setState({
-              games: games
+          if(this.state.selectedGame === null) {
+            this.setState({
+                games: games,
+                selectedGame: games[0].value,
+                total: games[0].total
             });
+          } else {
+              const gametotal = this.getGameTotal(games, this.state.selectedGame);
+              this.setState({
+                games: games,
+                total: gametotal
+            })
+          }
       })
       axios.get('/api/gameSettings')
       .then(response => {
@@ -100,14 +125,6 @@ class HighScores extends React.Component {
       })
   }
 
-  split(arr, n) {
-    let res = [];
-    while (arr.length) {
-      res.push(arr.splice(0, n));
-    }
-    return res;
-  }
-
   getScores() {
     axios.get('/api/scores', { params: {
         game_type_id: this.state.selectedGameType,
@@ -116,7 +133,7 @@ class HighScores extends React.Component {
     }})
     .then(response => {
         const arr = response.data;
-        const firstScore = arr[0].shift();
+        const firstScore = arr.length > 0 ? arr[0].shift() : null;
         this.setState({
             scores: arr,
             first: firstScore,
@@ -157,12 +174,11 @@ class HighScores extends React.Component {
                 }
 
             {
-                this.state.scores[this.state.activeItem].map((score, index) => (
-                    
+                this.state.scores[this.state.activeItem].map((score, index) => (         
                 <Table.Row key={index}>
                     <Table.Cell>{(this.state.activeItem === 0) ? index + 2 : this.state.activeItem * 10 + index + 1}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
-                    <Table.Cell>{score.count_polygons_entered + "/"}</Table.Cell>
+                    <Table.Cell>{score.count_polygons_entered + "/" + this.state.total}</Table.Cell>
                     <Table.Cell>{ moment.duration(score.game_timer_remaining, "seconds").format() }</Table.Cell>
                 </Table.Row>
                 ))
