@@ -346,11 +346,11 @@ export default class Map extends React.Component {
     //clear game and score reducers
     this.props.dispatch(await actions.postScore(currentScore))
 
-    this.props.history.push('/');
-
     this.props.dispatch(actions.resetGame())
 
     this.props.dispatch(actions.resetScore())
+
+    this.props.history.push('/');
   }
 
   studyCurrentGame() {
