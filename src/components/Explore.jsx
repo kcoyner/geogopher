@@ -73,38 +73,33 @@ let clickListener;
 class Explore extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
-
+    this.state = {}
     this.clearMarkers = this.clearMarkers.bind(this)
-
   }
-
 
   async componentDidMount() {
 
-    if (this.props.gameCenterCoords) {
+    if (this.props.polygonsAnswered.length > 1 || this.props.polygonsUnanswered.length > 1 || this.props.polygonsSkipped.length > 1) {
+      
+      map = new window.google.maps.Map(document.getElementById('explore-map'), {
+        zoom: this.props.gameZoom,
+        center: {
+          lat: this.props.gameCenterCoords[0],
+          lng: this.props.gameCenterCoords[1],
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          position: window.google.maps.ControlPosition.RIGHT_CENTER
+        },
+        streetViewControl: false,
+        mapTypeControl: false,
+        mapTypeId: 'roadmap',
+        //turn off all country names and labels
+        styles: mapDetails
+      });
 
-    map = new window.google.maps.Map(document.getElementById('explore-map'), {
-      zoom: this.props.gameZoom,
-      center: {
-        lat: this.props.gameCenterCoords[0],
-        lng: this.props.gameCenterCoords[1],
-      },
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.google.maps.ControlPosition.RIGHT_CENTER
-      },
-      streetViewControl: false,
-      mapTypeControl: false,
-      mapTypeId: 'roadmap',
-      //turn off all country names and labels
-      styles: mapDetails
-    });
-
-
-    map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
+      //load previous game GeoJSON then load game results
+      map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
 
         this.props.polygonsAnswered.forEach((el)=>{
           map.data.overrideStyle(map.data.getFeatureById(el.id), {
@@ -129,47 +124,44 @@ class Explore extends React.Component {
           })
         })
 
-      //add mouseover listener to increase stroke on hover
 
-      map.data.addListener('mouseover', (event) => {
-          map.data.overrideStyle(event.feature,
-            {
-              strokeWeight: '4'
-            })
+        //add mouseover listener to increase stroke on hover and create a click listener
+        map.data.addListener('mouseover', (event) => {
+            map.data.overrideStyle(event.feature,
+              {
+                strokeWeight: '4'
+              })
 
-          clickListener = map.data.addListener('click',  (event) => {
+            clickListener = map.data.addListener('click',  (event) => {
+              //onclick create a marker and infowindow
+              let marker = new google.maps.Marker({
+                map: map,
+                icon: imgFromAssets,
+                draggable: false,
+                animation: null,
+                position: { lat: event.feature.f.countryCenter[0], lng: event.feature.f.countryCenter[1] }
+              })
 
-            let marker = new google.maps.Marker({
-              map: map,
-              icon: imgFromAssets,
-              draggable: false,
-              animation: null,
-              position: { lat: event.feature.f.countryCenter[0], lng: event.feature.f.countryCenter[1] }
-            })
-            // instantiate an info window to contain the name of the country being skipped
-           let infoWindow = new google.maps.InfoWindow();
-              //build content inside the info window and open
-              infoWindow.setContent(
-                `<div class='polygon-explore-window'>
-                  <strong>Country:</strong> ${capitalizeWords(event.feature.f.primaryCountryName)}
-                  <br>
-                  <strong>Capital:</strong> ${capitalizeWords(event.feature.f.countryCapitalName)}
-                </div>`
-              );
+             let infoWindow = new google.maps.InfoWindow();
+                //build content inside the info window and open
+                infoWindow.setContent(
+                  `<div class='polygon-explore-window'>
+                    <strong>Country:</strong> ${capitalizeWords(event.feature.f.primaryCountryName)}
+                    <br>
+                    <strong>Capital:</strong> ${capitalizeWords(event.feature.f.countryCapitalName)}
+                  </div>`
+                );
+              //display infowindow and add marker to global markers array
               infoWindow.open(map, marker);
-
               markers.push(marker);
-          })
+            })
 
         });
-
-
-
-
+        //end geoJSON callback
       })
 
-      //add mouseout listener to decrease stroke back to normal
 
+      //add mouseout listener to remove click listener, clear markers and return stroke weight
       map.data.addListener('mouseout', (event) => {
           map.data.overrideStyle(event.feature,
             {
@@ -181,25 +173,15 @@ class Explore extends React.Component {
             this.clearMarkers();
       })
 
-      //add click listener to open info display
 
 
 
+    } else {
 
-
-
-//end callback for loadGeoJson
-
-
-  } else {
-    console.log('no state detected')
-        //initialize new google map and place it on '#map'
+        //initialize generic map without any previous game data
         map = new window.google.maps.Map(document.getElementById('explore-map'), {
           zoom: 3,
-          center: {
-            lat: 30,
-            lng: 31,
-          },
+          center: { lat: 30, lng: 31 },
           zoomControl: true,
           zoomControlOptions: {
             position: window.google.maps.ControlPosition.RIGHT_CENTER
@@ -211,11 +193,61 @@ class Explore extends React.Component {
           styles: mapDetails
         });
 
+        //load geoJSON for world map
+        map.data.loadGeoJson('https://s3.amazonaws.com/gopher-geofiles/geogophers-world-countries.json', "",(features) => {
 
+          map.data.setStyle({
+            fillColor: '#f5f5f5',
+            fillOpacity: '0',
+            strokeColor: '#616161',
+            strokeWeight: '1'
+          });
 
+          //this is repeat code from above conditional to provide same functionality.
+          //TODO: factor this out
 
-  }
+          map.data.addListener('mouseover', (event) => {
+              map.data.overrideStyle(event.feature,
+                {
+                  strokeWeight: '4'
+                })
 
+              clickListener = map.data.addListener('click',  (event) => {
+
+                let marker = new google.maps.Marker({
+                  map: map,
+                  icon: imgFromAssets,
+                  draggable: false,
+                  animation: null,
+                  position: { lat: event.feature.f.countryCenter[0], lng: event.feature.f.countryCenter[1] }
+                })
+                // instantiate an info window to contain the name of the country being skipped
+               let infoWindow = new google.maps.InfoWindow();
+                  //build content inside the info window and open
+                  infoWindow.setContent(
+                    `<div class='polygon-explore-window'>
+                      <strong>Country:</strong> ${capitalizeWords(event.feature.f.primaryCountryName)}
+                      <br>
+                      <strong>Capital:</strong> ${capitalizeWords(event.feature.f.countryCapitalName)}
+                    </div>`
+                  );
+                  infoWindow.open(map, marker);
+
+                  markers.push(marker);
+              })
+
+            });
+
+          })
+
+          map.data.addListener('mouseout', (event) => {
+              map.data.overrideStyle(event.feature, { strokeWeight: '2' })
+              google.maps.event.removeListener(clickListener);
+              this.clearMarkers();
+          })
+    //end of conditional that checks whether there is game data
+    }
+  //end of componentDidMount
   }
 
   clearMarkers() {

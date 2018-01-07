@@ -15,6 +15,23 @@ img.ui.image.geogopher-navbar-logo{
   left: 50px;
 }
 
+.ui.menu .item:before{
+  background: rgba(0,0,0,0);
+}
+
+.ui.menu a{
+    color: black;
+    font-size: 1.5em;
+    font-family: "Ubuntu Mono";
+    border: 6px solid white;
+    padding: 3px 5px 3px 5px;
+    &:hover{
+      border: 5px solid #EC0524;
+      padding: 3px 6px 3px 6px;
+
+    }
+}
+
 //games list AKA home page component styling
 .home-page-container {
   display: grid;
