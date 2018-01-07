@@ -20,8 +20,11 @@ import {
 } from '../utils/index';
 
 import * as actions from '../actions/index.js'
+const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-marker.png');
 
 let map;
+let markers = [];
+let clickListener;
 
 @connect((state) => {
 
@@ -71,8 +74,10 @@ class Explore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     }
+
+    this.clearMarkers = this.clearMarkers.bind(this)
 
   }
 
@@ -100,6 +105,7 @@ class Explore extends React.Component {
 
 
     map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
+
         this.props.polygonsAnswered.forEach((el)=>{
           map.data.overrideStyle(map.data.getFeatureById(el.id), {
             fillColor: '#7FF000',
@@ -123,7 +129,61 @@ class Explore extends React.Component {
           })
         })
 
-    });
+      //add mouseover listener to increase stroke on hover
+
+      map.data.addListener('mouseover', (event) => {
+          map.data.overrideStyle(event.feature,
+            {
+              strokeWeight: '4'
+            })
+
+          clickListener = map.data.addListener('click',  (event) => {
+
+            let marker = new google.maps.Marker({
+              map: map,
+              icon: imgFromAssets,
+              draggable: false,
+              animation: null,
+              position: { lat: event.feature.f.countryCenter[0], lng: event.feature.f.countryCenter[1] }
+            })
+            // instantiate an info window to contain the name of the country being skipped
+           let infoWindow = new google.maps.InfoWindow();
+              //build content inside the info window and open
+              infoWindow.setContent(
+                `<div class='polygon-explore-window'>
+                  <strong>Country:</strong> ${capitalizeWords(event.feature.f.primaryCountryName)}
+                  <br>
+                  <strong>Capital:</strong> ${capitalizeWords(event.feature.f.countryCapitalName)}
+                </div>`
+              );
+              infoWindow.open(map, marker);
+
+              markers.push(marker);
+          })
+
+        });
+
+
+
+
+      })
+
+      //add mouseout listener to decrease stroke back to normal
+
+      map.data.addListener('mouseout', (event) => {
+          map.data.overrideStyle(event.feature,
+            {
+              strokeWeight: '2'
+            })
+
+            google.maps.event.removeListener(clickListener);
+
+            this.clearMarkers();
+      })
+
+      //add click listener to open info display
+
+
 
 
 
@@ -157,6 +217,13 @@ class Explore extends React.Component {
   }
 
   }
+
+  clearMarkers() {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+      }
+      markers = [];
+    }
 
 
   render() {

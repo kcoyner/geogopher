@@ -23,6 +23,7 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
   let allowNextCountry = false;
   let moreCountriesLeft = false;
   let featureName;
+
   if (skipCountry) {
     // play an incorrect sound
     entryIncorrect.play();
@@ -62,6 +63,7 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
     google.maps.event.clearInstanceListeners(gameValues.map.data);
   } else {
     getRandomUnansweredPolygon(gameValues.gameData, (highlightedCountry) => {
+
       //add hover listeners to help user know they are hoving over a polygon selection
       gameValues.map.data.addListener('mouseover', (event) => {
         gameValues.map.data.overrideStyle(event.feature, {
