@@ -104,7 +104,7 @@ class GameOver extends React.Component {
 
                       <button
                         className="study-current-game"
-                        onClick={this.props.onDifferentGame}>
+                        onClick={this.props.onStudyCurrentGame}>
                         STUDY CURRENT GAME</button>
 
                       <button

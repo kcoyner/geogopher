@@ -30,9 +30,9 @@ let map;
   return {
 
     //pre game data
-    userName: state.UserReducer.user.username,
-    userID: state.UserReducer.user.user_id,
-    countGamesPlayed: state.UserReducer.count_games_played,
+    user: state.UserReducer.user.user,
+    userID: state.UserReducer.user.userID,
+    countGamesPlayed: state.UserReducer.countGamesPlayed,
     token: null,
     lastLogin: null,
 
@@ -100,6 +100,7 @@ export default class Map extends React.Component {
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
     this.handlePlayDifferentGame = this.handlePlayDifferentGame.bind(this);
+    this.studyCurrentGame = this.studyCurrentGame.bind(this);
     this.seeHighScores = this.seeHighScores.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleGameTypeSelection = this.handleGameTypeSelection.bind(this);
@@ -348,6 +349,14 @@ export default class Map extends React.Component {
 
     this.props.dispatch(actions.resetScore())
   }
+
+  studyCurrentGame() {
+
+    this.props.history.push('/explore')
+
+  }
+
+
   async seeHighScores() {
     // This should probably get factored out of this and the above function
     let currentScore = {
@@ -645,6 +654,7 @@ export default class Map extends React.Component {
           <GameOver
             onDifferentGame={ this.handlePlayDifferentGame }
             onSeeHighScores={ this.seeHighScores }
+            onStudyCurrentGame={ this.studyCurrentGame }
             onStart={this.handleStart}
             open={this.state.gameEnd}
           />

@@ -20,18 +20,16 @@ import {
 
 import * as actions from '../actions/index.js'
 
-let explore;
+let map;
 
 @connect((state) => {
 
-  if(!state) {
+
+
+
 
   return {
-      userName: state.UserReducer.user.username,
-      userID: state.UserReducer.user.user_id,
-      countGamesPlayed: state.UserReducer.count_games_played,
-      token: null,
-      lastLogin: null,
+
 
       //game settings
       gameSelected: state.GameReducer.gameSelected,
@@ -63,9 +61,7 @@ let explore;
       // TODO: in the user login routines, we need to take t
   }
 
-} else {
-  return {};
-}
+
 
 
 })
@@ -82,52 +78,101 @@ class Explore extends React.Component {
 
   async componentDidMount() {
 
-    // //initialize new google map and place it on '#map'
-    // map = new window.google.maps.Map(document.getElementById('map'), {
-    //   zoom: this.props.gameZoom,
-    //   center: {
-    //     lat: this.props.gameCenterCoords[0],
-    //     lng: this.props.gameCenterCoords[1],
-    //   },
-    //   zoomControl: true,
-    //   zoomControlOptions: {
-    //     position: window.google.maps.ControlPosition.RIGHT_CENTER
-    //   },
-    //   streetViewControl: false,
-    //   mapTypeControl: false,
-    //   mapTypeId: 'roadmap',
-    //   //turn off all country names and labels
-    //   styles: mapDetails
-    // });
-    // //load in coordinate data with country name information
-    // map.data.loadGeoJson(this.props.gameJSON);
-    // //set all loaded coordinate data to a red fill color with no stroke
-    // map.data.setStyle({
-    //   fillColor: 'firebrick',
-    //   fillOpacity: '.6',
-    //   strokeColor: 'orange',
-    //   strokeWeight: '2'
-    // });
-    // //build gameData in redux and stores as this.props.gameData
-    // if (this.props.gameSelected.indexOf('Capitals') > -1) {
-    //   await this.props.dispatch(
-    //     actions.initializeNewGame(this.props.gameJSON, 'Capitals')
-    //   );
-    //
-    // } else {
-    //
-    //   await this.props.dispatch(
-    //     actions.initializeNewGame(this.props.gameJSON, 'Countries')
-    //   );
-    //
-    // }
+    if (this.props.gameCenterCoords) {
+
+
+
+    //initialize new google map and place it on '#map'
+    map = new window.google.maps.Map(document.getElementById('explore-map'), {
+      zoom: this.props.gameZoom,
+      center: {
+        lat: this.props.gameCenterCoords[0],
+        lng: this.props.gameCenterCoords[1],
+      },
+      zoomControl: true,
+      zoomControlOptions: {
+        position: window.google.maps.ControlPosition.RIGHT_CENTER
+      },
+      streetViewControl: false,
+      mapTypeControl: false,
+      mapTypeId: 'roadmap',
+      //turn off all country names and labels
+      styles: mapDetails
+    });
+    //load in coordinate data with country name information
+
+    // Somewhere else in your code:
+    let polygonEntries = {
+      polygonsAnswered: this.props.polygonsAnswered,
+      polygonsUnanswered: this.props.polygonsUnanswered,
+      polygonsSkipped: this.props.polygonsSkipped,
+    }
+
+    map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
+        this.props.polygonsAnswered.forEach((el)=>{
+          map.data.overrideStyle(map.data.getFeatureById(el.id), {
+            fillColor: '#7FF000',
+            strokeColor: '#008000',
+            strokeWeight: '2'
+          })
+        })
+        this.props.polygonsSkipped.forEach((el)=>{
+          map.data.overrideStyle(map.data.getFeatureById(el.id), {
+            fillColor: 'grey',
+            strokeColor: 'darkslategrey',
+            strokeWeight: '2'
+          })
+        })
+        this.props.polygonsUnanswered.forEach((el)=>{
+          map.data.overrideStyle(map.data.getFeatureById(el.id), {
+            fillColor: 'firebrick',
+            fillOpacity: '.6',
+            strokeColor: 'orange',
+            strokeWeight: '2'
+          })
+        })
+    });
+
+
+
+//end callback for loadGeoJson
+
+
+  } else {
+    console.log('no state detected')
+        //initialize new google map and place it on '#map'
+        map = new window.google.maps.Map(document.getElementById('explore-map'), {
+          zoom: 3,
+          center: {
+            lat: 30,
+            lng: 31,
+          },
+          zoomControl: true,
+          zoomControlOptions: {
+            position: window.google.maps.ControlPosition.RIGHT_CENTER
+          },
+          streetViewControl: false,
+          mapTypeControl: false,
+          mapTypeId: 'roadmap',
+          //turn off all country names and labels
+          styles: mapDetails
+        });
+
+
+
+  }
 
   }
 
 
   render() {
     return (
-      <div> {this.state.someState} </div>
+      <div className="explore-container">
+        <div
+          className="explore-map"
+          id="explore-map">
+        </div>
+      </div>
 
     );
     // end render
