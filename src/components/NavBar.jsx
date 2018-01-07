@@ -47,7 +47,7 @@ class NavBar extends React.Component {
                      <NavLink exact to="/"> PLAY </NavLink>
                     </Menu.Item>
                     <Menu.Item>
-                     <NavLink to="/"> EXPLORE </NavLink>
+                     <NavLink to="/explore"> EXPLORE </NavLink>
                     </Menu.Item>
                     <Menu.Item>
                      <NavLink to="/high-scores"> SCORES </NavLink>
