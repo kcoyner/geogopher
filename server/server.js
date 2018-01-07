@@ -237,7 +237,11 @@ apiRouter.route('/scores')
       limit: 50
       })
       .then(scores => {
-          res.send(scores);
+          let results = [];
+          while (scores.length) {
+            results.push(scores.splice(0, 10));
+          }
+          res.send(results);
       })
   })
 

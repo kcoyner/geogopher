@@ -24,7 +24,7 @@ class HighScores extends React.Component {
         gameTypes: null,
         gameDifficulties: null,
         total: null,
-        page: 1
+        page: 0
     }
     this.getScores = this.getScores.bind(this);;
     this.getGameAttributes = this.getGameAttributes.bind(this);
@@ -98,9 +98,7 @@ class HighScores extends React.Component {
     }})
     .then(response => {
         const arr = response.data;
-        // const arr1 = this.split(arr, 10);
-        // console.log(arr1);
-        const firstScore = arr.shift();
+        const firstScore = arr[0].shift();
         this.setState({
             scores: arr,
             first: firstScore,
@@ -135,7 +133,7 @@ class HighScores extends React.Component {
                     <Table.Cell>{ moment.duration(this.state.first.game_timer_remaining, "seconds").format() }</Table.Cell>
                 </Table.Row>
             {
-                this.state.scores.map((score, index) => (
+                this.state.scores[this.state.page].map((score, index) => (
                     
                 <Table.Row key={index}>
                     <Table.Cell>{index + 2}</Table.Cell>
