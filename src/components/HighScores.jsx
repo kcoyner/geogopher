@@ -24,12 +24,14 @@ class HighScores extends React.Component {
         gameTypes: null,
         gameDifficulties: null,
         total: null,
-        page: 0
+        activeItem: 0
     }
     this.getScores = this.getScores.bind(this);;
     this.getGameAttributes = this.getGameAttributes.bind(this);
     this.onChange = this.onChange.bind(this);
     this.split = this.split.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
+    this.onPageClick = this.onPageClick.bind(this);
   }
 
     componentDidMount() {
@@ -45,6 +47,22 @@ class HighScores extends React.Component {
       console.log(data);
 
   }
+
+  onChangePage(e, { name }) {
+      if( name === "increment" && this.state.activeItem < this.state.scores.length){
+        const increment = this.state.activeItem + 1;
+        this.setState({ activeItem: increment });
+      }
+      if(name === "decrement" && this.state.activeItem >  0){
+        const decrement = this.state.activeItem - 1;
+        this.setState({ activeItem: decrement });
+      }
+  }
+
+  onPageClick(e, { value }) {
+    this.setState({ activeItem: value })
+  }
+
   getGameAttributes() {
       axios.get('/api/gameslist')
       .then(response => {
@@ -108,6 +126,7 @@ class HighScores extends React.Component {
   }
 
   render() {
+    const { activeItem } = this.state.activeItem;
     return (
       <div>
           <Dropdown name="selectedGameType" onChange={this.onChange} defaultValue={this.state.selectedGameType} fluid selection options={this.state.gameTypes} />
@@ -126,17 +145,22 @@ class HighScores extends React.Component {
             </Table.Row>
             </Table.Header>
             <Table.Body>
+                { this.state.activeItem === 0 ? (
                 <Table.Row>
                     <Table.Cell><Label ribbon>First</Label></Table.Cell>
                     <Table.Cell>{this.state.first.user.username }</Table.Cell>
                     <Table.Cell>{this.state.first.count_polygons_entered + "/" + this.state.total }</Table.Cell>
                     <Table.Cell>{ moment.duration(this.state.first.game_timer_remaining, "seconds").format() }</Table.Cell>
                 </Table.Row>
+                ) : (null)
+
+                }
+
             {
-                this.state.scores[this.state.page].map((score, index) => (
+                this.state.scores[this.state.activeItem].map((score, index) => (
                     
                 <Table.Row key={index}>
-                    <Table.Cell>{index + 2}</Table.Cell>
+                    <Table.Cell>{(this.state.activeItem === 0) ? index + 2 : this.state.activeItem * 10 + index + 1}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
                     <Table.Cell>{score.count_polygons_entered + "/"}</Table.Cell>
                     <Table.Cell>{ moment.duration(score.game_timer_remaining, "seconds").format() }</Table.Cell>
@@ -148,14 +172,21 @@ class HighScores extends React.Component {
                 <Table.Row>
                     <Table.HeaderCell colSpan='5'>
                     <Menu floated='right' pagination>
-                        <Menu.Item as='a' icon>
+                        <Menu.Item name="decrement" onClick={this.onChangePage} as='a' icon>
                         <Icon name='left chevron' />
                         </Menu.Item>
-                        <Menu.Item as='a'>1</Menu.Item>
-                        <Menu.Item as='a'>2</Menu.Item>
-                        <Menu.Item as='a'>3</Menu.Item>
-                        <Menu.Item as='a'>4</Menu.Item>
-                        <Menu.Item as='a' icon>
+                        {
+                             this.state.scores.map((scoreArr, index) => (
+                                <Menu.Item
+                                onClick={this.onPageClick}
+                                active={this.state.activeItem === index}
+                                value={index}
+                                key={index}
+                                as='a'>{index + 1}
+                                </Menu.Item>
+                            ))
+                        }
+                        <Menu.Item name="increment" as='a' icon onClick={this.onChangePage}>
                         <Icon name='right chevron' />
                         </Menu.Item>
                     </Menu>
