@@ -29,6 +29,7 @@ class HighScores extends React.Component {
     this.getScores = this.getScores.bind(this);;
     this.getGameAttributes = this.getGameAttributes.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.split = this.split.bind(this);
   }
 
     componentDidMount() {
@@ -81,6 +82,14 @@ class HighScores extends React.Component {
       })
   }
 
+  split(arr, n) {
+    const res = [];
+    while (arr.length) {
+      res.push(arr.splice(0, n));
+    }
+    return res;
+  }
+
   getScores() {
     axios.get('/api/scores', { params: {
         game_type_id: this.state.selectedGameType,
@@ -89,6 +98,8 @@ class HighScores extends React.Component {
     }})
     .then(response => {
         const arr = response.data;
+        const arr1 = this.split(arr, 10);
+        console.log(arr1);
         const firstScore = arr.shift();
         this.setState({
             scores: arr,
