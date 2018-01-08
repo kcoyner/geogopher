@@ -10,6 +10,8 @@ import { Card, Image } from 'semantic-ui-react';
 import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer, setBaseTime } from '../actions/index'
 import { Motion, spring } from 'react-motion';
 
+const gamesListSplash = require('-!url-loader?name=games-list-splash!../assets/games-list-splash.png');
+
 @connect((state, ownProps) => {
   return {
     //take out of redux
@@ -71,7 +73,7 @@ class GamesList extends React.Component {
         <div className="gap"></div>
 
         <div className="splash">
-          <h1>PLAY</h1>
+          <Image className="games-list-splash" src={gamesListSplash} />
         </div>
 
 
