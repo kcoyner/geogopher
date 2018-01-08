@@ -114,7 +114,7 @@ apiRouter.route('/login')
         password = req.body.password;
     db.users.findOne({ where: { email: email } }).then(function (user) {
       if(!user) {
-        console.log('user does not exist');
+        res.status(401).send({ error: 'Incorrect username and password combination'})
       } else {
       user.validPassword(password)
         .then(validUser => {
@@ -122,7 +122,7 @@ apiRouter.route('/login')
             console.log('valid user');
             res.send(user);
           } else {
-            console.log('wrong password');
+            res.send()
           }
         })
       }
@@ -237,7 +237,11 @@ apiRouter.route('/scores')
       limit: 50
       })
       .then(scores => {
-          res.send(scores);
+          let results = [];
+          while (scores.length) {
+            results.push(scores.splice(0, 10));
+          }
+          res.send(results);
       })
   })
 

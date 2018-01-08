@@ -4,7 +4,7 @@
 import axios from 'axios';
 import React from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 import { GoogleLogin } from 'react-google-login';
@@ -15,7 +15,8 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-
+      error: false,
+      errorMessage: null
     }
     this.onLoginSuccess = this.onLoginSuccess.bind(this);
     this.onLoginFailure = this.onLoginFailure.bind(this);
@@ -28,11 +29,20 @@ class Login extends React.Component {
     const { dispatch } = this.props;
     dispatch(await userActions.login(this.state, false))
     .then(user => {
-      if(this.props.gameSelected) {
-        this.props.history.push('/map');
+      if(user) {
+        if(this.props.gameSelected) {
+          this.props.history.push('/map');
+        } else {
+          this.props.history.push('/');
+        }
       } else {
-        this.props.history.push('/');
+        console.log('login error');
+        this.setState({
+          error: true,
+          errorMessage: 'Incorrect username and password combination'
+        })
       }
+
     })
   }
 
@@ -59,6 +69,10 @@ class Login extends React.Component {
 
   onLoginFailure(response) {
     console.log('failure: ', response);
+    this.setState({
+      error: true,
+      errorMessage: 'Incorrect username and password combination'
+    })
   }
 
   async onPlayAnonymous() {
@@ -83,24 +97,33 @@ class Login extends React.Component {
           <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
               <Form.Field>
                 <label>Email</label>
-                <input name='email' placeholder='Email' required='true'/>
+                <input name='email' type='email' placeholder='Email' required='true'/>
               </Form.Field>
               <Form.Field>
                 <label>Password</label>
                 <input name='password' placeholder='Password' type='password'required='true'/>
               </Form.Field>
-          <div className="divider"></div>
-          <Button className="login-btn" content="Login"/>
-          <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
-          <GoogleLogin
-          className="google-btn"
-          clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
-          buttonText="Login with Google"
-          onSuccess={this.onLoginSuccess}
-          onFailure={this.onLoginFailure}
-          />
-          <Button className="anonymous-btn"  onClick={this.onPlayAnonymous} content="Play as Anonymous"/>
+              <Button className="login-btn" content="Login"/>
           </Form>
+          <div className="divider"></div>
+          <Form>
+            <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
+            <GoogleLogin
+            className="google-btn"
+            clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={this.onLoginSuccess}
+            onFailure={this.onLoginFailure}
+            />
+            <Button className="anonymous-btn"  onClick={this.onPlayAnonymous} content="Play as Anonymous"/>
+          </Form>
+          { this.state.error &&
+          <Message
+          error
+          header='Oops! There seems to be a problem'
+          content={this.state.errorMessage}
+          />
+          }
         </div>
       </div>
     </div>

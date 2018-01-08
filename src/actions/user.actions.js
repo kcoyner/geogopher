@@ -13,12 +13,11 @@ function register(user) {
         return userService.register(user)
             .then(
                 user => {
-                    console.log(user);
                     if(user){
                         console.log('User created: ', user);
                         dispatch(success(user));
                     } else {
-                        console.log('User already exsists');
+                        return "A user with that email already exists."
                     }
                 },
                 error => {
@@ -49,8 +48,12 @@ function login(user, google) {
             return userService.login(user)
                 .then(
                     user => {
-                        dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-                        return user;
+                        if(user) {
+                            dispatch({ type: 'LOGIN_SUCCESS', payload: user })
+                            return user;
+                        } else {
+                            return;
+                        }
                     },
                     error => {
                         return error;

@@ -18,18 +18,20 @@ class HighScores extends React.Component {
         scores: null,
         first: null,
         selectedGameType: Number(props.match.params.gameTypeId) || 1,
-        selectedGame: Number(props.match.params.gameId) || 1,
+        selectedGame: Number(props.match.params.gameId) || null,
         selectedDifficulty: Number(props.match.params.gameDiffId) || 1,
         games: null,
         gameTypes: null,
         gameDifficulties: null,
         total: null,
-        page: 1
+        activeItem: 0
     }
     this.getScores = this.getScores.bind(this);;
     this.getGameAttributes = this.getGameAttributes.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.split = this.split.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
+    this.onPageClick = this.onPageClick.bind(this);
+    this.getGameTotal = this.getGameTotal.bind(this);
   }
 
     componentDidMount() {
@@ -39,12 +41,44 @@ class HighScores extends React.Component {
   }
 
   onChange(e, data) {
-      const obj = {}
-      obj[data.name] = data.value;
-      this.setState(obj, this.getScores);
-      console.log(data);
-
+      if(data.name === "selectedGame") {
+          const gameTotal = this.getGameTotal(this.state.games, data.value);
+          this.setState({
+              selectedGame: data.value,
+              total: gameTotal,
+              activeItem: 0
+          }, this.getScores)
+      } else {
+        const obj = {}
+        obj[data.name] = data.value;
+        obj['activeItem'] = 0;
+        this.setState(obj, this.getScores);
+      }
   }
+
+  onChangePage(e, { name }) {
+      if( name === "increment" && this.state.activeItem < this.state.scores.length){
+        const increment = this.state.activeItem + 1;
+        this.setState({ activeItem: increment });
+      }
+      if(name === "decrement" && this.state.activeItem >  0){
+        const decrement = this.state.activeItem - 1;
+        this.setState({ activeItem: decrement });
+      }
+  }
+
+  onPageClick(e, { value }) {
+    this.setState({ activeItem: value })
+  }
+
+  getGameTotal(gameArr, gameId) {
+    for(let i in gameArr) {
+        if(gameArr[i].value === gameId) {
+            return gameArr[i].total;
+        }
+    }
+  }
+
   getGameAttributes() {
       axios.get('/api/gameslist')
       .then(response => {
@@ -56,10 +90,19 @@ class HighScores extends React.Component {
               let game = Object.assign({}, { value: element.game_id, text: element.game_name, total: element.max_count_polygons });
               games.push(game);
           })
-
-          this.setState({
-              games: games
+          if(this.state.selectedGame === null) {
+            this.setState({
+                games: games,
+                selectedGame: games[0].value,
+                total: games[0].total
             });
+          } else {
+              const gametotal = this.getGameTotal(games, this.state.selectedGame);
+              this.setState({
+                games: games,
+                total: gametotal
+            })
+          }
       })
       axios.get('/api/gameSettings')
       .then(response => {
@@ -82,14 +125,6 @@ class HighScores extends React.Component {
       })
   }
 
-  split(arr, n) {
-    let res = [];
-    while (arr.length) {
-      res.push(arr.splice(0, n));
-    }
-    return res;
-  }
-
   getScores() {
     axios.get('/api/scores', { params: {
         game_type_id: this.state.selectedGameType,
@@ -98,9 +133,7 @@ class HighScores extends React.Component {
     }})
     .then(response => {
         const arr = response.data;
-        // const arr1 = this.split(arr, 10);
-        // console.log(arr1);
-        const firstScore = arr.shift();
+        const firstScore = arr.length > 0 ? arr[0].shift() : null;
         this.setState({
             scores: arr,
             first: firstScore,
@@ -110,6 +143,7 @@ class HighScores extends React.Component {
   }
 
   render() {
+    const { activeItem } = this.state.activeItem;
     return (
       <div>
           <Dropdown name="selectedGameType" onChange={this.onChange} defaultValue={this.state.selectedGameType} fluid selection options={this.state.gameTypes} />
@@ -128,19 +162,23 @@ class HighScores extends React.Component {
             </Table.Row>
             </Table.Header>
             <Table.Body>
+                { this.state.activeItem === 0 ? (
                 <Table.Row>
                     <Table.Cell><Label ribbon>First</Label></Table.Cell>
                     <Table.Cell>{this.state.first.user.username }</Table.Cell>
                     <Table.Cell>{this.state.first.count_polygons_entered + "/" + this.state.total }</Table.Cell>
                     <Table.Cell>{ moment.duration(this.state.first.game_timer_remaining, "seconds").format() }</Table.Cell>
                 </Table.Row>
+                ) : (null)
+
+                }
+
             {
-                this.state.scores.map((score, index) => (
-                    
+                this.state.scores[this.state.activeItem].map((score, index) => (         
                 <Table.Row key={index}>
-                    <Table.Cell>{index + 2}</Table.Cell>
+                    <Table.Cell>{(this.state.activeItem === 0) ? index + 2 : this.state.activeItem * 10 + index + 1}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
-                    <Table.Cell>{score.count_polygons_entered + "/"}</Table.Cell>
+                    <Table.Cell>{score.count_polygons_entered + "/" + this.state.total}</Table.Cell>
                     <Table.Cell>{ moment.duration(score.game_timer_remaining, "seconds").format() }</Table.Cell>
                 </Table.Row>
                 ))
@@ -150,14 +188,21 @@ class HighScores extends React.Component {
                 <Table.Row>
                     <Table.HeaderCell colSpan='5'>
                     <Menu floated='right' pagination>
-                        <Menu.Item as='a' icon>
+                        <Menu.Item name="decrement" onClick={this.onChangePage} as='a' icon>
                         <Icon name='left chevron' />
                         </Menu.Item>
-                        <Menu.Item as='a'>1</Menu.Item>
-                        <Menu.Item as='a'>2</Menu.Item>
-                        <Menu.Item as='a'>3</Menu.Item>
-                        <Menu.Item as='a'>4</Menu.Item>
-                        <Menu.Item as='a' icon>
+                        {
+                             this.state.scores.map((scoreArr, index) => (
+                                <Menu.Item
+                                onClick={this.onPageClick}
+                                active={this.state.activeItem === index}
+                                value={index}
+                                key={index}
+                                as='a'>{index + 1}
+                                </Menu.Item>
+                            ))
+                        }
+                        <Menu.Item name="increment" as='a' icon onClick={this.onChangePage}>
                         <Icon name='right chevron' />
                         </Menu.Item>
                     </Menu>
