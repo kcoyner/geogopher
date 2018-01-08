@@ -23,7 +23,7 @@ class GamesList extends React.Component {
     super(props);
     this.state = {
       count: 0,
-
+      isLoading: true
     };
     this.onGameSelect = this.onGameSelect.bind(this);
 
@@ -33,6 +33,7 @@ class GamesList extends React.Component {
     this.props.dispatch(fetchGamesList());
     //get game settings options queued up
     this.props.dispatch(fetchGameSettings());
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
 
@@ -54,15 +55,18 @@ class GamesList extends React.Component {
     }
 
 
-
-
   render() {
     const {games} = this.props;
 
     return (
 
-
       <div className="home-page-container">
+      {
+        this.state.isLoading ?
+        <div className="loader"></div>
+      :
+
+      <div>
 
         <div className="gap"></div>
 
@@ -78,15 +82,10 @@ class GamesList extends React.Component {
 
 
         <div className="countries-list">
-
-
             {
               games.map(
-
                 (game, index) => (
-
                   game.game_name.indexOf("Countries") > -1 ?
-
                     <div key={index}
                          className="game-thumb">
                       <img src={game.img_asset}
@@ -99,14 +98,11 @@ class GamesList extends React.Component {
                       <h3>{game.game_description}</h3>
                     </header>
                   </div>
-
                   :
                   null
-
               )
             )
           }
-
       </div>
 
         <div className="capitals-title">
@@ -136,20 +132,19 @@ class GamesList extends React.Component {
                     <h3>{game.game_description}</h3>
                   </header>
                 </div>
-
                   :
                 null
               )
             )
           }
-
+      </div>
       </div>
 
-
-
+     }
     </div>
-      );
+     );
   }
+
 }
 
 export default GamesList;
