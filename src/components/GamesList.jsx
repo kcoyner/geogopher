@@ -28,7 +28,6 @@ class GamesList extends React.Component {
       isLoading: true
     };
     this.onGameSelect = this.onGameSelect.bind(this);
-
   }
 
   componentDidMount() {
@@ -56,7 +55,6 @@ class GamesList extends React.Component {
       }
     }
 
-
   render() {
     const {games} = this.props;
 
@@ -76,14 +74,13 @@ class GamesList extends React.Component {
           <Image className="games-list-splash" src={gamesListSplash} />
         </div>
 
-
         <div className="countries-title">
           <h1>COUNTRIES</h1>
           <h3>Choose a region to begin</h3>
         </div>
 
-
         <div className="countries-list">
+
             {
               games.map(
                 (game, index) => (
@@ -114,7 +111,6 @@ class GamesList extends React.Component {
 
         <div className="capitals-list">
 
-
             {
               games.map(
 
@@ -141,7 +137,6 @@ class GamesList extends React.Component {
           }
       </div>
       </div>
-
      }
     </div>
      );
