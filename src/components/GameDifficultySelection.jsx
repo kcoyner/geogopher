@@ -148,22 +148,22 @@ class GameDifficultySelection extends React.Component {
                         className="qwk-select"
                         onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[3].game_difficulty_name)}
                         onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[3].game_difficulty_name)}>
-                        QUICK</Button>
+                        QUICK - 1 Minute</Button>
                       <Button
                         className="easy-select"
                         onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[0].game_difficulty_name)}
                         onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[0].game_difficulty_name)}>
-                        EASY</Button>
+                        RELAXED</Button>
                       <Button
                         className="med-select"
                         onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[1].game_difficulty_name)}
                         onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[1].game_difficulty_name)}>
-                        MEDIUM</Button>
+                        NORMAL</Button>
                       <Button
                         className="hard-select"
                         onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[2].game_difficulty_name)}
                         onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[2].game_difficulty_name)}>
-                        HARD</Button>
+                        PRO</Button>
 
                       <div className="time-display">{this.state.calculatedTime}</div>
 

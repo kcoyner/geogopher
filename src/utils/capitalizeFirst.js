@@ -8,7 +8,7 @@
 
 export const capitalizeWords = (words) => {
 
-  const EXCLUDED_WORDS = ['a', 'the', 'of', 'the'];
+  const EXCLUDED_WORDS = ['a', 'the', 'of', 'the', 'and'];
 
   const capFirstLetter = (word) => {
     let capitalizedWord = '';
