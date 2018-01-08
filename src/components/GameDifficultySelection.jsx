@@ -158,7 +158,7 @@ class GameDifficultySelection extends React.Component {
                         className="med-select"
                         onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[1].game_difficulty_name)}
                         onMouseEnter={() => this.showTimeResult(this.props.gameDifficulties[1].game_difficulty_name)}>
-                        MEDIUM</Button>
+                        NORMAL</Button>
                       <Button
                         className="hard-select"
                         onClick={() => this.handleDifficultySettings(this.props.gameDifficulties[2].game_difficulty_name)}
