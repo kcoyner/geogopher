@@ -86,6 +86,7 @@ export default class Map extends React.Component {
       geoJsonLoaded: false,
       highlightedPolygon: null,
       currentHint: null,
+      skippingPolygon: false,
       geoClickPolygonDisplay: '',
       oneStepBack: {
         gameType: true,
@@ -270,6 +271,7 @@ export default class Map extends React.Component {
       countPolygonsEntered: this.props.countPolygonsEntered,
       countTotalSubmissions: this.props.countTotalSubmissions,
       incorrectEntries: this.props.incorrectEntries,
+      skippingPolygon: this.state.skippingPolygon,
       dispatchFcn: this.props.dispatch,
       gameData: this.props.gameData,
       reactThis: this,
@@ -574,6 +576,7 @@ console.log("++++++++++", currentScore.userID);
       map: map,
       countTotalSubmissions: this.props.countTotalSubmissions,
       dispatchFcn: this.props.dispatch,
+      skippingPolygon: this.state.skippingPolygon,
       gameData: this.props.gameData,
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
@@ -584,7 +587,7 @@ console.log("++++++++++", currentScore.userID);
 
     if (this.props.gameTypeSelected === 'RANDOM SELECT') {
 
-      nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon, true);
+      nameTheCountryGameLogic(gameValues, gameValues.highlightedPolygon, true);
 
     } else if (this.props.gameTypeSelected === 'GEOCLICK') {
 

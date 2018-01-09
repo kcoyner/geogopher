@@ -71,7 +71,7 @@ class GameStart extends React.Component {
         return(
             <Modal
             open={this.props.open}
-            dimmer={this.props.mapLoaded}
+            dimmer={true}
             closeOnRootNodeClick={false}>
             <Step.Group ordered attached='top'>
               <Step completed>
@@ -137,7 +137,7 @@ class GameStart extends React.Component {
                 :
 
                 <Modal.Description style={ loaderStyle }>
-                  <Loader active />
+                <div className="loader"></div>
                 </Modal.Description>
               }
                 </Modal.Content>

@@ -24,7 +24,13 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
   let moreCountriesLeft = false;
   let featureName;
 
-  if (skipCountry) {
+
+  if (skipCountry && !gameValues.skippingPolygon) {
+
+    //set global skippingPolygon to true, to prevent double skips
+    gameValues.reactThis.setState({
+      skippingPolygon: true
+    });
     // play an incorrect sound
     entryIncorrect.play();
     //get the polygon inside the map by using the id
@@ -61,7 +67,10 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
       )
     )
     google.maps.event.clearInstanceListeners(gameValues.map.data);
-  } else {
+
+    gameValues.reactThis.setState({skippingPolygon: false});
+
+  } else if (!skipCountry && !gameValues.skippingPolygon){
     getRandomUnansweredPolygon(gameValues.gameData, (highlightedCountry) => {
 
       //add hover listeners to help user know they are hoving over a polygon selection
