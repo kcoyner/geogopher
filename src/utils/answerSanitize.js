@@ -16,13 +16,22 @@ export const sanitizeInput = (answerInputted) => {
         .join('');
     }
 
-    //if text has .
-    if (answerSanitized.indexOf('.') > -1) {
+    //if text has . or trailing space
+    if (answerSanitized.indexOf('.') > -1 || answerSanitized[answerSanitized.length - 1] === ' ') {
       answerSanitized = answerSanitized.split('')
         .map(
-          (el) => { if (el !== '.') { return el } }
+          (el, idx) => {
+            if (idx === answerSanitized.length - 1 && el === ' ') {
+              return
+            }
+            if (el !== '.') {
+              return el
+            }
+          }
         )
         .join('');
     }
+
+    console.log(answerSanitized)
     return answerSanitized
 }
