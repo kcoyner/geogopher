@@ -67,12 +67,26 @@ class GameStart extends React.Component {
         maxHeight:'400px'
       }
 
+      let gameDifficulty;
+
+      this.props.gameDifficultySelected ?
+      gameDifficulty = this.props.gameDifficultySelected.toUpperCase() :
+      null;
+
 
         return(
+
             <Modal
             open={this.props.open}
             dimmer={true}
             closeOnRootNodeClick={false}>
+
+            {
+
+            this.props.mapLoaded
+
+            ?
+
             <Step.Group ordered attached='top'>
               <Step completed>
                 <Step.Content>
@@ -84,7 +98,7 @@ class GameStart extends React.Component {
               <Step completed>
                 <Step.Content >
                   <Step.Title>Difficulty</Step.Title>
-                  <Step.Description>{this.props.gameDifficultySelected || "Choose a difficulty"}</Step.Description>
+                  <Step.Description>{gameDifficulty || "Choose a difficulty"}</Step.Description>
                 </Step.Content>
               </Step>
 
@@ -96,54 +110,58 @@ class GameStart extends React.Component {
               </Step>
             </Step.Group>
 
+            :
+
+            null
+
+          }
+
+          {
+
+            this.props.mapLoaded
+
+            ?
 
             <Modal.Content>
+              <Modal.Description className="start-game-modal">
+                  <div className="get-ready">ARE YOU READY?</div>
+                  <div className="play-now"
+                       onMouseOver={()=>this.changePlayImg(true)}
+                       onMouseOut={()=>this.changePlayImg(false)}
+                       onClick={this.props.onStart}>
+                    <img src={
+                      this.state.hoverPlay ? playImgHover : playImgIdle
+                      }/>
+                  </div>
+                  <div className="play-now-bg">
+                      <img src={ this.state.backgroundGif }/>
+                  </div>
+                  <Button
+                    animated
+                    className="dont-play"
+                    onClick={this.props.onGoBack}>
+                      <Button.Content hidden>
+                        <Icon name="arrow left"/>
+                      </Button.Content>
+                      <Button.Content visible>
+                        BACK
+                      </Button.Content>
+                  </Button>
+              </Modal.Description>
+            </Modal.Content>
 
-                  {
+            :
 
-                  this.props.mapLoaded ?
+            <div className="loader"></div>
 
-                <Modal.Description className="start-game-modal">
-                    <div className="get-ready">ARE YOU READY?</div>
+          }
 
-                    <div className="play-now"
-                         onMouseOver={()=>this.changePlayImg(true)}
-                         onMouseOut={()=>this.changePlayImg(false)}
-                         onClick={this.props.onStart}>
-                          <img src={
-                            this.state.hoverPlay ? playImgHover : playImgIdle
-                          }/>
-                    </div>
-
-                    <div className="play-now-bg">
-                        <img src={
-                            this.state.backgroundGif
-                        }/>
-                    </div>
-
-                    <Button
-                      animated
-                      className="dont-play"
-                      onClick={this.props.onGoBack}>
-                        <Button.Content hidden>
-                          <Icon name="arrow left"/>
-                        </Button.Content>
-                        <Button.Content visible>
-                          BACK
-                        </Button.Content>
-                    </Button>
-                </Modal.Description>
-
-                :
-
-                <Modal.Description style={ loaderStyle }>
-                <div className="loader"></div>
-                </Modal.Description>
-              }
-                </Modal.Content>
-            </Modal>
+          </Modal>
+        //end render return
         )
-    }
+        //end return
+        }
+//end class
 }
 
 export default withRouter(GameStart);

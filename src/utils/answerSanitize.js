@@ -32,6 +32,5 @@ export const sanitizeInput = (answerInputted) => {
         .join('');
     }
 
-    console.log(answerSanitized)
     return answerSanitized
 }
