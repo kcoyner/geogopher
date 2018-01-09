@@ -26,11 +26,11 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
   let featureName;
 
 
-  if (skipCountry && !gameValues.skippingPolygon) {
+  if (skipCountry && !gameValues.skipInProgress) {
 
-    //set global skippingPolygon to true, to prevent double skips
+    //set global skipInProgress to true, to prevent double skips
     gameValues.reactThis.setState({
-      skippingPolygon: true
+      skipInProgress: true
     });
     // play an incorrect sound
     entryIncorrect.play();
@@ -69,10 +69,10 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
     )
     google.maps.event.clearInstanceListeners(gameValues.map.data);
 
-    gameValues.reactThis.setState({skippingPolygon: false});
+    gameValues.reactThis.setState({skipInProgress: false});
 
 
-  } else if (!skipCountry && !gameValues.skippingPolygon){
+  } else if (!skipCountry && !gameValues.skipInProgress){
     gameValues.gameData.map((polygon) => {
       if (polygon.polygonUnanswered) {
         endGame = false;

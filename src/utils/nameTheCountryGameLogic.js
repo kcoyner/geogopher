@@ -54,12 +54,12 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
     //if user is skipping the country
     if (skipCountry) {
       //if user double clicks SKIP and is already in the process of skipping, return
-      if (gameValues.skippingPolygon) {
+      if (gameValues.skipInProgress) {
         return;
       }
-      //set global skippingPolygon to true, to prevent double skips
+      //set global skipInProgress to true, to prevent double skips
       gameValues.reactThis.setState({
-        skippingPolygon: true
+        skipInProgress: true
       });
       //get the polygon inside the map by using the id
       let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
@@ -97,7 +97,7 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
         )
       )
       gameValues.reactThis.setState({
-        skippingPolygon: false
+        skipInProgress: false
       })
       //set answer status to correct
       allowNextCountry = true;
