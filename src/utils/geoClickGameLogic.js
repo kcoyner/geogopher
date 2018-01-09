@@ -22,6 +22,7 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
   let entryCorrect = gameValues.refs.entry_correct;
   let allowNextCountry = false;
   let moreCountriesLeft = false;
+  let endGame = true;
   let featureName;
 
 
@@ -70,7 +71,20 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
 
     gameValues.reactThis.setState({skippingPolygon: false});
 
+
   } else if (!skipCountry && !gameValues.skippingPolygon){
+    gameValues.gameData.map((polygon) => {
+      if (polygon.polygonUnanswered) {
+        endGame = false;
+      }
+    })
+
+    //end game if the above map does not contain unanswered polygons
+    if (endGame) {
+      gameValues.handleGameEnd();
+      return;
+    }
+
     getRandomUnansweredPolygon(gameValues.gameData, (highlightedCountry) => {
 
       //add hover listeners to help user know they are hoving over a polygon selection
@@ -108,8 +122,6 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
           })
           // play a correct sound
           entryCorrect.play();
-          //set allowNextCountry to true
-          allowNextCountry = true;
           //submit correct entry
           gameValues.dispatchFcn(
             submitCorrectEntry(

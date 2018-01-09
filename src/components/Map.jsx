@@ -276,6 +276,7 @@ export default class Map extends React.Component {
       gameData: this.props.gameData,
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
+      handleGameEnd: this.handleGameEnd,
       gameSelected: this.props.gameSelected,
       refs: this.refs
     }
