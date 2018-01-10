@@ -116,8 +116,8 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
         if (featureName === highlightedCountry.acceptedAnswers[0]) {
           //change polygon colors
           gameValues.map.data.overrideStyle(event.feature, {
-            fillColor: '#7FF000',
-            strokeColor: '#008000',
+            fillColor: '#008000',
+            strokeColor: '#7FFF00',
             strokeWeight: '2'
           })
           // play a correct sound

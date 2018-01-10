@@ -79,8 +79,8 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
       polygon,
       {
         fillOpacity: '1',
-        fillColor: '#7FF000',
-        strokeColor: '#008000',
+        fillColor: '#008000',
+        strokeColor: '#7FFF00',
         strokeWeight: '2',
       }
     ), 1000);
@@ -92,8 +92,8 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
       polygon,
       {
         fillOpacity: '1',
-        fillColor: '#7FF000',
-        strokeColor: '#008000',
+        fillColor: '#008000',
+        strokeColor: '#7FFF00',
         strokeWeight: '2',
       }
     );

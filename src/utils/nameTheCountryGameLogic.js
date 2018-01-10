@@ -112,8 +112,8 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
           // the the sound for a correct entry
           //modify the colors of polygon in the map
           gameValues.map.data.overrideStyle(polygonInMap, {
-            fillColor: '#7FF000',
-            strokeColor: '#008000',
+            fillColor: '#008000',
+            strokeColor: '#7FFF00',
             strokeWeight: '2'
           })
           //dispatch gameData to show TRUE for polygonsAnswered

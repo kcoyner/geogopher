@@ -115,6 +115,8 @@ export default class Map extends React.Component {
     this.showHint = this.showHint.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
   }
 
   componentDidUpdate() {
@@ -137,15 +139,12 @@ export default class Map extends React.Component {
         lat: this.props.gameCenterCoords[0],
         lng: this.props.gameCenterCoords[1],
       },
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.google.maps.ControlPosition.RIGHT_CENTER
-      },
       streetViewControl: false,
       mapTypeControl: false,
       mapTypeId: 'roadmap',
       //turn off all country names and labels
-      styles: mapDetails
+      styles: mapDetails,
+      disableDefaultUI: true
     });
     //load in coordinate data with country name information
     map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
@@ -617,7 +616,19 @@ export default class Map extends React.Component {
       }, 2000)
 
     }
-    this.nameInput.focus();
+    //refocus on input if not geoclick
+    this.props.gameTypeSelected !== 'GEOCLICK' ? this.nameInput.focus() : null
+
+  }
+
+  zoomIn(){
+    let currentZoomLevel = map.getZoom();
+    currentZoomLevel != 18 ? map.setZoom(currentZoomLevel + 1) : null
+  }
+
+  zoomOut(){
+    let currentZoomLevel = map.getZoom();
+    currentZoomLevel != 0 ? map.setZoom(currentZoomLevel - 1) : null
   }
 
   handleClick() {
@@ -640,9 +651,10 @@ export default class Map extends React.Component {
       if (!google.maps.event.hasListeners(map.data, 'click')) {
         geoClickGameLogic(gameValues, this.state.highlightedPolygon)
       }
-    }
 
-    this.nameInput.focus();
+    } else {
+      this.nameInput.focus();
+    }
   }
 
   render() {
@@ -731,10 +743,12 @@ export default class Map extends React.Component {
           }
 
           <div className="zoom-in">
-            +{/* <Icon name='plus' size='big' /> */}
+            <div className="zi-btn"
+                 onClick={this.zoomIn}>+</div>
           </div>
           <div className="zoom-out">
-            -{/* <Icon name='minus' size='big' /> */}
+            <div className="zo-btn"
+                 onClick={this.zoomOut}>-</div>
           </div>
 
           {
