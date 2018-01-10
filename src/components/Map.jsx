@@ -86,6 +86,8 @@ export default class Map extends React.Component {
       geoJsonLoaded: false,
       highlightedPolygon: null,
       currentHint: null,
+      skipInProgress: false,
+      hintInProgress: false,
       geoClickPolygonDisplay: '',
       oneStepBack: {
         gameType: true,
@@ -270,10 +272,12 @@ export default class Map extends React.Component {
       countPolygonsEntered: this.props.countPolygonsEntered,
       countTotalSubmissions: this.props.countTotalSubmissions,
       incorrectEntries: this.props.incorrectEntries,
+      skipInProgress: this.state.skipInProgress,
       dispatchFcn: this.props.dispatch,
       gameData: this.props.gameData,
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
+      handleGameEnd: this.handleGameEnd,
       gameSelected: this.props.gameSelected,
       refs: this.refs
     }
@@ -381,7 +385,7 @@ export default class Map extends React.Component {
       userID: this.props.userID
     }
     this.setState({ open: false });
-console.log("++++++++++", currentScore.userID);
+
     this.props.dispatch(await actions.postScore(currentScore))
 
 
@@ -463,10 +467,18 @@ console.log("++++++++++", currentScore.userID);
   }
 
   showHint() {
+    console.log("skip:",this.state.skipInProgress)
+    console.log("hint:",this.state.hintInProgress)
 
     let gameTypeSelected = this.props.gameTypeSelected;
     //declare base sentence
     let hintSentence = 'The answer starts with a';
+    this.setState({hintInProgress: true})
+
+    if (this.state.hintInProgress || this.state.skipInProgress) {
+      this.setState({hintInProgress: false})
+      return
+    }
 
     if (gameTypeSelected === 'RANDOM SELECT' ) {
       //get first letter of country that was selected
@@ -481,7 +493,10 @@ console.log("++++++++++", currentScore.userID);
       //change state to show hint
       this.setState({currentHint: `${hintSentence} "${hint.toUpperCase()}"`})
       //set state back to null
-      setTimeout(()=>this.setState({currentHint: null}),2000)
+      setTimeout( () => {
+        this.setState({currentHint: null});
+        this.setState({hintInProgress: false});
+      },2000)
 
     } else if (gameTypeSelected === 'COUNTDOWN') {
 
@@ -524,15 +539,17 @@ console.log("++++++++++", currentScore.userID);
               },2000)
               break;
         }
-
       }
+
+      this.setState({hintInProgress: false});
+
     } else {
       //hint logic for geoClick
       let polygonId = this.state.highlightedPolygon.id;
       let hintsArr;
 
       polygonId + 5 > this.props.maxCountPolygons ?
-      hintsArr = Array.from([0, 1, 2, 3, 4], x => (polygonId - 5) + x) :
+      hintsArr = Array.from([0, 1, 2, 3, 4], x => (polygonId - 4) + x) :
       hintsArr = Array.from([0, 1, 2, 3, 4], x => polygonId + x)
       console.log(hintsArr)
       this.setState({currentHint: "It's one of these"})
@@ -556,6 +573,7 @@ console.log("++++++++++", currentScore.userID);
             strokeColor: 'orange',
             strokeWeight: '2'
           });
+          this.setState({hintInProgress: false});
       },2000)
       });
     }
@@ -574,6 +592,7 @@ console.log("++++++++++", currentScore.userID);
       map: map,
       countTotalSubmissions: this.props.countTotalSubmissions,
       dispatchFcn: this.props.dispatch,
+      skipInProgress: this.state.skipInProgress,
       gameData: this.props.gameData,
       reactThis: this,
       highlightedPolygon: this.state.highlightedPolygon,
@@ -584,7 +603,7 @@ console.log("++++++++++", currentScore.userID);
 
     if (this.props.gameTypeSelected === 'RANDOM SELECT') {
 
-      nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon, true);
+      nameTheCountryGameLogic(gameValues, gameValues.highlightedPolygon, true);
 
     } else if (this.props.gameTypeSelected === 'GEOCLICK') {
 

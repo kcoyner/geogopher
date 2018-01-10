@@ -80,7 +80,7 @@ class Explore extends React.Component {
   async componentDidMount() {
 
     if (this.props.polygonsAnswered.length > 1 || this.props.polygonsUnanswered.length > 1 || this.props.polygonsSkipped.length > 1) {
-      
+
       map = new window.google.maps.Map(document.getElementById('explore-map'), {
         zoom: this.props.gameZoom,
         center: {

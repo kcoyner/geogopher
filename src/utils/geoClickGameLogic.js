@@ -22,9 +22,16 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
   let entryCorrect = gameValues.refs.entry_correct;
   let allowNextCountry = false;
   let moreCountriesLeft = false;
+  let endGame = true;
   let featureName;
 
-  if (skipCountry) {
+
+  if (skipCountry && !gameValues.skipInProgress) {
+
+    //set global skipInProgress to true, to prevent double skips
+    gameValues.reactThis.setState({
+      skipInProgress: true
+    });
     // play an incorrect sound
     entryIncorrect.play();
     //get the polygon inside the map by using the id
@@ -61,7 +68,23 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
       )
     )
     google.maps.event.clearInstanceListeners(gameValues.map.data);
-  } else {
+
+    gameValues.reactThis.setState({skipInProgress: false});
+
+
+  } else if (!skipCountry && !gameValues.skipInProgress){
+    gameValues.gameData.map((polygon) => {
+      if (polygon.polygonUnanswered) {
+        endGame = false;
+      }
+    })
+
+    //end game if the above map does not contain unanswered polygons
+    if (endGame) {
+      gameValues.handleGameEnd();
+      return;
+    }
+
     getRandomUnansweredPolygon(gameValues.gameData, (highlightedCountry) => {
 
       //add hover listeners to help user know they are hoving over a polygon selection
@@ -99,8 +122,6 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
           })
           // play a correct sound
           entryCorrect.play();
-          //set allowNextCountry to true
-          allowNextCountry = true;
           //submit correct entry
           gameValues.dispatchFcn(
             submitCorrectEntry(

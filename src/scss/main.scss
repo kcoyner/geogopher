@@ -58,6 +58,10 @@ img.ui.image.geogopher-navbar-logo{
   text-align: center;
 }
 
+// .games-list-splash{
+//
+// }
+
 .countries-title{
   grid-area: countriestitle;
   padding: 20px;
@@ -866,11 +870,11 @@ button.play-different-game{
   grid-area: pdg;
   background-color: white;
   color: #6699cc;
-  border: 1px solid #6699cc;
+  border: 5px solid #6699cc;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
   transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
-  border-radius: 5px;
   box-shadow: none;
   &:hover{
     background-color: #6699cc;
@@ -884,11 +888,11 @@ button.play-again{
   grid-area: pa;
   background-color: white;
   color: #008000;
-  border: 1px solid #008000;
+  border: 5px solid #008000;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
   transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
-  border-radius: 5px;
   box-shadow: none;
   &:hover{
     background-color: #008000;
@@ -902,11 +906,11 @@ button.study-current-game{
   grid-area: scg;
   background-color: white;
   color: #c57b26;
-  border: 1px solid #c57b26;
+  border: 5px solid #c57b26;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
   transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
-  border-radius: 5px;
   box-shadow: none;
   &:hover{
     background-color: #c57b26;
@@ -920,11 +924,11 @@ button.see-high-scores{
   grid-area: shs;
   background-color: white;
   color: #EC0524;
-  border: 1px solid #EC0524;
+  border: 5px solid #EC0524;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
   transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
-  border-radius: 5px;
   box-shadow: none;
   &:hover{
     background-color: #EC0524;
