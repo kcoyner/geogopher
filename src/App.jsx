@@ -7,6 +7,7 @@ import Login from './components/Login';
 import RegisterPage from './components/Register';
 import HighScores from './components/HighScores';
 import Explore from './components/Explore';
+import Home from './components/Home';
 
 export default class App extends React.Component {
 
@@ -15,6 +16,7 @@ export default class App extends React.Component {
       <div>
         <NavBar> </NavBar>
         <Route exact path="/" component={ GamesList } />
+        <Route exact path="/home" component={ Home } />
         <Route path="/map" component={ Map } />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ RegisterPage } />

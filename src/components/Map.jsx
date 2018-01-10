@@ -467,8 +467,6 @@ export default class Map extends React.Component {
   }
 
   showHint() {
-    console.log("skip:",this.state.skipInProgress)
-    console.log("hint:",this.state.hintInProgress)
 
     let gameTypeSelected = this.props.gameTypeSelected;
     //declare base sentence
@@ -532,8 +530,8 @@ export default class Map extends React.Component {
                 map.data.overrideStyle(
                   map.data.getFeatureById(el.id),
                   {
-                    fillColor: 'firebrick',
-                    fillOpacity: '.6',
+                    fillColor: 'indianred',
+                    fillOpacity: '1',
                     strokeColor: 'orange',
                     strokeWeight: '2'
                   });

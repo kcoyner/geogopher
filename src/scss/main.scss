@@ -9,12 +9,6 @@ div.ui.menu{
   border: none;
 }
 
-img.ui.image.geogopher-navbar-logo{
-  position: absolute;
-  top: 55px;
-  left: 55px;
-}
-
 .ui.menu .item:before{
   background: rgba(0,0,0,0);
 }
@@ -30,6 +24,19 @@ img.ui.image.geogopher-navbar-logo{
       padding: 3px 6px 3px 6px;
 
     }
+}
+
+.ui.menu a[href="/home"]{
+  border: none;
+  &:hover{
+    border: none;
+  }
+}
+
+img.ui.image.geogopher-navbar-logo{
+  position: absolute;
+  top: 55px;
+  left: 55px;
 }
 
 //games list AKA home page component styling

@@ -40,7 +40,9 @@ class NavBar extends React.Component {
                 <Menu>
 
                   <Menu.Menu position='left'>
+                    <NavLink to="/home">
                       <Image className='geogopher-navbar-logo' src={geogopherLogo}/>
+                    </NavLink>
                   </Menu.Menu>
                   <Menu.Menu position='right'>
                     <Menu.Item>
