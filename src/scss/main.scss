@@ -526,29 +526,34 @@ div.game-controls{
     grid-area: gcontrols;
     display: grid;
     grid-gap: 10px;
-    grid-template-areas: ".. ..       ..       ..        ..        .."
-                         ".. timehead timehead scorehead scorehead .."
-                         ".. timedisp timedisp scoredisp scoredisp .."
-                         ".. ..       ..       ..        ..        .."
-                         ".. hintdisp hintdisp hintdisp  hintdisp  .."
-                         ".. inputent inputent inputent  inputent  .."
-                         ".. hint     advance  ..        quit      .."
-                         ".. ..       ..       ..        ..        ..";
+    grid-template-areas: ".. .. ..       ..       ..        ..        .."
+                         ".. .. timehead timehead scorehead scorehead .."
+                         ".. .. timedisp timedisp scoredisp scoredisp .."
+                         ".. .. ..       ..       ..        ..        .."
+                         ".. .. hintdisp hintdisp hintdisp  hintdisp  .."
+                         ".. zi inputent inputent inputent  inputent  .."
+                         ".. zo hint     advance  ..        quit      .."
+                         ".. .. ..       ..       ..        ..        ..";
 
     @media screen and (max-width: 1299px) {
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr;
       grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
       height: 85vh;
     }
 
     @media screen and (min-width: 1300px) {
-      grid-template-columns: 4fr 1fr 1fr 1fr 1fr 4fr;
+      grid-template-columns: 4fr  .5fr 1fr 1fr 1fr 1fr 1fr 4fr;
       grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
       height: 92vh;
     }
 }
 
-.hint-display{
+.game-controls > div {
+    padding: 10%;
+    text-align: center;
+}
+
+div.hint-display{
   grid-area: hintdisp;
   z-index: 4;
   text-align: center;
@@ -636,65 +641,100 @@ div.geoClick-display{
   line-height: 1;
 }
 
-button.ui.button.hint-btn{
+div.zoom-in{
+  grid-area: zi;
+  z-index: 4;
+  background-color: white;
+  color: #C57B26;
+  border: 5px solid #C57B26;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  max-height: 60px;
+  height:60px;
+  width:60px;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  box-shadow: none;
+  &:hover{
+    background-color: #C57B26;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
+}
+div.zoom-out{
+  grid-area:zo;
+  z-index: 4;
+  background-color: white;
+  color: #C57B26;
+  border: 5px solid #C57B26;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  box-shadow: none;
+  &:hover{
+    background-color: #C57B26;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
+}
+
+div.hint-btn{
   grid-area: hint;
   z-index: 4;
-  font-size: 1.2em;
-  background-color: #8AC84A;
-  padding: 20px 20px 30px 20px;
-  letter-spacing: 2px;
-  font-weight: lighter;
-  color: white;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -10px darkslategrey;
+  background-color: white;
+  color: #008000;
+  border: 5px solid #008000;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  box-shadow: none;
   &:hover{
-    background-color: #669933;
+    background-color: #008000;
     color: white;
-    border: 1px solid white;
-    border-radius: 4px;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
-button.ui.button.advance-btn{
+div.advance-btn{
   grid-area: advance;
   z-index: 4;
-  font-size: 1.2em;
-  background-color: #6A99CC;
-  padding: 20px 20px 30px 20px;
-  letter-spacing: 2px;
-  font-weight: lighter;
-  color: white;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -10px darkslategrey;
+  background-color: white;
+  color: #6699CC;
+  border: 5px solid #6699CC;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  box-shadow: none;
   &:hover{
-    background-color: #336699;
+    background-color: #6699CC;
     color: white;
-    border: 1px solid white;
-    border-radius: 4px;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
-button.ui.button.quit-game-btn{
+div.quit-game-btn{
   grid-area: quit;
   z-index: 4;
-  font-size: 1.2em;
-  background-color: #ec0524;
-  padding: 20px 20px 30px 20px;
-  letter-spacing: 2px;
-  font-weight: lighter;
-  color: white;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -10px darkslategrey;
-  margin-right: 0;
-  margin-left: 2em;
+  background-color: white;
+  color: #EC0524;
+  border: 5px solid #EC0524;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+  box-shadow: none;
   &:hover{
-    background-color: #CC3333;
+    background-color: #EC0524;
     color: white;
-    border: 1px solid white;
-    border-radius: 4px;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
@@ -1047,4 +1087,3 @@ button.see-high-scores{
     transform: rotate(360deg);
   }
 }
-

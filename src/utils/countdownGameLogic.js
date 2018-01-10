@@ -69,7 +69,7 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
     map.data.overrideStyle(
       polygon,
       {
-        fillOpacity: '0.5',
+        fillOpacity: '1',
         fillColor: '#7CFC00',
         strokeColor: '#00FFFF',
         strokeWeight: '5',
@@ -78,7 +78,7 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
     setTimeout(() => map.data.overrideStyle(
       polygon,
       {
-        fillOpacity: '0.5',
+        fillOpacity: '1',
         fillColor: '#7FF000',
         strokeColor: '#008000',
         strokeWeight: '2',
@@ -91,7 +91,7 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
     map.data.overrideStyle(
       polygon,
       {
-        fillOpacity: '0.5',
+        fillOpacity: '1',
         fillColor: '#7FF000',
         strokeColor: '#008000',
         strokeWeight: '2',
@@ -120,4 +120,3 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
   dispatchFcn(incrementTotalSubmissions(countTotalSubmissions));
   return;
 };
-
