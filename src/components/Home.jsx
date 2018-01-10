@@ -9,29 +9,64 @@ import {
   Modal,
   Loader } from 'semantic-ui-react';
 
-const countdownGif = require('-!file-loader?name=countdown!../assets/countdown.gif');
-const randomselectGif = require('-!file-loader?name=random-select!../assets/random-select.gif');
-const geoclickGif = require('-!file-loader?name=geoclick!../assets/geoclick.gif');
-const playImgIdle = require('-!file-loader?name=start-thumb-1!../assets/start-thumb-1.png');
-const playImgHover = require('-!file-loader?name=start-thumb-2!../assets/start-thumb-2.png');
+const ctaImg = require('-!file-loader?name=geogopher-cta!../assets/geogopher-cta.png');
+
 
 
 class Home extends React.Component {
     constructor(props) {
       super(props);
       this.state = {}
+      this.goGamesList = this.goGamesList.bind(this);
     }
 
     componentWillReceiveProps(){
 
     }
 
+    goGamesList(){
+      this.props.history.push('/')
+    }
+
     render() {
 
 
         return(
+          <div className="home-container">
+            <div className="gutter-right"/>
+            <div className="gutter-left"/>
+            <div className="cta-container">
+              <div className="cta-text">
+                {'Know the'} <br/> {'world that'} <br/> {'surrounds'} <br/> {'you.'}
+              </div>
+              <div className="cta-play-now" onClick={this.goGamesList}>PLAY NOW</div>
+              <div className="cta-img-overlay">
+                <img src={ctaImg} alt=""/>
+              </div>
+              <div className="geogopher-title">
+                GEOGOPHER
+              </div>
+              <div className="cta-map">
+                <div id="finland"></div>
+                <div id="germany"></div>
+                <div id="mali"></div>
+                <div id="cameroon"></div>
+                <div id="albania"></div>
+                <div id="romania"></div>
+                <div id="syria"></div>
+                <div id="kazakhstan"></div>
+              </div>
+            </div>
+            <div className="transition-stripe"></div>
+            <div className="transition-stripe-2"></div>
 
-            <div>assah</div>
+            <div className="about-container">
+
+
+
+
+            </div>
+        </div>
         )
         //end return
         }
