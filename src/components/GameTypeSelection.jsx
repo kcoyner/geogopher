@@ -126,7 +126,6 @@ class GameTypeSelection extends React.Component {
                           position="bottom center"
                           size="huge"
                           wide="very"
-                          basic
                         />
 
                       <Popup
@@ -145,7 +144,6 @@ class GameTypeSelection extends React.Component {
                         position="bottom center"
                         size="huge"
                         wide="very"
-                        basic
                       />
 
                     <Popup
@@ -164,7 +162,6 @@ class GameTypeSelection extends React.Component {
                       position="bottom center"
                       size="huge"
                       wide="very"
-                      basic
                     />
 
 

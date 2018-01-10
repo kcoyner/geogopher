@@ -33,10 +33,47 @@ div.ui.menu{
   }
 }
 
+.ui.dropdown > .text{
+  font-family: "Ubuntu Mono";
+  font-size: 1.5em;
+}
+
 img.ui.image.geogopher-navbar-logo{
   position: absolute;
   top: 55px;
   left: 55px;
+}
+
+div.menu.transition.visible{
+  transform: translateX(-50px);
+  width: 80%;
+  .header {
+    font-family: "Ubuntu Mono";
+    font-size: 1.5em;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #EC0524;
+  }
+  div.item > button {
+    background-color: white;
+    color: #EC0524;
+    border: 5px solid #EC0524;
+    border-radius: 0;
+    margin: 10px!important;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: 0 10%;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+    &:hover{
+      background-color: #EC0524;
+      color: white;
+      box-shadow: 5px 10px 20px -10px darkslategrey;
+      cursor: pointer;
+    }
+  }
 }
 
 //games list AKA home page component styling
@@ -252,6 +289,18 @@ button.ui.animated.button.go-back-gt-btn{
   font-size: 4em;
   font-family: "Ubuntu Mono";
   font-weight: 700;
+}
+
+div.bottom.center.popup{
+  .header{
+    border-bottom: 3px solid #EC0524;
+    font-family: "Ubuntu Mono";
+    font-size: 1.5em;
+  }
+  .content{
+    font-family: "Source Sans Pro";
+    font-size: 1.25em;
+  }
 }
 
 .ui.small.fade.reveal.select-countdown{
@@ -575,11 +624,6 @@ div.game-controls{
       grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
       height: 92vh;
     }
-}
-
-.game-controls > div {
-    padding: 10%;
-    text-align: center;
 }
 
 div.hint-display{

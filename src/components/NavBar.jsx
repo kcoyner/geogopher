@@ -40,9 +40,15 @@ class NavBar extends React.Component {
                 <Menu>
 
                   <Menu.Menu position='left'>
+                  {
+                    //dont show home logo if on home page
+                    this.props.location.pathname === '/home' ?
+                    null
+                    :
                     <NavLink to="/home">
                       <Image className='geogopher-navbar-logo' src={geogopherLogo}/>
                     </NavLink>
+                  }
                   </Menu.Menu>
                   <Menu.Menu position='right'>
                     <Menu.Item>
@@ -57,14 +63,13 @@ class NavBar extends React.Component {
                     <Menu.Item>
                        {user ? (
 
-                         <Dropdown text={user.username} pointing className='user-account-menu-dropdown'>
+                         <Dropdown text={`Hi, ${user.username}`} pointing="top left" className='user-account-menu-dropdown'>
                           <Dropdown.Menu>
                             <Dropdown.Header>Account</Dropdown.Header>
-                            <Dropdown.Divider />
                             <Dropdown.Item>
                               <Button
                               onClick={this.onLogout}
-                            >Logout</Button>
+                            >LOGOUT</Button>
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
