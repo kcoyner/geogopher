@@ -445,6 +445,9 @@ div.play-now{
   text-align: center;
   height: 100%;
   z-index: 10;
+  img{
+    max-height: 300px;
+  }
   img:hover{
     cursor: pointer;
   }
@@ -455,6 +458,9 @@ div.play-now-bg{
   text-align: center;
   height: 100%;
   z-index: 5;
+  img{
+    max-height: 300px;
+  }
   img:hover{
     cursor: pointer;
   }
@@ -815,48 +821,127 @@ div.quit-game-btn{
 
 //login styling
 .login-widget {
+  display: grid;
   grid-area: loginwidget;
+  grid-template-columns: 10fr 1fr 10fr;
+  grid-template-areas: "lcreds divider lbtns";
 
-    form.ui.form{
-      width: 100%;
+    // form.ui.form{
+    //   width: 100%;
+    //   display: grid;
+    //   grid-template-columns: 10fr 1fr 1fr 10fr;
+    //   grid-template-rows: repeat(3, 1fr);
+    // }
+
+    form.ui.form.login-credentials{
+      grid-area: lcreds;
+      .field > label{
+        font-family: "Ubuntu Mono";
+        font-size: 1.5em;
+      }
+      .field > input{
+        border: 1px solid black;
+        border-radius: 0;
+        height: 50px;
+        font-size: 1.5em;
+      }
+      button.ui.button.login-btn{
+          background-color: white;
+          color: #C57b26;
+          border: 5px solid #C57b26;
+          border-radius: 0;
+          font-size: 1.25em;
+          font-weight: bold;
+          padding: 2% 20%;
+          box-shadow: none;
+          max-width: 70%;
+          margin: auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+          &:hover{
+            background-color: #C57b26;
+            color: white;
+            box-shadow: 5px 10px 20px -10px darkslategrey;
+            cursor: pointer;
+          }
+      }
+    }
+
+    form.ui.form.login-buttons{
+      grid-column: lbtns;
       display: grid;
-      grid-template-columns: 10fr 1fr 1fr 10fr;
       grid-template-rows: repeat(3, 1fr);
     }
 
-    div.field{
-      grid-column: 1;
-    }
-
     div.divider{
-      grid-column: 2;
-      grid-row: 1/4;
+      grid-area: divider;
       border-right: 1px solid black;
+      margin-right: 40%;
     }
 
-    a.ui.button.register-btn{
-      grid-area: 1/4/1/4;
-      margin: 20px 20px 20px 0;
-    }
-    button.google-btn{
-      grid-area: 2/4/2/4;
-      margin: 20px 20px 20px 0;
-      background: #DD4B39;
-      color: white;
-      border-radius: 5px;
+    div.register-btn{
+      grid-row: 1;
+      background-color: white;
+      color: #008000;
+      border: 5px solid #008000;
+      font-size: 1.25em;
+      font-weight: bold;
+      box-shadow: none;
+      margin: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
       &:hover{
-        background: firebrick;
+        background-color: #008000;
+        color: white;
+        box-shadow: 5px 10px 20px -10px darkslategrey;
         cursor: pointer;
       }
     }
-    button.ui.button.anonymous-btn{
-      grid-area: 3/4/3/4;
-      margin: 20px 20px 20px 0;
+
+    button.google-btn{
+      grid-row: 2;
+      background-color: white;
+      color: #EC0524;
+      border: 5px solid #EC0524;
+      font-size: 1.25em;
+      font-weight: bold;
+      box-shadow: none;
+      margin: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+      &:hover{
+        background-color: #EC0524;
+        color: white;
+        box-shadow: 5px 10px 20px -10px darkslategrey;
+        cursor: pointer;
+      }
     }
 
-    button.ui.button.login-btn{
-      grid-area:3/1/3/1;
-      margin: 20px
+    div.anonymous-btn{
+      grid-row: 3;
+      background-color: white;
+      color: #6699CC;
+      border: 5px solid #6699CC;
+      font-size: 1.25em;
+      font-weight: bold;
+      box-shadow: none;
+      margin: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+      &:hover{
+        background-color: #6699CC;
+        color: white;
+        box-shadow: 5px 10px 20px -10px darkslategrey;
+        cursor: pointer;
+      }
     }
 }
 

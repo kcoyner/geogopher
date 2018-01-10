@@ -94,7 +94,8 @@ class Login extends React.Component {
         <div className="login-page-container">
           <div className="gap"></div>
           <div className="login-widget">
-          <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
+
+          <Form className="login-credentials" onChange={this.handleChange} onSubmit={this.handleSubmit} >
               <Form.Field>
                 <label>Email</label>
                 <input name='email' type='email' placeholder='Email' required='true'/>
@@ -103,20 +104,23 @@ class Login extends React.Component {
                 <label>Password</label>
                 <input name='password' placeholder='Password' type='password'required='true'/>
               </Form.Field>
-              <Button className="login-btn" content="Login"/>
+              <Button className="login-btn" >LOGIN</Button>
           </Form>
+
           <div className="divider"></div>
-          <Form>
-            <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
+
+          <Form className="login-buttons">
+            <div className="register-btn"  as={ Link } to="/register">SIGNUP</div>
             <GoogleLogin
             className="google-btn"
             clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
-            buttonText="Login with Google"
+            buttonText="LOGIN WITH GOOGLE"
             onSuccess={this.onLoginSuccess}
             onFailure={this.onLoginFailure}
             />
-            <Button className="anonymous-btn"  onClick={this.onPlayAnonymous} content="Play as Anonymous"/>
+            <div className="anonymous-btn"  onClick={this.onPlayAnonymous}>PLAY AS ANONYMOUS</div>
           </Form>
+
           { this.state.error &&
           <Message
           error
