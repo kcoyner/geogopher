@@ -624,11 +624,13 @@ export default class Map extends React.Component {
   zoomIn(){
     let currentZoomLevel = map.getZoom();
     currentZoomLevel != 18 ? map.setZoom(currentZoomLevel + 1) : null
+    this.nameInput.focus();
   }
 
   zoomOut(){
     let currentZoomLevel = map.getZoom();
     currentZoomLevel != 0 ? map.setZoom(currentZoomLevel - 1) : null
+    this.nameInput.focus();
   }
 
   handleClick() {
