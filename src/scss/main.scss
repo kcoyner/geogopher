@@ -881,11 +881,12 @@ div.quit-game-btn{
       margin-right: 40%;
     }
 
-    div.register-btn{
+    a.ui.button.register-btn{
       grid-row: 1;
       background-color: white;
       color: #008000;
       border: 5px solid #008000;
+      border-radius: 0;
       font-size: 1.25em;
       font-weight: bold;
       box-shadow: none;

@@ -110,7 +110,7 @@ class Login extends React.Component {
           <div className="divider"></div>
 
           <Form className="login-buttons">
-            <div className="register-btn"  as={ Link } to="/register">SIGNUP</div>
+            <Button className="register-btn"  as={ Link } to="/register">SIGNUP</Button>
             <GoogleLogin
             className="google-btn"
             clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
