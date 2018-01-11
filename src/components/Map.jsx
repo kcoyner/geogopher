@@ -78,7 +78,6 @@ export default class Map extends React.Component {
       userQuit: false,
       renderMissingCountriesButton: false,
       renderSkipCountryButton: false,
-      // renderSoundButton: true,
       renderInputField: true,
       gameType: true,
       gameDifficulty: false,
