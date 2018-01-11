@@ -113,8 +113,10 @@ export default class Map extends React.Component {
     this.showMarkers = this.showMarkers.bind(this);
     this.skipCountry = this.skipCountry.bind(this);
     this.showHint = this.showHint.bind(this);
-    this.handleGeoClick = this.handleGeoClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
   }
 
   componentDidUpdate() {
@@ -137,15 +139,12 @@ export default class Map extends React.Component {
         lat: this.props.gameCenterCoords[0],
         lng: this.props.gameCenterCoords[1],
       },
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.google.maps.ControlPosition.RIGHT_CENTER
-      },
       streetViewControl: false,
       mapTypeControl: false,
       mapTypeId: 'roadmap',
       //turn off all country names and labels
-      styles: mapDetails
+      styles: mapDetails,
+      disableDefaultUI: true
     });
     //load in coordinate data with country name information
     map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
@@ -153,8 +152,8 @@ export default class Map extends React.Component {
     });
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
-      fillColor: 'firebrick',
-      fillOpacity: '.6',
+      fillColor: 'indianred',
+      fillOpacity: '1',
       strokeColor: 'orange',
       strokeWeight: '2'
     });
@@ -464,11 +463,10 @@ export default class Map extends React.Component {
     setInterval( () => {
       this.setState({showMissingCountries: false})
     }, 3000);
+    this.nameInput.focus();
   }
 
   showHint() {
-    console.log("skip:",this.state.skipInProgress)
-    console.log("hint:",this.state.hintInProgress)
 
     let gameTypeSelected = this.props.gameTypeSelected;
     //declare base sentence
@@ -477,6 +475,7 @@ export default class Map extends React.Component {
 
     if (this.state.hintInProgress || this.state.skipInProgress) {
       this.setState({hintInProgress: false})
+      this.nameInput.focus();
       return
     }
 
@@ -531,12 +530,13 @@ export default class Map extends React.Component {
                 map.data.overrideStyle(
                   map.data.getFeatureById(el.id),
                   {
-                    fillColor: 'firebrick',
-                    fillOpacity: '.6',
+                    fillColor: 'indianred',
+                    fillOpacity: '1',
                     strokeColor: 'orange',
                     strokeWeight: '2'
                   });
               },2000)
+              this.nameInput.focus();
               break;
         }
       }
@@ -610,14 +610,28 @@ export default class Map extends React.Component {
       geoClickGameLogic(gameValues, gameValues.highlightedPolygon, true);
 
       setTimeout( () => {
-        this.handleGeoClick();
+        this.handleClick();
       }, 2000)
 
     }
+    //refocus on input if not geoclick
+    this.props.gameTypeSelected !== 'GEOCLICK' ? this.nameInput.focus() : null
 
   }
 
-  handleGeoClick() {
+  zoomIn(){
+    let currentZoomLevel = map.getZoom();
+    currentZoomLevel != 18 ? map.setZoom(currentZoomLevel + 1) : null
+    this.nameInput.focus();
+  }
+
+  zoomOut(){
+    let currentZoomLevel = map.getZoom();
+    currentZoomLevel != 0 ? map.setZoom(currentZoomLevel - 1) : null
+    this.nameInput.focus();
+  }
+
+  handleClick() {
 
     let gameValues = {
       map: map,
@@ -637,6 +651,9 @@ export default class Map extends React.Component {
       if (!google.maps.event.hasListeners(map.data, 'click')) {
         geoClickGameLogic(gameValues, this.state.highlightedPolygon)
       }
+
+    } else {
+      this.nameInput.focus();
     }
   }
 
@@ -650,7 +667,7 @@ export default class Map extends React.Component {
         <div
           className="maps"
           id="map"
-          onClick={this.handleGeoClick}>
+          onClick={this.handleClick}>
         </div>
 
         <div className="game-controls">
@@ -725,10 +742,19 @@ export default class Map extends React.Component {
             </div>
           }
 
+          <div className="zoom-in">
+            <div className="zi-btn"
+                 onClick={this.zoomIn}>+</div>
+          </div>
+          <div className="zoom-out">
+            <div className="zo-btn"
+                 onClick={this.zoomOut}>-</div>
+          </div>
+
           {
             true
             ?
-            <Button className="hint-btn" onClick={ this.showHint }>HINT</Button>
+            <div className="hint-btn" onClick={ this.showHint }>HINT</div>
             :
             null
           }
@@ -736,18 +762,20 @@ export default class Map extends React.Component {
           {
             this.state.renderMissingCountriesButton
             ?
-            <Button className="advance-btn" onClick={ this.showMarkers } icon="globe"/>
+            <div className="advance-btn" onClick={ this.showMarkers }>
+              <Icon name="globe" size="large"/>
+            </div>
             : null
           }
 
           {
             this.state.renderSkipCountryButton
             ?
-            <Button className="advance-btn" onClick={ this.skipCountry }>SKIP</Button>
+            <div className="advance-btn" onClick={ this.skipCountry }>SKIP</div>
             : null
           }
 
-          <Button className="quit-game-btn" onClick={this.handleGameEnd}>QUIT</Button>
+          <div className="quit-game-btn" onClick={this.handleGameEnd}>QUIT</div>
 
           <audio ref='entry_correct'>
             <source src='https://s3.amazonaws.com/geogopher-assets/sounds/correct.m4a' type='audio/mpeg'></source>

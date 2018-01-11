@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Allerta|Ubuntu+Mono:700');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Ubuntu+Mono:700');
 
 li {
   list-style: none;
@@ -7,12 +7,6 @@ li {
 div.ui.menu{
   box-shadow: none;
   border: none;
-}
-
-img.ui.image.geogopher-navbar-logo{
-  position: absolute;
-  top: 55px;
-  left: 55px;
 }
 
 .ui.menu .item:before{
@@ -30,6 +24,56 @@ img.ui.image.geogopher-navbar-logo{
       padding: 3px 6px 3px 6px;
 
     }
+}
+
+.ui.menu a[href="/home"]{
+  border: none;
+  &:hover{
+    border: none;
+  }
+}
+
+.ui.dropdown > .text{
+  font-family: "Ubuntu Mono";
+  font-size: 1.5em;
+}
+
+img.ui.image.geogopher-navbar-logo{
+  position: absolute;
+  top: 55px;
+  left: 55px;
+}
+
+div.menu.transition.visible{
+  transform: translateX(-50px);
+  width: 80%;
+  .header {
+    font-family: "Ubuntu Mono";
+    font-size: 1.5em;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #EC0524;
+  }
+  div.item > button {
+    background-color: white;
+    color: #EC0524;
+    border: 5px solid #EC0524;
+    border-radius: 0;
+    margin: 10px!important;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: 0 10%;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+    &:hover{
+      background-color: #EC0524;
+      color: white;
+      box-shadow: 5px 10px 20px -10px darkslategrey;
+      cursor: pointer;
+    }
+  }
 }
 
 //games list AKA home page component styling
@@ -247,6 +291,18 @@ button.ui.animated.button.go-back-gt-btn{
   font-weight: 700;
 }
 
+div.bottom.center.popup{
+  .header{
+    border-bottom: 3px solid #EC0524;
+    font-family: "Ubuntu Mono";
+    font-size: 1.5em;
+  }
+  .content{
+    font-family: "Source Sans Pro";
+    font-size: 1.25em;
+  }
+}
+
 .ui.small.fade.reveal.select-countdown{
   grid-area: cdn;
   justify-self: center;
@@ -308,73 +364,89 @@ button.ui.animated.button.go-back-gd-btn{
 
 }
 
-.ui.button.qwk-select{
+div.qwk-select{
   // grid-area: qwk;
   grid-area: 4/2/4/3;
   background-color: white;
-  color: #6699cc;
-  border: 1px solid #6699cc;
+  color: #6699CC;
+  border: 5px solid #6699CC;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
-  transition: padding .2s;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
   &:hover{
-    background-color: #6699cc;
+    background-color: #6699CC;
     color: white;
-    border: 4px solid #6699cc;
-    padding-bottom: 7%;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
-  // margin:1%;
 }
 
-.ui.button.easy-select{
+div.easy-select{
   grid-area: 5/2/5/3;
   background-color: white;
   color: #008000;
-  border: 1px solid #008000;
+  border: 5px solid #008000;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
-  transition: padding .2s;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
   &:hover{
     background-color: #008000;
     color: white;
-    border: 4px solid #008000;
-    padding-bottom: 7%;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
-  // margin:1%;
 }
 
-.ui.button.med-select{
+div.med-select{
   grid-area: 6/2/6/3;
   background-color: white;
-  color: #c57b26;
-  border: 1px solid #c57b26;
+  color: #C57b26;
+  border: 5px solid #C57b26;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
-  transition: padding .2s;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
   &:hover{
-    background-color: #c57b26;
+    background-color: #C57b26;
     color: white;
-    border: 4px solid #c57b26;
-    padding-bottom: 7%;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
-  // margin:1%;
 }
 
-.ui.button.hard-select{
+div.hard-select{
   grid-area: 7/2/7/3;
   background-color: white;
   color: #EC0524;
-  border: 1px solid #EC0524;
+  border: 5px solid #EC0524;
   font-size: 1.25em;
+  font-weight: bold;
   padding: 2%;
-  transition: padding .2s;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
   &:hover{
     background-color: #EC0524;
     color: white;
-    border: 4px solid #EC0524;
-    padding-bottom: 7%;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
-  // margin:1%;
 }
 
 .time-display{
@@ -429,6 +501,9 @@ div.play-now{
   text-align: center;
   height: 100%;
   z-index: 10;
+  img{
+    max-height: 300px;
+  }
   img:hover{
     cursor: pointer;
   }
@@ -439,6 +514,9 @@ div.play-now-bg{
   text-align: center;
   height: 100%;
   z-index: 5;
+  img{
+    max-height: 300px;
+  }
   img:hover{
     cursor: pointer;
   }
@@ -526,29 +604,29 @@ div.game-controls{
     grid-area: gcontrols;
     display: grid;
     grid-gap: 10px;
-    grid-template-areas: ".. ..       ..       ..        ..        .."
-                         ".. timehead timehead scorehead scorehead .."
-                         ".. timedisp timedisp scoredisp scoredisp .."
-                         ".. ..       ..       ..        ..        .."
-                         ".. hintdisp hintdisp hintdisp  hintdisp  .."
-                         ".. inputent inputent inputent  inputent  .."
-                         ".. hint     advance  ..        quit      .."
-                         ".. ..       ..       ..        ..        ..";
+    grid-template-areas: ".. .. ..       ..       ..        ..        .."
+                         ".. .. timehead timehead scorehead scorehead .."
+                         ".. .. timedisp timedisp scoredisp scoredisp .."
+                         ".. .. ..       ..       ..        ..        .."
+                         ".. .. hintdisp hintdisp hintdisp  hintdisp  .."
+                         ".. zi inputent inputent inputent  inputent  .."
+                         ".. zo hint     advance  ..        quit      .."
+                         ".. .. ..       ..       ..        ..        ..";
 
     @media screen and (max-width: 1299px) {
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr;
       grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
       height: 85vh;
     }
 
     @media screen and (min-width: 1300px) {
-      grid-template-columns: 4fr 1fr 1fr 1fr 1fr 4fr;
+      grid-template-columns: 4fr  .5fr 1fr 1fr 1fr 1fr 1fr 4fr;
       grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
       height: 92vh;
     }
 }
 
-.hint-display{
+div.hint-display{
   grid-area: hintdisp;
   z-index: 4;
   text-align: center;
@@ -636,65 +714,138 @@ div.geoClick-display{
   line-height: 1;
 }
 
-button.ui.button.hint-btn{
+div.zoom-in{
+  grid-area: zi;
+  display: flex;
+  z-index: 4;
+  justify-content: center;
+  align-items: flex-end;
+  .zi-btn{
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: white;
+    color: #C57B26;
+    border: 5px solid #C57B26;
+    height: 50px;
+    width: 50px;
+    max-height: 50px;
+    max-width: 50px;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 2%;
+
+    box-shadow: none;
+    &:hover{
+      background-color: #C57B26;
+      color: white;
+      border: 5px solid #C57B26;
+      height: 50px;
+      width: 50px;
+      box-shadow: 5px 10px 20px -10px darkslategrey;
+      cursor: pointer;
+    }
+  }
+}
+div.zoom-out{
+  grid-area:zo;
+  display: flex;
+  z-index: 4;
+  justify-content: center;
+  .zo-btn{
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: white;
+    color: #C57B26;
+    border: 5px solid #C57B26;
+    height: 50px;
+    width: 50px;
+    max-height: 50px;
+    max-width: 50px;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 2%;
+
+    box-shadow: none;
+    &:hover{
+      border: 5px solid #C57B26;
+      height: 50px;
+      width: 50px;
+      background-color: #C57B26;
+      color: white;
+      box-shadow: 5px 10px 20px -10px darkslategrey;
+      cursor: pointer;
+    }
+  }
+}
+
+
+
+div.hint-btn{
   grid-area: hint;
   z-index: 4;
-  font-size: 1.2em;
-  background-color: #8AC84A;
-  padding: 20px 20px 30px 20px;
-  letter-spacing: 2px;
-  font-weight: lighter;
-  color: white;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -10px darkslategrey;
+  background-color: white;
+  color: #008000;
+  border: 5px solid #008000;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover{
-    background-color: #669933;
+    background-color: #008000;
     color: white;
-    border: 1px solid white;
-    border-radius: 4px;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
-button.ui.button.advance-btn{
+div.advance-btn{
   grid-area: advance;
   z-index: 4;
-  font-size: 1.2em;
-  background-color: #6A99CC;
-  padding: 20px 20px 30px 20px;
-  letter-spacing: 2px;
-  font-weight: lighter;
-  color: white;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -10px darkslategrey;
+  background-color: white;
+  color: #6699CC;
+  border: 5px solid #6699CC;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover{
-    background-color: #336699;
+    background-color: #6699CC;
     color: white;
-    border: 1px solid white;
-    border-radius: 4px;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
-button.ui.button.quit-game-btn{
+div.quit-game-btn{
   grid-area: quit;
   z-index: 4;
-  font-size: 1.2em;
-  background-color: #ec0524;
-  padding: 20px 20px 30px 20px;
-  letter-spacing: 2px;
-  font-weight: lighter;
-  color: white;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -10px darkslategrey;
-  margin-right: 0;
-  margin-left: 2em;
+  background-color: white;
+  color: #EC0524;
+  border: 5px solid #EC0524;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover{
-    background-color: #CC3333;
+    background-color: #EC0524;
     color: white;
-    border: 1px solid white;
-    border-radius: 4px;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
   }
 }
 
@@ -721,48 +872,128 @@ button.ui.button.quit-game-btn{
 
 //login styling
 .login-widget {
+  display: grid;
   grid-area: loginwidget;
+  grid-template-columns: 10fr 1fr 10fr;
+  grid-template-areas: "lcreds divider lbtns";
 
-    form.ui.form{
-      width: 100%;
+    // form.ui.form{
+    //   width: 100%;
+    //   display: grid;
+    //   grid-template-columns: 10fr 1fr 1fr 10fr;
+    //   grid-template-rows: repeat(3, 1fr);
+    // }
+
+    form.ui.form.login-credentials{
+      grid-area: lcreds;
+      .field > label{
+        font-family: "Ubuntu Mono";
+        font-size: 1.5em;
+      }
+      .field > input{
+        border: 1px solid black;
+        border-radius: 0;
+        height: 50px;
+        font-size: 1.5em;
+      }
+      button.ui.button.login-btn{
+          background-color: white;
+          color: #C57b26;
+          border: 5px solid #C57b26;
+          border-radius: 0;
+          font-size: 1.25em;
+          font-weight: bold;
+          padding: 2% 20%;
+          box-shadow: none;
+          max-width: 70%;
+          margin: auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+          &:hover{
+            background-color: #C57b26;
+            color: white;
+            box-shadow: 5px 10px 20px -10px darkslategrey;
+            cursor: pointer;
+          }
+      }
+    }
+
+    form.ui.form.login-buttons{
+      grid-column: lbtns;
       display: grid;
-      grid-template-columns: 10fr 1fr 1fr 10fr;
       grid-template-rows: repeat(3, 1fr);
     }
 
-    div.field{
-      grid-column: 1;
-    }
-
     div.divider{
-      grid-column: 2;
-      grid-row: 1/4;
+      grid-area: divider;
       border-right: 1px solid black;
+      margin-right: 40%;
     }
 
     a.ui.button.register-btn{
-      grid-area: 1/4/1/4;
-      margin: 20px 20px 20px 0;
-    }
-    button.google-btn{
-      grid-area: 2/4/2/4;
-      margin: 20px 20px 20px 0;
-      background: #DD4B39;
-      color: white;
-      border-radius: 5px;
+      grid-row: 1;
+      background-color: white;
+      color: #008000;
+      border: 5px solid #008000;
+      border-radius: 0;
+      font-size: 1.25em;
+      font-weight: bold;
+      box-shadow: none;
+      margin: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
       &:hover{
-        background: firebrick;
+        background-color: #008000;
+        color: white;
+        box-shadow: 5px 10px 20px -10px darkslategrey;
         cursor: pointer;
       }
     }
-    button.ui.button.anonymous-btn{
-      grid-area: 3/4/3/4;
-      margin: 20px 20px 20px 0;
+
+    button.google-btn{
+      grid-row: 2;
+      background-color: white;
+      color: #EC0524;
+      border: 5px solid #EC0524;
+      font-size: 1.25em;
+      font-weight: bold;
+      box-shadow: none;
+      margin: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+      &:hover{
+        background-color: #EC0524;
+        color: white;
+        box-shadow: 5px 10px 20px -10px darkslategrey;
+        cursor: pointer;
+      }
     }
 
-    button.ui.button.login-btn{
-      grid-area:3/1/3/1;
-      margin: 20px
+    div.anonymous-btn{
+      grid-row: 3;
+      background-color: white;
+      color: #6699CC;
+      border: 5px solid #6699CC;
+      font-size: 1.25em;
+      font-weight: bold;
+      box-shadow: none;
+      margin: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+      &:hover{
+        background-color: #6699CC;
+        color: white;
+        box-shadow: 5px 10px 20px -10px darkslategrey;
+        cursor: pointer;
+      }
     }
 }
 
@@ -1048,3 +1279,261 @@ button.see-high-scores{
   }
 }
 
+//home styles
+div.home-container{
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-areas: "..  ..    .."
+                       "gl  cta   gr"
+                       "ts  ts    ts"
+                       "ts2 ts2   ts2"
+                       "..  abt   ..";
+  z-index: 3;
+  background-color: white;
+}
+
+div.gutter-right{
+  grid-area: gr;
+  background-color: white;
+  z-index: 3;
+}
+div.gutter-left{
+  grid-area: gl;
+  background-color: white;
+  z-index: 3;
+}
+
+div.cta-container{
+  grid-area: cta;
+  display: grid;
+  grid-template-columns: 500fr 800fr;
+  grid-template-rows: 800fr 500fr;
+  max-height: 100vh;
+  max-width: 1300px;
+  margin: auto;
+  z-index: 3;
+}
+
+/* BEGIN CTA container */
+div.cta-img-overlay{
+  grid-area: 1/1/3/3;
+  max-height: 100%;
+  height:100%;
+  width: auto;
+  z-index: 5;
+}
+
+div.cta-img-overlay img{
+  grid-area: 1/1/3/3;
+  max-width: 100%;
+  /* height: auto; */
+  z-index: 5;
+  /* visibility: hidden; */
+}
+
+div.geogopher-title{
+  grid-area: 1/2/3/3;
+  z-index: 100;
+  color: black;
+  font-size: 6em;
+  /* position: absolute; */
+  margin: auto;
+  font-family: "Ubuntu Mono";
+  font-weight: bold;
+  background-color: white;
+  padding: 30px 15px;
+  border: 8px solid #EC0524;
+}
+
+div.cta-text{
+  grid-area: 1/1/1/2;
+  z-index: 100;
+  color: black;
+  margin: auto;
+  font-family: "Source Sans Pro";
+  font-weight: bold;
+  padding-right: 15%;
+  font-size: 3em;
+  line-height: 1.5;
+  letter-spacing: 4px;
+}
+
+
+div.cta-play-now{
+  grid-area: 2/1/3/2;
+  z-index: 100;
+  font-family: "Ubuntu Mono";
+  background-color: white;
+  font-weight: bold;
+  font-size: 2em;
+  margin: auto;
+  margin-right: 45%;
+  margin-top: 0;
+  border: 8px solid #EC0524;
+  padding: 20px 10px;
+  transition: background-color .2s ease-in-out, color .2s ease-in-out, box-shadow .2s ease-in-out;
+}
+
+div.cta-play-now:hover{
+  box-shadow: 2px 2px 10px darkslategrey;
+  background-color: #EC0524;
+  color: white;
+  cursor: pointer;
+}
+
+div.cta-play-now a:hover{
+  color: white;
+}
+
+div.cta-map{
+  grid-area: 1/2/3/3;
+  display: grid;
+  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(8, 1fr);
+  max-width: 100%;
+  max-height: auto;
+  height: %;
+  /* width: auto; */
+  z-index: 1;
+}
+
+#finland{
+  grid-area:  3/1/5/4;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 1s infinite alternate;
+}
+
+#germany{
+  grid-area: 5/2/7/4;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 3s infinite alternate;
+
+}
+
+@keyframes changeColor{
+  0% {background-color: indianred}
+  70% {background-color: indianred}
+  100% {background-color: forestgreen}
+
+}
+
+#mali{
+  grid-area:  7/3/9/7;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 2s infinite alternate;
+}
+
+#cameroon{
+  grid-area:  7/8/9/9;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 7s infinite alternate;
+
+}
+
+#albania{
+  grid-area:  6/5/6/6;
+  background-color: indianred
+  ;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 3.5s infinite alternate;
+}
+
+#romania{
+  grid-area:  5/4/5/6;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 5s infinite alternate;
+}
+
+#syria{
+  grid-area: 5/7/7/9;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 6s infinite alternate;
+}
+
+#kazakhstan{
+  grid-area: 3/6/5/9;
+  background-color: indianred;
+  height: 100%;
+  width: 100%;
+  animation: changeColor 3s ease-in-out 4s infinite alternate;
+}
+
+  div.transition-stripe{
+    grid-area: ts;
+    width:130%;
+    height: 150px;
+    /* border-top: 50px solid #EC0524; */
+    /* border-bottom: 50px solid #EC0524; */
+    background-color: white;
+    transform: translate(-50px, -70px)
+               rotate(3deg);
+    z-index: 100;
+    box-shadow: 0px -2px 40px gainsboro;
+    /* border-top: 1px solid lightgrey; */
+  }
+
+  div.transition-stripe-2{
+    grid-area: ts;
+    width:130%;
+    height: 150px;
+    /* border-top: 50px solid #EC0524; */
+    /* border-bottom: 50px solid #EC0524; */
+    background-color: white;
+    transform: translate(-50px, -10px)
+               rotate(3deg);
+    z-index: 100;
+
+  }
+
+  /* END CTA container */
+
+  /* BEGIN about */
+
+  div.about-container{
+    grid-area: abt;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  div.about-title{
+    grid-area: 1/1/1/3;
+    text-align: center;
+    font-family: "Source Sans Pro";
+    font-size: 3em;
+    padding: 2em 0 2em 0;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: auto;
+    text-align: center;
+  }
+
+  div.sample-text{
+    font-family: "Source Sans Pro";
+    font-size: 2em;
+    font-weight: lighter;
+  }
+
+  div.sample-text > strong{
+    font-family: "Ubuntu Mono";
+  }
+
+  div.img-text-block.sample-img{
+    height:400px;
+    width:400px;
+    position: absolute;
+    background-color: rebeccapurple;
+    z-index: 400;
+  }
