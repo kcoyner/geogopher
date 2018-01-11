@@ -59,6 +59,7 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
   let submissionSanitized = gameValues.submissionSanitized;
   let incorrectEntries = gameValues.incorrectEntries;
   let countTotalSubmissions = gameValues.countTotalSubmissions;
+  let currentSoundState = gameValues.currentSoundState;
   let entryCorrect = gameValues.refs.entry_correct;
   let entryIncorrect = gameValues.refs.entry_incorrect;
   let entryCorrectResubmit = gameValues.refs.entry_correct_resubmit;
@@ -84,8 +85,8 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
         strokeWeight: '2',
       }
     ), 1000);
-  //trigger for already-answered sound
-    entryCorrectResubmit.play();
+  //play already-answered sound
+    currentSoundState ?  entryCorrectResubmit.play() : null;
   } else if (answerStatus === 'unanswered') {
     //modify map to reflect answered  polygon
     map.data.overrideStyle(
@@ -106,13 +107,11 @@ const countdownAnswerResponse = (answerStatus, polygonID, gameValues) => {
         gameData
       )
     );
-    //trigger for correct sound
-    entryCorrect.play();
+    currentSoundState ?  entryCorrect.play() : null;
   } else { //answer status is 'incorrect'
     //dispatch to store in incorrectEntries
     dispatchFcn(submitIncorrectEntry(submissionSanitized, incorrectEntries));
-    //trigger for incorrect sound
-    entryIncorrect.play();
+    currentSoundState ?  entryIncorrect.play() : null;
   // TODO: trigger for text field to shake
   }
 

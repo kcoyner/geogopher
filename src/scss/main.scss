@@ -610,7 +610,7 @@ div.game-controls{
                          ".. .. ..       ..       ..        ..        .."
                          ".. .. hintdisp hintdisp hintdisp  hintdisp  .."
                          ".. zi inputent inputent inputent  inputent  .."
-                         ".. zo hint     advance  ..        quit      .."
+                         ".. zo hint     advance  sound     quit      .."
                          ".. .. ..       ..       ..        ..        ..";
 
     @media screen and (max-width: 1299px) {
@@ -784,8 +784,6 @@ div.zoom-out{
   }
 }
 
-
-
 div.hint-btn{
   grid-area: hint;
   z-index: 4;
@@ -801,6 +799,27 @@ div.hint-btn{
   justify-content: center;
   &:hover{
     background-color: #008000;
+    color: white;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
+    cursor: pointer;
+  }
+}
+
+div.sound-btn{
+  grid-area: sound;
+  z-index: 4;
+  background-color: white;
+  color: #FF810D;
+  border: 5px solid #FF810D;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 2%;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    background-color: #FF810D;
     color: white;
     box-shadow: 5px 10px 20px -10px darkslategrey;
     cursor: pointer;

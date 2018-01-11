@@ -20,20 +20,18 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
   //declare logic variables
   let entryIncorrect = gameValues.refs.entry_incorrect;
   let entryCorrect = gameValues.refs.entry_correct;
+  let currentSoundState = gameValues.currentSoundState;
   let allowNextCountry = false;
   let moreCountriesLeft = false;
   let endGame = true;
   let featureName;
 
-
   if (skipCountry && !gameValues.skipInProgress) {
-
     //set global skipInProgress to true, to prevent double skips
     gameValues.reactThis.setState({
       skipInProgress: true
     });
-    // play an incorrect sound
-    entryIncorrect.play();
+    currentSoundState ?  entryIncorrect.play() : null;
     //get the polygon inside the map by using the id
     let polygonInMap = gameValues.map.data.getFeatureById(highlightedCountry.id)
     //modify the colors of polygon in the map to be greyed out
@@ -120,8 +118,7 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
             strokeColor: '#7FFF00',
             strokeWeight: '2'
           })
-          // play a correct sound
-          entryCorrect.play();
+          currentSoundState ?  entryCorrect.play() : null;
           //submit correct entry
           gameValues.dispatchFcn(
             submitCorrectEntry(
@@ -133,7 +130,7 @@ export const geoClickGameLogic = async(gameValues, highlightedCountry, skipCount
           //remove all listeners on correct entry. new listeners will be created for the next polygon
           google.maps.event.clearInstanceListeners(gameValues.map.data);
         } else {
-          entryIncorrect.play();
+          currentSoundState ?  entryIncorrect.play() : null;
         }
       })
     //end callback for getRandomUnansweredPolygon
