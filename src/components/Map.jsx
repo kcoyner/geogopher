@@ -88,6 +88,7 @@ export default class Map extends React.Component {
       currentHint: null,
       skipInProgress: false,
       hintInProgress: false,
+      currentSoundState: true,
       geoClickPolygonDisplay: '',
       oneStepBack: {
         gameType: true,
@@ -264,7 +265,6 @@ export default class Map extends React.Component {
 
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
-
     //pack gameValues for game init
     let gameValues = {
       map: map,
@@ -278,6 +278,7 @@ export default class Map extends React.Component {
       highlightedPolygon: this.state.highlightedPolygon,
       handleGameEnd: this.handleGameEnd,
       gameSelected: this.props.gameSelected,
+      currentSoundState: this.state.currentSoundState,
       refs: this.refs
     }
     if (this.props.gameTypeSelected !== 'GEOCLICK') {
@@ -428,6 +429,7 @@ export default class Map extends React.Component {
         reactThis: this,
         highlightedPolygon: this.state.highlightedPolygon,
         handleGameEnd: this.handleGameEnd,
+        currentSoundState: this.state.currentSoundState,
         refs: this.refs,
       }
 
@@ -598,6 +600,7 @@ export default class Map extends React.Component {
       highlightedPolygon: this.state.highlightedPolygon,
       handleGameEnd: this.handleGameEnd,
       gameSelected: this.props.gameSelected,
+      currentSoundState: this.state.currentSoundState,
       refs: this.refs
     }
 
@@ -643,18 +646,25 @@ export default class Map extends React.Component {
       handleGameEnd: this.handleGameEnd,
       countPolygonsEntered: this.props.countPolygonsEntered,
       gameSelected: this.props.gameSelected,
+      currentSoundState: this.state.currentSoundState,
       refs: this.refs
     }
 
     if (this.props.gameTypeSelected === 'GEOCLICK') {
-
       if (!google.maps.event.hasListeners(map.data, 'click')) {
         geoClickGameLogic(gameValues, this.state.highlightedPolygon)
       }
-
     } else {
       this.nameInput.focus();
     }
+  }
+
+/** Sound toggle */
+  toggleSoundState = (e) => {
+    this.state.currentSoundState ?
+    this.setState({ currentSoundState: false} ) :
+    this.setState({ currentSoundState: true} )
+    this.props.gameTypeSelected !== 'GEOCLICK' ? this.nameInput.focus() : null
   }
 
   render() {
@@ -716,6 +726,16 @@ export default class Map extends React.Component {
           }
 
           <div className="polygon-score"> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons} </div>
+
+        { /** Sound toggle button */
+          <div className="sound-btn">
+            SOUND&nbsp;
+            <Checkbox
+              checked={ this.state.currentSoundState }
+              onClick={ this.toggleSoundState }toggle
+            />
+          </div>
+        }
 
           {
             this.state.currentHint !== null

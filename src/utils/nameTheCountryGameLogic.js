@@ -21,6 +21,7 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
   const imgFromAssets = require('-!file-loader?name=markerImg!../assets/geogopher-marker.png');
   let entryIncorrect = gameValues.refs.entry_incorrect;
   let entryCorrect = gameValues.refs.entry_correct;
+  let currentSoundState = gameValues.currentSoundState;
   // if a highlighted country has not been passed in, then it came from Map's handleStart
   if (!highlightedCountry) {
     // a random polygon is returned from gameData, invoking cb using random polygon as 'highlightedCountry'
@@ -69,8 +70,7 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
         strokeColor: 'darkslategrey',
         strokeWeight: '2'
       })
-      // play an incorrect sound
-      entryIncorrect.play();
+      currentSoundState ?  entryIncorrect.play() : null;
       //instantiate new marker to hold info window
       let marker = new google.maps.Marker({
         map: gameValues.map,
@@ -132,8 +132,7 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
               el.polygonAnswered = true;
             }
           })
-          // play correct sound
-          entryCorrect.play();
+          currentSoundState ?  entryCorrect.play() : null;
         //end of if statement that matches submission to accepted answer
         }
       //end of forEach that cycles through accepted answers
@@ -161,7 +160,7 @@ export const nameTheCountryGameLogic = async(gameValues, highlightedCountry, ski
           gameValues.incorrectEntries
         )
       )
-      entryIncorrect.play();
+      currentSoundState ?  entryIncorrect.play() : null;
     }
   //end of else statement
   }
