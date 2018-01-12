@@ -114,7 +114,7 @@ apiRouter.route('/login')
         password = req.body.password;
     db.users.findOne({ where: { email: email } }).then(function (user) {
       if(!user) {
-        res.status(401).send({ error: 'Incorrect username and password combination'})
+        res.send()
       } else {
       user.validPassword(password)
         .then(validUser => {
