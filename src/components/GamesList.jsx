@@ -10,6 +10,8 @@ import { Card, Image } from 'semantic-ui-react';
 import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer, setBaseTime } from '../actions/index'
 import { Motion, spring } from 'react-motion';
 
+const DEBUG = false
+
 const gamesListSplash = require('-!url-loader?name=games-list-splash!../assets/games-list-splash.png');
 
 @connect((state, ownProps) => {
@@ -34,7 +36,7 @@ class GamesList extends React.Component {
     this.props.dispatch(fetchGamesList());
     //get game settings options queued up
     this.props.dispatch(fetchGameSettings());
-    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
+    DEBUG ?  setTimeout(() => this.setState({ isLoading: false }), 1500) : this.setState({ isLoading: false})
   }
 
 
