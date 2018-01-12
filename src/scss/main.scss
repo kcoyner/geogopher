@@ -923,7 +923,7 @@ div.quit-game-btn{
                          "..    gapfoot                 ..";
         div.gap-head{
           grid-area: gaphead;
-          height: 300px;
+          height: 200px;
         }
         div.gap-foot{
           grid-area: gapfoot;
@@ -942,18 +942,20 @@ div.quit-game-btn{
   display: grid;
   grid-area: registerwidget;
   grid-template-columns: 1fr;
-  
-    // form.ui.form{
-    //   width: 100%;
-    //   display: grid;
-    //   grid-template-columns: 10fr 1fr 1fr 10fr;
-    //   grid-template-rows: repeat(3, 1fr);
-    // }
+    h1.register-title{
+      font-size: 4em;
+      grid-area: 1/1/1/1;
+      font-family: "Ubuntu Mono";
+      border-bottom: 6px solid #EC0524;
+      margin-bottom: 50px;
+    }
+}
+
 
     form.ui.form.register-credentials{
-      grid-area: lcreds;
+      grid-area: 2/1/2/1;
       .field > label{
-        font-family: "Ubuntu Mono";
+        font-family: "Source Sans Pro";
         font-size: 1.5em;
       }
       .field > input{
@@ -962,10 +964,10 @@ div.quit-game-btn{
         height: 50px;
         font-size: 1.5em;
       }
-      button.ui.button.login-btn{
+      button.ui.button.register-btn{
           background-color: white;
-          color: #C57b26;
-          border: 5px solid #C57b26;
+          color: #EC0524;
+          border: 5px solid #EC0524;
           border-radius: 0;
           font-size: 1.25em;
           font-weight: bold;
@@ -978,7 +980,7 @@ div.quit-game-btn{
           justify-content: flex-start;
           transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
           &:hover{
-            background-color: #C57b26;
+            background-color: #EC0524;
             color: white;
             box-shadow: 5px 10px 20px -10px darkslategrey;
             cursor: pointer;
@@ -1028,7 +1030,7 @@ div.quit-game-btn{
     form.ui.form.login-credentials{
       grid-area: lcreds;
       .field > label{
-        font-family: "Ubuntu Mono";
+        font-family: "Source Sans Pro";
         font-size: 1.5em;
       }
       .field > input{
