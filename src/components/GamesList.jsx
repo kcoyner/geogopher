@@ -68,7 +68,7 @@ class GamesList extends React.Component {
 
     return (
 
-      <div className="home-page-container">
+      <div className="games-list-container">
       {
         this.state.isLoading ?
         <div className="loader"></div>
