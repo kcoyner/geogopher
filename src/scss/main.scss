@@ -913,6 +913,83 @@ div.quit-game-btn{
   }
 }
 
+//register styling
+.register-page-container{
+    display: grid;
+    max-width: 100vw;
+    max-height: 95vh;
+    grid-template-areas: "..    gaphead                 .."
+                         "..    registerwidget          .."
+                         "..    gapfoot                 ..";
+        div.gap-head{
+          grid-area: gaphead;
+          height: 300px;
+        }
+        div.gap-foot{
+          grid-area: gapfoot;
+          height: 300px;
+        }
+        @media screen and (max-width: 1200px) {
+          grid-template-columns: 1fr 10fr 1fr;
+        }
+
+        @media screen and (min-width: 1201px) {
+          grid-template-columns: 1fr 2fr 1fr;
+        }
+}
+
+.register-widget {
+  display: grid;
+  grid-area: registerwidget;
+  grid-template-columns: 1fr;
+  
+    // form.ui.form{
+    //   width: 100%;
+    //   display: grid;
+    //   grid-template-columns: 10fr 1fr 1fr 10fr;
+    //   grid-template-rows: repeat(3, 1fr);
+    // }
+
+    form.ui.form.register-credentials{
+      grid-area: lcreds;
+      .field > label{
+        font-family: "Ubuntu Mono";
+        font-size: 1.5em;
+      }
+      .field > input{
+        border: 1px solid black;
+        border-radius: 0;
+        height: 50px;
+        font-size: 1.5em;
+      }
+      button.ui.button.login-btn{
+          background-color: white;
+          color: #C57b26;
+          border: 5px solid #C57b26;
+          border-radius: 0;
+          font-size: 1.25em;
+          font-weight: bold;
+          padding: 2% 20%;
+          box-shadow: none;
+          max-width: 70%;
+          margin: auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          transition: background-color .3s ease-in-out, box-shadow .4s ease-in-out, color .3s ease-in-out;
+          &:hover{
+            background-color: #C57b26;
+            color: white;
+            box-shadow: 5px 10px 20px -10px darkslategrey;
+            cursor: pointer;
+          }
+      }
+    }
+
+
+
+//login styling
+
 .login-page-container{
   display: grid;
   max-width: 100vw;
@@ -934,7 +1011,7 @@ div.quit-game-btn{
 }
 
 
-//login styling
+
 .login-widget {
   display: grid;
   grid-area: loginwidget;
