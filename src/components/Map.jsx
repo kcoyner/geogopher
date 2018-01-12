@@ -121,6 +121,12 @@ export default class Map extends React.Component {
   }
 
   componentDidUpdate() {
+    if (this.props.gameTimerRemaining === 61) {
+      this.refs.oneMinute.play()
+    }
+    if (this.props.gameTimerRemaining === 6) {
+      this.refs.countdown.play()
+    }
     if (this.props.gameTimerRemaining === 1) {
       setTimeout(()=> {
         this.props.dispatch(
@@ -805,6 +811,12 @@ export default class Map extends React.Component {
           </audio>
           <audio ref='entry_correct_resubmit'>
             <source src='https://s3.amazonaws.com/geogopher-assets/sounds/correct_resubmit.m4a' type='audio/mpeg'></source>
+          </audio>
+          <audio ref='countdown'>
+            <source src='https://s3.amazonaws.com/geogopher-assets/sounds/countdown_5-1_male.m4a' type='audio/mpeg'></source>
+          </audio>
+          <audio ref='oneMinute'>
+            <source src='https://s3.amazonaws.com/geogopher-assets/sounds/one_minute_remaining.m4a' type='audio/mpeg'></source>
           </audio>
 
           {/* end game controls */}
