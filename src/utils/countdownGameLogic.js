@@ -30,7 +30,7 @@ export const countdownGameLogic = (gameValues) => {
   countdownAnswerResponse(answerStatus, polygonID, gameValues);
   //verify there are countries left
   gameValues.gameData.forEach((el) => {
-    if (!el.polygonAnswered) {
+    if (el.polygonUnanswered) {
       endGame = false;
     }
   });

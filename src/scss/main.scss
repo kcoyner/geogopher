@@ -50,10 +50,11 @@ img.ui.image.geogopher-navbar-logo{
   position: absolute;
   top: 55px;
   left: 55px;
+  max-width: 150px;
 }
 
 div.menu.transition.visible{
-  transform: translateX(-50px);
+  transform: translateX(calc(width * -1));
   width: 80%;
   .header {
     font-family: "Ubuntu Mono";
@@ -858,7 +859,7 @@ div.sound-btn{
   border: 5px solid #C57B26;
   font-size: 1.25em;
   font-weight: bold;
-  padding: 2%;
+  padding: 5px;
   box-shadow: none;
   display: flex;
   align-items: center;
@@ -866,6 +867,7 @@ div.sound-btn{
   &:hover{
     box-shadow: 5px 10px 20px -10px darkslategrey;
     cursor: pointer;
+    padding: 5px;
   }
   .ui.toggle.checkbox input:checked~.box:before, .ui.toggle.checkbox input:checked~label:before{
     background-color: #C57B26!important;
@@ -1506,6 +1508,28 @@ div.hs-container{
     .ui.table.hs-table{
       grid-area: table;
 
+      a.active.item {
+        padding: 0;
+        margin: 0;
+        border: none;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        &:hover{
+          color: #EC0524;
+          text-decoration: underline;
+          text-decoration-color: #EC0524;
+        }
+      }
+
+    }
+
+    .ui.pagination.menu .item:last-child{
+      border: 6px solid white;
+      width: 70px;
+      &:hover{
+        border: 6px solid #EC0524;
+      }
     }
 
     div.no-scores{

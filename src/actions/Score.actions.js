@@ -182,10 +182,10 @@ export const incrementTotalHints = (countTotalHints) => {
 
 
 export const postScore = (score) => {
-return (dispatch) => {
+return () => {
   axios.post('/api/postScore', score)
     .then(response => {
-      console.log(response.data)
+      console.log("SCORE WRITTEN TO DB ✍🏽")
     })
     .catch(error => {
       throw (error);
