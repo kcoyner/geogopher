@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import store from './store';
 import { Provider } from 'react-redux';
 import 'core-js/es6/map';
@@ -16,6 +16,8 @@ if(localStorage.user) {
 
 ReactDOM.render(<Provider store={ store }>
   <Router>
+    <Switch>
     <App />
+    </Switch>
   </Router>
 </Provider>, document.getElementById('app'));

@@ -1,16 +1,30 @@
 import React from 'react';
 import NavBar from './components/NavBar';
 import { Route } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import GamesList from './components/GamesList';
-import Map from './components/Map';
 import Login from './components/Login';
 import RegisterPage from './components/Register';
 import HighScores from './components/HighScores';
-import Explore from './components/Explore';
-import Home from './components/Home';
+
+const Loading = () => <div className='loader'></div>;
+
+const Home = Loadable({
+  loader: () => import('./components/Home'),
+  loading: Loading,
+});
+
+const Map = Loadable({
+  loader: () => import('./components/Map'),
+  loading: Loading,
+});
+
+const Explore = Loadable({
+  loader: () => import('./components/Explore'),
+  loading: Loading,
+});
 
 export default class App extends React.Component {
-
   render() {
     return (
       <div>
