@@ -1450,15 +1450,18 @@ button.see-high-scores{
 div.hs-container{
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
-  grid-template-areas: ".. gap    .."
+  grid-template-areas: ".. gaptop      .."
                        ".. title    .."
                        ".. dropdown .."
-                       ".. table    ..";
+                       ".. table    .."
+                       ".. gapbtm   ..";
+  margin-bottom: 200px;
 
     div.gap{
-      grid-area: gap;
+      grid-area: gaptop;
       height: 200px;
     }
+
 
     div.hs-title{
       grid-area: title;
@@ -1479,14 +1482,35 @@ div.hs-container{
 
     div.dropdowns{
       grid-area: dropdown;
+      display: flex;
+      justify-content: space-between;
+
+      .ui.fluid.selection.dropdown > div.text{
+        font-family: "Source Sans Pro";
+        line-height: 1;
+      }
+
+      div.menu.transition.visible{
+        transform: translateX(0px);
+      }
     }
 
     .ui.table.hs-table{
       grid-area: table;
+
     }
 
     div.no-scores{
       grid-area: table;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
+    }
+
+    div.no-scores::first-line{
+      font-family: "Source Sans Pro";
+      font-weight: bold;
     }
 
 

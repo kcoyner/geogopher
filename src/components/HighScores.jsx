@@ -214,7 +214,9 @@ class HighScores extends React.Component {
                 </Table.Row>
             </Table.Footer>
         </Table> ) :
-        (<div className="no-scores">No scores yet! <br/> Make an account and get high scores!</div>)
+        (
+          <div className="no-scores">No scores yet! <br/> Make an account and get high scores!</div>
+        )
           }
       </div>
     );
