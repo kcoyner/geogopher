@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { userActions } from '../actions';
 import { Menu, Image, Dropdown, Button } from 'semantic-ui-react';
 
-const geogopherLogo = require('-!url-loader?name=geogopher-logo!../assets/geogopher-logo.svg');
+const geogopherLogo = require('-!url-loader?name=geogopher-logo!../assets/geogopher-logo.png');
 
 
 class NavBar extends React.Component {
@@ -63,7 +63,7 @@ class NavBar extends React.Component {
                     <Menu.Item>
                        {user ? (
 
-                         <Dropdown text={`Hi, ${user.username}`} pointing="top left" className='user-account-menu-dropdown'>
+                         <Dropdown text={`Hi, ${user.username}`} pointing="top right" className='user-account-menu-dropdown'>
                           <Dropdown.Menu>
                             <Dropdown.Header>Account</Dropdown.Header>
                             <Dropdown.Item>

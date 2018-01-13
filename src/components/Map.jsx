@@ -25,6 +25,7 @@ import {
 import * as actions from '../actions/index.js'
 
 let map;
+let counter = 0;
 
 @connect((state) => {
   return {
@@ -128,12 +129,16 @@ export default class Map extends React.Component {
       this.refs.countdown.play()
     }
     if (this.props.gameTimerRemaining === 1) {
-      setTimeout(()=> {
-        this.props.dispatch(
-          actions.decrementTime(this.props.gameTimerRemaining + 1)
-        );
-        this.handleGameEnd();
-      } , 1000)
+      if (counter < 1) {
+        console.log("RUNNING HANDLEGAMEEND FROM COMPONENTDIDUPDATE 🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸")
+        setTimeout(()=> {
+          this.props.dispatch(
+            actions.decrementTime(this.props.gameTimerRemaining + 1)
+          );
+          this.handleGameEnd();
+        } , 1000)
+        counter = counter + 1;
+      }
     }
   }
 
@@ -312,14 +317,16 @@ export default class Map extends React.Component {
     }
   }
   //on quit, set change game state and clear timer
-  handleGameEnd() {
+  async handleGameEnd() {
+    console.log("RUNNING HANDLEGAMEEND ++++++++++++++++++++++")
+
     this.setState({
       userQuit: true,
       gameEnd : true });
       clearInterval(this.incrementer);
       //dispatches gameend gameEndTimestamp
       this.props.dispatch(
-        actions.setGameEndTimestamp()
+         await actions.setGameEndTimestamp()
       )
       //builds and dispatches polygons answered/unanswered arrays for convenience
       this.props.dispatch(
@@ -327,34 +334,38 @@ export default class Map extends React.Component {
           buildPolygonResults(this.props.gameData)
         )
       )
+
+      //package Score
+      let currentScore = {
+        countPolygonsEntered: this.props.countPolygonsEntered,
+        countTotalSubmissions: this.props.countTotalSubmissions,
+        countTotalHints: this.props.countTotalHints,
+        gameDifficultyID: this.props.gameDifficultyID,
+        gameEndTimestamp: this.props.gameEndTimestamp,
+        gameID: this.props.gameID,
+        gameStartTimestamp: this.props.gameStartTimestamp,
+        gameTimerRemaining: this.props.gameTimerRemaining,
+        gameTimerStart: this.props.gameTimerStart,
+        gameTypeID: this.props.gameTypeID,
+        incorrectEntries: this.props.incorrectEntries,
+        ipWhereGamePlayed: this.props.ipWhereGamePlayed,
+        polygonsAnswered: this.props.polygonsAnswered,
+        polygonsUnanswered: this.props.polygonsUnanswered,
+        polygonsSkipped: this.props.polygonsSkipped,
+        userID: this.props.userID
+      }
+
+      //potential post scores
+      console.log("RUNNING JUST BEFORE DISPATCH TO POST SCORE")
+      this.props.dispatch(await actions.postScore(currentScore))
     }
 
   //closes gameStart modal onClick
-  async handlePlayDifferentGame() {
-    //package Score
-    let currentScore = {
-      countPolygonsEntered: this.props.countPolygonsEntered,
-      countTotalSubmissions: this.props.countTotalSubmissions,
-      countTotalHints: this.props.countTotalHints,
-      gameDifficultyID: this.props.gameDifficultyID,
-      gameEndTimestamp: this.props.gameEndTimestamp,
-      gameID: this.props.gameID,
-      gameStartTimestamp: this.props.gameStartTimestamp,
-      gameTimerRemaining: this.props.gameTimerRemaining,
-      gameTimerStart: this.props.gameTimerStart,
-      gameTypeID: this.props.gameTypeID,
-      incorrectEntries: this.props.incorrectEntries,
-      ipWhereGamePlayed: this.props.ipWhereGamePlayed,
-      polygonsAnswered: this.props.polygonsAnswered,
-      polygonsUnanswered: this.props.polygonsUnanswered,
-      polygonsSkipped: this.props.polygonsSkipped,
-      userID: this.props.userID
-    }
+  handlePlayDifferentGame() {
+
     //need to confirm whether all state must be returned back to init
-    this.setState({ open: false });
-    console.log("++++++++++", currentScore.userID);
+    // this.setState({ open: false });
     //clear game and score reducers
-    this.props.dispatch(await actions.postScore(currentScore))
 
     this.props.dispatch(actions.resetGame())
 
@@ -391,9 +402,6 @@ export default class Map extends React.Component {
       userID: this.props.userID
     }
     this.setState({ open: false });
-
-    this.props.dispatch(await actions.postScore(currentScore))
-
 
     let path = "/high-scores/" + this.props.gameID + "/" + this.props.gameTypeID + "/" + this.props.gameDifficultyID;
     this.props.history.push({
@@ -453,9 +461,7 @@ export default class Map extends React.Component {
         geoClickGameLogic(gameValues, this.state.highlightedPolygon);
 
       }
-      if(gameValues.incorrectEntries.indexOf(submission) < 0) {
 
-      }
     //end keystroke if statement
     }
   //end keypress function
@@ -483,7 +489,7 @@ export default class Map extends React.Component {
 
     if (this.state.hintInProgress || this.state.skipInProgress) {
       this.setState({hintInProgress: false})
-      this.nameInput.focus();
+      this.props.gameTypeSelected !== 'GEOCLICK' ? this.nameInput.focus() : null
       return
     }
 
@@ -631,13 +637,13 @@ export default class Map extends React.Component {
   zoomIn(){
     let currentZoomLevel = map.getZoom();
     currentZoomLevel != 18 ? map.setZoom(currentZoomLevel + 1) : null
-    this.nameInput.focus();
+    this.props.gameTypeSelected !== 'GEOCLICK' ? this.nameInput.focus() : null
   }
 
   zoomOut(){
     let currentZoomLevel = map.getZoom();
     currentZoomLevel != 0 ? map.setZoom(currentZoomLevel - 1) : null
-    this.nameInput.focus();
+    this.props.gameTypeSelected !== 'GEOCLICK' ? this.nameInput.focus() : null
   }
 
   handleClick() {
