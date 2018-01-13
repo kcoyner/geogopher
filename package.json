@@ -4,7 +4,7 @@
   "description": "learn more about the world around you",
   "main": "index.html",
   "scripts": {
-    "build": "webpack --config webpack.testing.js",
+    "build": "webpack --config webpack.prod.js",
     "reset-testing-db": "bash ./scripts/reset_testing_db.sh",
     "server": "nodemon server/server.js",
     "start": "node server/server.js",
