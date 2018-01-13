@@ -130,7 +130,7 @@ export default class Map extends React.Component {
     }
     if (this.props.gameTimerRemaining === 1) {
       if (counter < 1) {
-        console.log("RUNNING HANDLEGAMEEND FROM COMPONENTDIDUPDATE 🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸")
+        console.log("🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸")
         setTimeout(()=> {
           this.props.dispatch(
             actions.decrementTime(this.props.gameTimerRemaining + 1)
@@ -143,6 +143,7 @@ export default class Map extends React.Component {
   }
 
   async componentDidMount() {
+    counter = 0;
 
     //initialize new google map and place it on '#map'
     map = new window.google.maps.Map(document.getElementById('map'), {
