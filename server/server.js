@@ -1,25 +1,26 @@
-const express = require('express');
-const webpack = require('webpack');
 const cors = require('cors');
+const express = require('express');
+const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv').config();
 const session = require('express-session');
-const webpackDevMiddleware = require('webpack-dev-middleware');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
-
 const generateName = require('sillyname');
 const getIP = require('ipware')().get_ip;
 const moment = require('moment');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const dotenv = require('dotenv').config();
+const NODE_ENV = process.env.NODE_ENV;
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
 
-// require("babel-core/register");
-// require("babel-polyfill");
+let config = require('../webpack.dev.js');
+if (NODE_ENV === 'production') {
+  config = require('../webpack.prod.js');
+}
 
-const app = express();
-const config = require('../webpack.dev.js');
 const compiler = webpack(config);
 const apiRouter = express.Router();
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
