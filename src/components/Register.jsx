@@ -67,9 +67,12 @@ class RegisterPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Register</h1>
-          <Form onChange={this.handleChange} onSubmit={this.handleSubmit} >
+      <div className="register-page-container">
+        <div className="gap-head"></div>
+        <div className="register-widget">
+        <div className="register-title">SIGN UP<br/>Make an account to get high scores and see your progress!</div>
+
+          <Form className="register-credentials" onChange={this.handleChange} onSubmit={this.handleSubmit} >
             <Form.Field required>
               <label>First Name</label>
               <input name='firstName' placeholder='First Name' required='true'/>
@@ -78,7 +81,7 @@ class RegisterPage extends React.Component {
               <label>Last Name</label>
               <input name='lastName' placeholder='Last Name' required='true'/>
             </Form.Field>
-            <Form.Field required> 
+            <Form.Field required>
               <label>Email</label>
               <input name='email' placeholder='Email' type='email' required='true'/>
             </Form.Field>
@@ -90,7 +93,7 @@ class RegisterPage extends React.Component {
               <label>Username</label>
               <input name='username' placeholder='Username' required='true'/>
             </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button className="register-btn" type='submit'>SUBMIT</Button>
         </Form>
         { this.state.error &&
         <Message
@@ -99,8 +102,9 @@ class RegisterPage extends React.Component {
         content={this.state.errorMessage}
       />
       }
-        
       </div>
+      <div className="gap-foot"></div>
+    </div>
     );
   }
 }

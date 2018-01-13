@@ -92,9 +92,10 @@ class Login extends React.Component {
     return(
       <div>
         <div className="login-page-container">
-          <div className="gap"></div>
+          <div className="gap-top"></div>
+          <div className="login-title">LOGIN<br/>
+          You can signup with your <span>Geogopher</span> account, Google account, or play as anonymous.</div>
           <div className="login-widget">
-
           <Form className="login-credentials" onChange={this.handleChange} onSubmit={this.handleSubmit} >
               <Form.Field>
                 <label>Email</label>
@@ -128,6 +129,7 @@ class Login extends React.Component {
           content={this.state.errorMessage}
           />
           }
+          <div className="gap-top"></div>
         </div>
       </div>
     </div>

@@ -99,26 +99,28 @@ class Explore extends React.Component {
       });
 
       //load previous game GeoJSON then load game results
-      map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
+      await map.data.loadGeoJson(this.props.gameJSON, "",(features) => {
 
         this.props.polygonsAnswered.forEach((el)=>{
           map.data.overrideStyle(map.data.getFeatureById(el.id), {
-            fillColor: '#7FF000',
-            strokeColor: '#008000',
+            fillColor: '#008000',
+            fillOpacity: '1',
+            strokeColor: '#7FF000',
             strokeWeight: '2'
           })
         })
         this.props.polygonsSkipped.forEach((el)=>{
           map.data.overrideStyle(map.data.getFeatureById(el.id), {
             fillColor: 'grey',
+            fillOpacity: '1',
             strokeColor: 'darkslategrey',
             strokeWeight: '2'
           })
         })
         this.props.polygonsUnanswered.forEach((el)=>{
           map.data.overrideStyle(map.data.getFeatureById(el.id), {
-            fillColor: 'firebrick',
-            fillOpacity: '.6',
+            fillColor: 'indianred',
+            fillOpacity: '1',
             strokeColor: 'orange',
             strokeWeight: '2'
           })
@@ -157,6 +159,10 @@ class Explore extends React.Component {
             })
 
         });
+
+        this.props.dispatch(actions.resetGame())
+        this.props.dispatch(actions.resetScore())
+
         //end geoJSON callback
       })
 
@@ -172,9 +178,6 @@ class Explore extends React.Component {
 
             this.clearMarkers();
       })
-
-
-
 
     } else {
 
@@ -248,6 +251,7 @@ class Explore extends React.Component {
     //end of conditional that checks whether there is game data
     }
   //end of componentDidMount
+
   }
 
   clearMarkers() {

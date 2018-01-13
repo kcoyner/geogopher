@@ -576,8 +576,8 @@ export default class Map extends React.Component {
         map.data.overrideStyle(
           map.data.getFeatureById(el),
           {
-            fillColor: 'firebrick',
-            fillOpacity: '.6',
+            fillColor: 'indianred',
+            fillOpacity: '1',
             strokeColor: 'orange',
             strokeWeight: '2'
           });

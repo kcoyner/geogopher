@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Image, Icon } from 'semantic-ui-react';
 import { selectGame, userActions, setScoreIDs, fetchGamesList, fetchGameSettings, setTimer, setBaseTime } from '../actions/index'
 import { Motion, spring } from 'react-motion';
 
@@ -30,6 +30,7 @@ class GamesList extends React.Component {
       isLoading: true
     };
     this.onGameSelect = this.onGameSelect.bind(this);
+    this.goNext = this.goNext.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +38,11 @@ class GamesList extends React.Component {
     //get game settings options queued up
     this.props.dispatch(fetchGameSettings());
     DEBUG ?  setTimeout(() => this.setState({ isLoading: false }), 1500) : this.setState({ isLoading: false})
+  }
+
+  goNext() {
+
+    this.refs.start_games.scrollIntoView({behavior: "smooth", block: "start"});
   }
 
 
@@ -62,7 +68,7 @@ class GamesList extends React.Component {
 
     return (
 
-      <div className="home-page-container">
+      <div className="games-list-container">
       {
         this.state.isLoading ?
         <div className="loader"></div>
@@ -72,11 +78,14 @@ class GamesList extends React.Component {
 
         <div className="gap"></div>
 
-        <div className="splash">
+        <div className="splash" onClick={this.goNext}>
           <Image className="games-list-splash" src={gamesListSplash} />
+          <div className="games-list-next" onClick={this.goNext}>
+            <Icon name="sort descending" size="huge"/>
+          </div>
         </div>
 
-        <div className="countries-title">
+        <div className="countries-title" ref="start_games">
           <h1>COUNTRIES</h1>
           <h3>Choose a region to begin</h3>
         </div>

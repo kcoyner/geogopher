@@ -46,9 +46,9 @@ INSERT INTO game_types (game_type_id, game_type_name, game_type_description) VAL
 
 
 -- actual game modes
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'Easy', '{"multiplier": "1.5"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (1, 'Relaxed', '{"multiplier": "1.5"}');
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (2, 'Normal', '{"multiplier": "1.0"}');
-INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (3, 'Hard', '{"multiplier": "0.5"}');
+INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (3, 'Pro', '{"multiplier": "0.5"}');
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (4, 'Quick', '{"override": "60"}');
 
 -- sample user data

@@ -29,6 +29,7 @@ export const buildGameData = (inputData, gameType) => {
 
             if (key !== 'countryCapitalCenter' && key !== 'countryCapitalName' && key !== 'countryCenter' && key !== 'countryZoomLevel') {
               if (Array.isArray(countryData[key]) && countryData[key].length > 0) {
+                console.log(countryData[key])
                 outputCountryData.acceptedAnswers = outputCountryData.acceptedAnswers.concat(countryData[key]);
               }
               if (Object.prototype.toString.call(countryData[key]) === '[object String]') {

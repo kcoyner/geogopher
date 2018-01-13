@@ -139,20 +139,24 @@ class HighScores extends React.Component {
             first: firstScore,
         });
     })
-    
+
   }
 
   render() {
     const { activeItem } = this.state.activeItem;
     return (
-      <div>
+      <div className="hs-container">
+        <div className="gap"></div>
+        <div className="hs-title">HIGH SCORES<br/>Create an account to see your high scores</div>
+        <div className="dropdowns">
           <Dropdown name="selectedGameType" onChange={this.onChange} defaultValue={this.state.selectedGameType} fluid selection options={this.state.gameTypes} />
           <Dropdown name="selectedGame" onChange={this.onChange} value={this.state.selectedGame} fluid selection options={this.state.games} />
           <Dropdown name="selectedDifficulty" onChange={this.onChange} defaultValue={this.state.selectedDifficulty} fluid selection options={this.state.gameDifficulties} />
+        </div>
 
           { this.state.first ? (
 
-          <Table celled>
+          <Table className="hs-table" celled>
             <Table.Header>
             <Table.Row>
                 <Table.HeaderCell>Place</Table.HeaderCell>
@@ -174,7 +178,7 @@ class HighScores extends React.Component {
                 }
 
             {
-                this.state.scores[this.state.activeItem].map((score, index) => (         
+                this.state.scores[this.state.activeItem].map((score, index) => (
                 <Table.Row key={index}>
                     <Table.Cell>{(this.state.activeItem === 0) ? index + 2 : this.state.activeItem * 10 + index + 1}</Table.Cell>
                     <Table.Cell>{score.user.username}</Table.Cell>
@@ -210,7 +214,9 @@ class HighScores extends React.Component {
                 </Table.Row>
             </Table.Footer>
         </Table> ) :
-        (<div>no scores yet</div>)
+        (
+          <div className="no-scores">No scores yet! <br/> Make an account and get high scores!</div>
+        )
           }
       </div>
     );
