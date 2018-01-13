@@ -70,7 +70,7 @@ class RegisterPage extends React.Component {
       <div className="register-page-container">
         <div className="gap-head"></div>
         <div className="register-widget">
-        <h1 className="register-title">REGISTER</h1>
+        <h1 className="register-title">SIGN UP</h1>
           <Form className="register-credentials" onChange={this.handleChange} onSubmit={this.handleSubmit} >
             <Form.Field required>
               <label>First Name</label>
