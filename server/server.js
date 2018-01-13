@@ -16,9 +16,10 @@ const NODE_ENV = process.env.NODE_ENV;
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
+const configProd = require('../webpack.prod.js');
 let config = require('../webpack.dev.js');
 if (NODE_ENV === 'production') {
-  config = require('../webpack.prod.js');
+  config = configProd;
 }
 
 const compiler = webpack(config);
