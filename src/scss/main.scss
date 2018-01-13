@@ -942,8 +942,17 @@ div.quit-game-btn{
   display: grid;
   grid-area: registerwidget;
   grid-template-columns: 1fr;
-    h1.register-title{
-      font-size: 4em;
+  .register-title{
+    font-size: 1.5em;
+    grid-area: 1/1/1/1;
+    font-family: "Source Sans Pro";
+    border-bottom: 6px solid #EC0524;
+    margin-bottom: 50px;
+    line-height: 1;
+    padding-bottom:20px;
+  }
+    .register-title::first-line{
+      font-size: 3em;
       grid-area: 1/1/1/1;
       font-family: "Ubuntu Mono";
       border-bottom: 6px solid #EC0524;
@@ -1009,13 +1018,21 @@ div.quit-game-btn{
         height: 200px;
       }
       div.login-title{
-          font-size: 4em;
+          font-size: 1.5em;
           grid-area: logintitle;
-          font-family: "Ubuntu Mono";
+          font-family: "Source Sans Pro";
           border-bottom: 6px solid #EC0524;
           margin-bottom: 50px;
           padding-bottom: 20px;
+          line-height: 1;
         }
+      div.login-title::first-line{
+        font-size: 3em;
+        grid-area: 1/1/1/1;
+        font-family: "Ubuntu Mono";
+        border-bottom: 6px solid #EC0524;
+        margin-bottom: 50px;
+      }
       @media screen and (max-width: 1200px) {
         grid-template-columns: 1fr 10fr 1fr;
       }
@@ -1406,6 +1423,7 @@ button.see-high-scores{
   }
 
 }
+//loader
 
 .loader:empty {
   position: absolute;
@@ -1426,6 +1444,52 @@ button.see-high-scores{
   100% {
     transform: rotate(360deg);
   }
+}
+
+//High scores
+div.hs-container{
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-areas: ".. gap    .."
+                       ".. title    .."
+                       ".. dropdown .."
+                       ".. table    ..";
+
+    div.gap{
+      grid-area: gap;
+      height: 200px;
+    }
+
+    div.hs-title{
+      grid-area: title;
+      font-size: 1.5em;
+      font-family: "Source Sans Pro";
+      border-bottom: 6px solid #EC0524;
+      margin-bottom: 50px;
+      line-height: 1;
+      padding-bottom:20px;
+    }
+
+    div.hs-title::first-line{
+      font-size: 3em;
+      font-family: "Ubuntu Mono";
+      border-bottom: 6px solid #EC0524;
+      margin-bottom: 50px;
+    }
+
+    div.dropdowns{
+      grid-area: dropdown;
+    }
+
+    .ui.table.hs-table{
+      grid-area: table;
+    }
+
+    div.no-scores{
+      grid-area: table;
+    }
+
+
 }
 
 //home styles

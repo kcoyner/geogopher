@@ -93,7 +93,8 @@ class Login extends React.Component {
       <div>
         <div className="login-page-container">
           <div className="gap-top"></div>
-          <div className="login-title">LOGIN</div>
+          <div className="login-title">LOGIN<br/>
+          You can signup with your account, your Google account, or play as anonymous.</div>
           <div className="login-widget">
           <Form className="login-credentials" onChange={this.handleChange} onSubmit={this.handleSubmit} >
               <Form.Field>

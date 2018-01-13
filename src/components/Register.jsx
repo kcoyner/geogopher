@@ -70,7 +70,8 @@ class RegisterPage extends React.Component {
       <div className="register-page-container">
         <div className="gap-head"></div>
         <div className="register-widget">
-        <h1 className="register-title">SIGN UP</h1>
+        <div className="register-title">SIGN UP<br/>Make an account to get high scores and see your progress!</div>
+
           <Form className="register-credentials" onChange={this.handleChange} onSubmit={this.handleSubmit} >
             <Form.Field required>
               <label>First Name</label>
@@ -92,7 +93,7 @@ class RegisterPage extends React.Component {
               <label>Username</label>
               <input name='username' placeholder='Username' required='true'/>
             </Form.Field>
-            <Button className="register-btn" type='submit'>Submit</Button>
+            <Button className="register-btn" type='submit'>SUBMIT</Button>
         </Form>
         { this.state.error &&
         <Message
