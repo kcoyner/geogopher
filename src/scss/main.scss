@@ -854,8 +854,8 @@ div.sound-btn{
   grid-area: sound;
   z-index: 4;
   background-color: white;
-  color: #FF810D;
-  border: 5px solid #FF810D;
+  color: #C57B26;
+  border: 5px solid #C57B26;
   font-size: 1.25em;
   font-weight: bold;
   padding: 2%;
@@ -864,10 +864,18 @@ div.sound-btn{
   align-items: center;
   justify-content: center;
   &:hover{
-    background-color: #FF810D;
-    color: white;
     box-shadow: 5px 10px 20px -10px darkslategrey;
     cursor: pointer;
+  }
+  .ui.toggle.checkbox input:checked~.box:before, .ui.toggle.checkbox input:checked~label:before{
+    background-color: #C57B26!important;
+  }
+  .ui.toggle.checkbox .box:before, .ui.toggle.checkbox label:before{
+    background-color: gainsboro!important;
+  }
+  .ui.toggle.checkbox .box:after, .ui.toggle.checkbox label:after{
+    background-color: white;
+    border: 1px solid #C57B26;
   }
 }
 
